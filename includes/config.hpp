@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   config.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/03 16:46:21 by atrouill         ###   ########.fr       */
+/*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
+/*   Updated: 2022/05/03 18:12:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.Class.hpp"
+#ifndef CONFIG_HPP
+# define CONFIG_HPP
 
-int	main(void)
-{
-	User	arthur("arthur", "arthur-trt", 4);
+# define MAX_CLIENTS_CONNECTION		30
 
-	return (0);
-}
+#endif

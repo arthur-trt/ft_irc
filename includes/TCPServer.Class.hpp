@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   TCPServer.Class.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/03 16:46:21 by atrouill         ###   ########.fr       */
+/*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
+/*   Updated: 2022/05/03 18:27:35 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.Class.hpp"
+#ifndef TCPSERVER_CLASS_HPP
+# define TCPSERVER_CLASS_HPP
 
-int	main(void)
+# include <arpa/inet.h>
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <sys/time.h>
+
+class TCPServer
 {
-	User	arthur("arthur", "arthur-trt", 4);
+	private:
+		char	buffer[1025];
 
-	return (0);
-}
+
+};
+
+#endif
