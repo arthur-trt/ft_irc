@@ -13,7 +13,7 @@
 
 #define TRUE 1
 #define FALSE 0
-#define PORT 8888
+#define PORT 6667
 
 int main(int argc , char *argv[])
 {

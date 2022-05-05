@@ -2,8 +2,9 @@
 
 ## SRCS ##
 
-SOURCES		+=                		\
-		srcs/User.Class.cpp      	\
-		srcs/main.cpp            	\
+SOURCES		+=                     		\
+		srcs/User.Class.cpp           	\
+		srcs/TCPServer.Class.cpp      	\
+		srcs/main.cpp                 	\
 
 
