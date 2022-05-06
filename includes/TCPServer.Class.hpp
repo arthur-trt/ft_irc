@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/05 16:56:34 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:10:56 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class TCPServer
 		//char				_buffer[1025];
 		struct sockaddr_in	_address;
 		int					_clients_socket[MAX_CLIENTS_CONNECTION];
-		//fd_set				_listen_socket;
+		fd_set				_listen_socket;
 		int					_main_socket;
 
 	public:
@@ -38,7 +38,9 @@ class TCPServer
 
 		TCPServer ( int port = PORT );
 
-		int	pending_socket ( void );
+		void	pending_activity ( void );
+
+		int		incoming_connection ( void );
 
 };
 
