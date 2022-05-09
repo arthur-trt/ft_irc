@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/06 16:26:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:20:59 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define MOTD "\
 BONJOUR LES COPAIN.E.S\n\
-VOUS ETES TOUS BEAUX"
+VOUS ETES TOUS BEAUX\n"
 
 
 #endif

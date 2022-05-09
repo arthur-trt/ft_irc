@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/06 16:10:56 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:24:41 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "config.hpp"
 
+# include <unistd.h>
 # include <arpa/inet.h>
 # include <sys/types.h>
 # include <sys/socket.h>
@@ -27,7 +28,6 @@
 class TCPServer
 {
 	private:
-		//char				_buffer[1025];
 		struct sockaddr_in	_address;
 		int					_clients_socket[MAX_CLIENTS_CONNECTION];
 		fd_set				_listen_socket;
@@ -38,9 +38,11 @@ class TCPServer
 
 		TCPServer ( int port = PORT );
 
-		void	pending_activity ( void );
+		void						pending_activity ( void );
 
-		int		incoming_connection ( void );
+		int							incoming_connection ( void );
+
+		std::pair<int, std::string>	receive_data ( void );
 
 };
 

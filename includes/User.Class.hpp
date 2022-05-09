@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/03 16:46:28 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:41:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 class User
 {
-	private:
+	public:
 		std::string		_user_name;
 		std::string		_nick_name;
 		/**
@@ -36,7 +36,13 @@ class User
 	public:
 		User ( void );
 
+		User ( const int fd );
+
 		User ( const std::string & user_name, const std::string & nick_name, const int fd );
+
+		User ( const User & src );
+
+		User&	operator= ( const User & rhs );
 
 		~User ( void );
 

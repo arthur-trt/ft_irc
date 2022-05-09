@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/03 16:36:26 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:50:48 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,11 @@
   #define debug(x, ...)      /* x */
 #endif
 
+void ltrim(std::string &s);
+void rtrim(std::string &s);
+void trim(std::string &s);
+std::string ltrim_copy(std::string s);
+std::string rtrim_copy(std::string s);
+std::string trim_copy(std::string s);
 
 #endif
