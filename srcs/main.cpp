@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 14:52:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:07:02 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ void	loop (TCPServer *server)
 			{
 				users.erase(buffer.first);
 			}
-			if (users[buffer.first]._nick_name == "")
+			else if (users[buffer.first]._nick_name == "")
 			{
-				std::cout << trim(buffer.second) << " will be your nick_name" << std::endl;
+				std::cout << trim_copy(buffer.second) << " will be your nick_name" << std::endl;
 				users[buffer.first]._nick_name = trim_copy(buffer.second);
 			}
 			else
 			{
+				// Command goes here
 				std::cout << users[buffer.first]._nick_name << " say : ";
 				std::cout << buffer.second;
 			}

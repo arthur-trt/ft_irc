@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 14:40:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:12:05 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ TCPServer::TCPServer ( int port )
 {
 	int		optval = 1;
 
-	std::memset(&_clients_socket, 0, MAX_CLIENTS_CONNECTION);
+	std::memset(&_clients_socket, 0, MAX_CLIENTS_CONNECTION * sizeof(int));
 
 	if ((_main_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 	{
@@ -46,6 +46,7 @@ TCPServer::TCPServer ( int port )
 
 	if (bind(_main_socket, (struct sockaddr *)&_address, sizeof(_address)) < 0)
 	{
+		debug("bind");
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
 	}
