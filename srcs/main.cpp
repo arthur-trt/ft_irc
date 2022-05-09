@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 17:07:02 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:20:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 void	loop (TCPServer *server)
 {
-	int							tmp_fd;
-	std::pair<int, std::string>	buffer;
-	std::map<int, User>			users;
+	int								tmp_fd;
+	std::pair<int, std::string>		buffer;
+	std::map<int, User>				users;
+	std::map<int, User>::iterator	it;
 
 	while (true)
 	{
@@ -45,7 +46,22 @@ void	loop (TCPServer *server)
 			}
 			else
 			{
-				// Command goes here
+				it = users.begin();
+
+				while (it != users.end())
+				{
+					if (it->second._fd != buffer.first)
+					{
+						std::string	msg = "";
+						msg.append(users[buffer.first]._nick_name);
+						msg.append(" say: ");
+						msg.append(buffer.second);
+						
+						send(it->second._fd, msg.c_str(), msg.size(), 0);
+					}
+					it++;
+				}
+				// // Command goes here
 				std::cout << users[buffer.first]._nick_name << " say : ";
 				std::cout << buffer.second;
 			}
