@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 11:12:51 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:12:36 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ class TCPServer
 
 		void						pending_activity ( void );
 
-		int							incoming_connection ( void );
+		std::pair<int, std::string>	incoming_connection ( void );
 
 		std::pair<int, std::string>	receive_data ( void );
 

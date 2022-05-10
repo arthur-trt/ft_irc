@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 17:20:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:15:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	loop (TCPServer *server)
 {
-	int								tmp_fd;
+	std::pair<int, std::string>		in_connection;
 	std::pair<int, std::string>		buffer;
 	std::map<int, User>				users;
 	std::map<int, User>::iterator	it;
@@ -26,11 +26,11 @@ void	loop (TCPServer *server)
 	while (true)
 	{
 		server->pending_activity();
-		tmp_fd = server->incoming_connection();
-		if (tmp_fd != 0)
+		in_connection = server->incoming_connection();
+		if (in_connection.first != 0)
 		{
-			User	tmp(tmp_fd);
-			users.insert(std::make_pair(tmp_fd, tmp));
+			User	tmp(in_connection.second, in_connection.first);
+			users.insert(std::make_pair(in_connection.first, tmp));
 		}
 		buffer = server->receive_data();
 		if (buffer.first != 0)
@@ -56,7 +56,7 @@ void	loop (TCPServer *server)
 						msg.append(users[buffer.first]._nick_name);
 						msg.append(" say: ");
 						msg.append(buffer.second);
-						
+
 						send(it->second._fd, msg.c_str(), msg.size(), 0);
 					}
 					it++;

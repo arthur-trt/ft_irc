@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 11:15:08 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:16:05 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ void		TCPServer::pending_activity ( void )
 /**
  * @brief Accept new connection and assigne a port and a socket to it
  *
- * @return The fd for this new connection
+ * @return pair->first is the socket fd. pair->second is the hostname
  */
-int							TCPServer::incoming_connection ( void )
+std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 {
 	int			new_socket;
+	char		_host_name[1024];
 	socklen_t	addr_len = sizeof(_address);
 
 	if (FD_ISSET(_main_socket, &_listen_socket))
@@ -105,18 +106,12 @@ int							TCPServer::incoming_connection ( void )
 			std::cerr << std::strerror(errno) << std::endl;
 			exit(EXIT_FAILURE);
 		}
-		//TEST HOSTNAME
-		char	_host_name[1024];
-		char	_server_name[1027];
-		getnameinfo((struct sockaddr *)&_address, addr_len, _host_name, 1024, _server_name, 1024, 0);
-
-		std::cout << _host_name << std::endl;
-		std::cout << _server_name << std::endl;
-
+		getnameinfo((struct sockaddr *)&_address, addr_len, _host_name, 1024, NULL, 0, 0);
 		std::cout	<< "New connection." << std::endl
 					<< "\tsocket fd : " << new_socket << std::endl
 					<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
-					<< "\tport : " << ntohs(_address.sin_port) << std::endl;
+					<< "\tport : " << ntohs(_address.sin_port) << std::endl
+					<<	"\thostname : " << _host_name << std::endl;
 		if (send(new_socket, MOTD, std::strlen(MOTD), 0) != std::strlen(MOTD))
 		{
 			std::cerr << "Error when sending MOTD" << std::endl;
@@ -126,11 +121,11 @@ int							TCPServer::incoming_connection ( void )
 			if (_clients_socket[i] == 0)
 			{
 				_clients_socket[i] = new_socket;
-				return (new_socket);
+				return (std::make_pair(new_socket, _host_name));
 			}
 		}
 	}
-	return (0);
+	return (std::make_pair(0, ""));
 }
 
 /**
