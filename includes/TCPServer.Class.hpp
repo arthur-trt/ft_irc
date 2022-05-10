@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 12:24:41 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:12:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "config.hpp"
 
+# include <netdb.h>
 # include <unistd.h>
 # include <arpa/inet.h>
 # include <sys/types.h>

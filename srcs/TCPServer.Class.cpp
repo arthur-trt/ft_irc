@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 17:12:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:15:08 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,14 @@ int							TCPServer::incoming_connection ( void )
 			std::cerr << std::strerror(errno) << std::endl;
 			exit(EXIT_FAILURE);
 		}
+		//TEST HOSTNAME
+		char	_host_name[1024];
+		char	_server_name[1027];
+		getnameinfo((struct sockaddr *)&_address, addr_len, _host_name, 1024, _server_name, 1024, 0);
+
+		std::cout << _host_name << std::endl;
+		std::cout << _server_name << std::endl;
+
 		std::cout	<< "New connection." << std::endl
 					<< "\tsocket fd : " << new_socket << std::endl
 					<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
