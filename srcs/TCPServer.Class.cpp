@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 12:16:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 10:56:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ TCPServer::TCPServer ( int port )
 		exit (EXIT_FAILURE);
 	}
 	std::cout << "Listener on port " << port << std::endl;
-	if (listen(_main_socket, 5) < 0)
+	if (listen(_main_socket, MAX_CLIENTS_CONNECTION) < 0)
 	{
 		debug("listen");
 		exit(EXIT_FAILURE);

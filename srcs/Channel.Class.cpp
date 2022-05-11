@@ -6,10 +6,11 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 14:21:44 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 10:56:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string>
 #include "utils.hpp"
 #include "Channel.Class.hpp"
 
@@ -91,6 +92,13 @@ bool				Channel::addUser ( User * user )
 	return (false);
 }
 
+/**
+ * @brief Remove a user of the channel. Delete the channel if member_counts is 0
+ *
+ * @param user User to remove
+ * @return true	If the user have been actuallye remove
+ * @return false If the user was not in the channel
+ */
 bool				Channel::kickUser ( User * user )
 {
 	if (this->_joined_user.count(user) != 0)
