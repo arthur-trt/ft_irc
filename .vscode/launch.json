@@ -1,0 +1,28 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Build and debug project",
+		"type": "cppdbg",
+		"request": "launch",
+		"program": "${workspaceFolder}/pIRCarre",
+		"args": [
+			"6667"
+		],
+		"stopAtEntry": false,
+		"cwd": "${workspaceFolder}",
+		"environment": [],
+		"externalConsole": false,
+		"MIMode": "gdb",
+		"setupCommands": [
+		  {
+			"description": "Enable pretty-printing for gdb",
+			"text": "-enable-pretty-printing",
+			"ignoreFailures": true
+		  }
+		],
+		"preLaunchTask": "C/C++: Build project",
+		"miDebuggerPath": "/usr/bin/gdb"
+	  }
+	]
+  }

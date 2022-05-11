@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 10:56:14 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 19:14:08 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ TCPServer::TCPServer( void )
 TCPServer::TCPServer ( int port )
 {
 	int		optval = 1;
+	char	hostname[1024];
+
+	gethostname(hostname, 1024);
+	this->_hostname = std::string(hostname);
 
 	std::memset(&_clients_socket, 0, MAX_CLIENTS_CONNECTION * sizeof(int));
 
@@ -112,10 +116,10 @@ std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 					<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
 					<< "\tport : " << ntohs(_address.sin_port) << std::endl
 					<<	"\thostname : " << _host_name << std::endl;
-		if (send(new_socket, MOTD, std::strlen(MOTD), 0) != std::strlen(MOTD))
-		{
-			std::cerr << "Error when sending MOTD" << std::endl;
-		}
+		//if (send(new_socket, MOTD, std::strlen(MOTD), 0) != std::strlen(MOTD))
+		//{
+		//	std::cerr << "Error when sending MOTD" << std::endl;
+		//}
 		for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 		{
 			if (_clients_socket[i] == 0)
@@ -166,4 +170,27 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 		}
 	}
 	return (std::make_pair(0, std::string("")));
+}
+
+void					TCPServer::add_to_buffer ( std::pair<int, std::string> buff )
+{
+	this->_buffer_out.insert(buff);
+}
+
+void					TCPServer::send_buffer ( void )
+{
+	std::map<int, std::string>::iterator	it = _buffer_out.begin();
+
+	while (it != _buffer_out.end())
+	{
+		debug("Send to %d : %s", it->first, it->second.c_str());
+		send(it->first, it->second.c_str(), std::strlen(it->second.c_str()), MSG_NOSIGNAL);
+		it++;
+	}
+	_buffer_out.clear();
+}
+
+const std::string &		TCPServer::getHostname ( void ) const
+{
+	return (this->_hostname);
 }

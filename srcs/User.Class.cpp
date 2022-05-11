@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 12:15:50 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:48:48 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 User::User ( void )
 {
-	debug("Empty user constructor");
+	//debug("Empty user constructor");
 }
 
 User::User ( const std::string & host_name, const int fd ) :
@@ -24,8 +24,8 @@ User::User ( const std::string & host_name, const int fd ) :
 {
 	_user_name = "";
 	_nick_name = "";
-	_host_name = "";
-	debug("user fd constructor called");
+	_real_name = "";
+	//debug("user fd constructor called");
 }
 
 User::User ( const std::string & user_name, const std::string & nick_name, const std::string & host_name, const int fd ) :
@@ -34,16 +34,17 @@ User::User ( const std::string & user_name, const std::string & nick_name, const
 	_host_name(host_name),
 	_fd(fd)
 {
-	debug("User constructor for %s", _user_name.c_str());
+	//debug("User constructor for %s", _user_name.c_str());
 }
 
 User::User ( const User & src ) :
 	_user_name(src._user_name),
 	_nick_name(src._nick_name),
+	_real_name(src._real_name),
 	_host_name(src._host_name),
 	_fd(src._fd)
 {
-	debug("Copy constructor called");
+	//debug("Copy constructor called");
 }
 
 User&	User::operator= ( const User & rhs )
@@ -52,6 +53,7 @@ User&	User::operator= ( const User & rhs )
 	{
 		this->_fd = rhs._fd;
 		this->_user_name = rhs._user_name;
+		this->_real_name = rhs._real_name;
 		this->_nick_name = rhs._nick_name;
 	}
 	return (*this);
@@ -60,5 +62,5 @@ User&	User::operator= ( const User & rhs )
 User::~User ( void )
 {
 	_fd = 0;
-	debug("User destructor for %s", _user_name.c_str());
+	//debug("User destructor for %s", _user_name.c_str());
 }

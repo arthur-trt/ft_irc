@@ -6,11 +6,12 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 14:57:04 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:21:17 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "config.hpp"
+#include "commands.hpp"
 #include "utils.hpp"
 #include "User.Class.hpp"
 #include "TCPServer.Class.hpp"
@@ -39,33 +40,38 @@ void	loop (TCPServer *server)
 			{
 				users.erase(buffer.first);
 			}
-			else if (users[buffer.first]._nick_name == "")
-			{
-				std::cout << trim_copy(buffer.second) << " will be your nick_name" << std::endl;
-				users[buffer.first]._nick_name = trim_copy(buffer.second);
-			}
 			else
 			{
-				it = users.begin();
-
-				while (it != users.end())
-				{
-					if (it->second._fd != buffer.first)
-					{
-						std::string	msg = "";
-						msg.append(users[buffer.first]._nick_name);
-						msg.append(" say: ");
-						msg.append(buffer.second);
-
-						send(it->second._fd, msg.c_str(), msg.size(), 0);
-					}
-					it++;
-				}
-				// // Command goes here
-				std::cout << users[buffer.first]._nick_name << " say : ";
-				std::cout << buffer.second;
+				cmd_parse(buffer.second, server, &(users[buffer.first]));
 			}
+			//else if (users[buffer.first]._nick_name == "")
+			//{
+			//	std::cout << trim_copy(buffer.second) << " will be your nick_name" << std::endl;
+			//	users[buffer.first]._nick_name = trim_copy(buffer.second);
+			//}
+			//else
+			//{
+			//	it = users.begin();
+
+			//	while (it != users.end())
+			//	{
+			//		if (it->second._fd != buffer.first)
+			//		{
+			//			std::string	msg = "";
+			//			msg.append(users[buffer.first]._nick_name);
+			//			msg.append(" say: ");
+			//			msg.append(buffer.second);
+
+			//			send(it->second._fd, msg.c_str(), msg.size(), 0);
+			//		}
+			//		it++;
+			//	}
+			//	// // Command goes here
+			//	std::cout << users[buffer.first]._nick_name << " say : ";
+			//	std::cout << buffer.second;
+			//}
 		}
+		server->send_buffer();
 	}
 }
 
@@ -78,6 +84,6 @@ int	main(int argc, char **argv)
 	TCPServer	server(port);
 
 	loop (&server);
-	
+
 	return (0);
 }
