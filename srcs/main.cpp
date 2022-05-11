@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/10 12:15:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:57:04 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int	main(int argc, char **argv)
 	TCPServer	server(port);
 
 	loop (&server);
-
+	
 	return (0);
 }

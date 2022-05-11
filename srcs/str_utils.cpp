@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:49:25 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 16:48:50 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:53:59 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,18 @@ std::string	trim_copy ( std::string s )
 {
 	trim(s);
 	return s;
+}
+
+char		my_toupper ( char ch )
+{
+    return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+}
+
+void			str_upper ( std::string & s )
+{
+	for (size_t i = 0; i < s.length(); i++)
+	{
+		s[i] = my_toupper(s[i]);
+	}
+	
 }

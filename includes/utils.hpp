@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/09 14:50:48 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:51:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void trim(std::string &s);
 std::string ltrim_copy(std::string s);
 std::string rtrim_copy(std::string s);
 std::string trim_copy(std::string s);
-
+char		    my_toupper ( char ch );
+void		  	str_upper ( std::string & s );
 #endif
