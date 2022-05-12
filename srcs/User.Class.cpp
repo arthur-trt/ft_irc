@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 18:48:48 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:33:19 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ User::User ( void )
 	//debug("Empty user constructor");
 }
 
-User::User ( const std::string & host_name, const int fd ) :
-	_host_name(host_name),
+User::User ( const std::string & hostname, const int fd ) :
+	_hostname(hostname),
 	_fd(fd)
 {
 	_user_name = "";
@@ -28,10 +28,10 @@ User::User ( const std::string & host_name, const int fd ) :
 	//debug("user fd constructor called");
 }
 
-User::User ( const std::string & user_name, const std::string & nick_name, const std::string & host_name, const int fd ) :
+User::User ( const std::string & user_name, const std::string & nick_name, const std::string & hostname, const int fd ) :
 	_user_name(user_name),
 	_nick_name(nick_name),
-	_host_name(host_name),
+	_hostname(hostname),
 	_fd(fd)
 {
 	//debug("User constructor for %s", _user_name.c_str());
@@ -41,7 +41,7 @@ User::User ( const User & src ) :
 	_user_name(src._user_name),
 	_nick_name(src._nick_name),
 	_real_name(src._real_name),
-	_host_name(src._host_name),
+	_hostname(src._hostname),
 	_fd(src._fd)
 {
 	//debug("Copy constructor called");

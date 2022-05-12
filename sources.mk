@@ -9,6 +9,7 @@ SOURCES		+=                        		\
 		srcs/User.Class.cpp              	\
 		srcs/Channel.Class.cpp           	\
 		srcs/main.cpp                    	\
+		srcs/IRC.Class.cpp               	\
 
 
 ## SRCS/COMMANDS ##

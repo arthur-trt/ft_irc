@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 16:19:32 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:33:03 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class User
 		std::string		_user_name;
 		std::string		_nick_name;
 		std::string		_real_name;
-		std::string		_host_name;
+		std::string		_hostname;
 		/**
 		 * Fd of the socket in use for the connection
 		 */

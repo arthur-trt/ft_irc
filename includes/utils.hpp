@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 19:28:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:39:25 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <string>
 # include <vector>
-# include "TCPServer.Class.hpp"
+# include "IRC.Class.hpp"
 # include "User.Class.hpp"
 
 #if DEBUG
@@ -27,7 +27,7 @@
   #define debug(x, ...)      /* x */
 #endif
 
-std::string	send_rpl(int rpl_num, TCPServer *serv, User *user);
+std::string	send_rpl(int rpl_num, IRC *serv, User *user);
 
 void ltrim(std::string &s);
 void rtrim(std::string &s);

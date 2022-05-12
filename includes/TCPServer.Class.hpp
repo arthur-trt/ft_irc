@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 19:13:18 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:02:17 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TCPSERVER_CLASS_HPP
 
 # include "config.hpp"
+# include "User.Class.hpp"
 
 # include <netdb.h>
 # include <unistd.h>

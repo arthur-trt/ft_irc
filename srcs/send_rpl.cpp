@@ -6,23 +6,23 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 19:37:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:39:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPL.hpp"
 #include "config.hpp"
-#include "TCPServer.Class.hpp"
+#include "IRC.Class.hpp"
 #include "User.Class.hpp"
 #include "utils.hpp"
 
 
-std::string	send_rpl(int rpl_num, TCPServer *serv, User *user)
+std::string	send_rpl(int rpl_num, IRC *serv, User *user)
 {
 	std::string		answer = ":";
 	std::string		code;
 
-	answer.append(serv->getHostname());
+	answer.append(serv->_tcp.getHostname());
 	answer.append(" ");
 	if (rpl_num < 10)
 		answer.append("00");
@@ -35,7 +35,7 @@ std::string	send_rpl(int rpl_num, TCPServer *serv, User *user)
 	switch ( rpl_num )
 	{
 		case 1:
-			answer.append(RPL_WELCOME(user->_nick_name, user->_user_name, user->_host_name));
+			answer.append(RPL_WELCOME(user->_nick_name, user->_user_name, user->_hostname));
 			break;
 		case 2:
 			answer.append(RPL_YOURHOST);
