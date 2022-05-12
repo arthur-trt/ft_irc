@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:39:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:54:45 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,20 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user)
 		default:
 			;
 	}
+	return (answer);
+}
+
+std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host)
+{
+	std::string		answer;
+
+	answer.append(":");
+	answer.append(nick);
+	answer.append("@");
+	answer.append(username);
+	answer.append("!");
+	answer.append(host);
+	answer.append(" ");
+	
 	return (answer);
 }

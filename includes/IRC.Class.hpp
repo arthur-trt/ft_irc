@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:55:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:40:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,13 @@ class IRC
 		IRC ( int port );
 		~IRC ();
 
-		void	add_user ( int fd, std::string hostname );
-		void	remove_user ( int fd );
-		User*	get_user ( int fd );
+		void		add_user ( int fd, std::string hostname );
+		void		remove_user ( int fd );
+		User*		get_user ( int fd );
+
+		void		create_channel ( std::string & name, User * chan_operator );
+		void		remove_channel ( std::string & name );
+		Channel*	get_channel ( std::string & name );
 
 
 };

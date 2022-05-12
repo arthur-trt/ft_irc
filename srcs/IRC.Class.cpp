@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:57:23 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 17:45:36 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,18 @@ IRC::IRC ( int port ) :
 
 IRC::~IRC ( void )
 {
-	std::map<int, User*>::iterator	it = this->_connected_user.begin();
-
-	while (it != this->_connected_user.end())
+	std::map<int, User*>::iterator				it_u = this->_connected_user.begin();
+	std::map<std::string, Channel*>::iterator	it_c = this->_channels.begin();
+	
+	while (it_u != this->_connected_user.end())
 	{
-		delete (it->second);
-		it++;
+		delete (it_u->second);
+		it_u++;
+	}
+	while (it_c != this->_channels.end())
+	{
+		delete (it_c->second);
+		it_c++;
 	}
 
 }
@@ -46,4 +52,17 @@ void	IRC::remove_user( int fd )
 User *	IRC::get_user ( int fd )
 {
 	return (this->_connected_user[fd]);
+}
+
+void	IRC::create_channel ( std::string & name, User * chan_operator )
+{
+	Channel*	tmp = new Channel(this->_tcp, name, chan_operator);
+
+	this->_channels.insert(std::make_pair(name, tmp));
+}
+
+void	IRC::remove_channel ( std::string & name )
+{
+	delete this->_channels[name];
+	this->_channels.erase(name);
 }
