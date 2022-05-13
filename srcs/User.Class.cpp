@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:33:19 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:08:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ User::User ( const std::string & hostname, const int fd ) :
 	_user_name = "";
 	_nick_name = "";
 	_real_name = "";
+	_connected = false;
 	//debug("user fd constructor called");
 }
 
@@ -34,6 +35,7 @@ User::User ( const std::string & user_name, const std::string & nick_name, const
 	_hostname(hostname),
 	_fd(fd)
 {
+	_connected = false;
 	//debug("User constructor for %s", _user_name.c_str());
 }
 
@@ -42,7 +44,8 @@ User::User ( const User & src ) :
 	_nick_name(src._nick_name),
 	_real_name(src._real_name),
 	_hostname(src._hostname),
-	_fd(src._fd)
+	_fd(src._fd),
+	_connected(src._connected)
 {
 	//debug("Copy constructor called");
 }
@@ -54,6 +57,7 @@ User&	User::operator= ( const User & rhs )
 		this->_fd = rhs._fd;
 		this->_user_name = rhs._user_name;
 		this->_real_name = rhs._real_name;
+		this->_connected = rhs._connected;
 		this->_nick_name = rhs._nick_name;
 	}
 	return (*this);

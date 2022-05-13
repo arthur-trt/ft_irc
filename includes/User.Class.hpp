@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:33:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 13:58:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ class User
 		 * Fd of the socket in use for the connection
 		 */
 		int		_fd;
+		/**
+		 * Is the connection done for IRC ?
+		 */
+		bool	_connected;
 		///**
 		// * Is the user alive ?
 		// */

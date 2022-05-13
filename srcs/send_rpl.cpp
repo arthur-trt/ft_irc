@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 11:05:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:48:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,18 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 			break;
 		case 433:
 			answer.append(ERR_NICKNAMEINUSE(args));
+			break;
+		case 432:
+			answer.append(ERR_ERRONEUSNICKNAME(args));
+			break;
+		case 461:
+			answer.append(ERR_NEEDMOREPARAMS(args));
+			break;
+		case 462:
+			answer.append(ERR_ALREADYREGISTRED);
+			break;
+		case 421:
+			answer.append(ERR_UNKNOWNCOMMAND(args));
 			break;
 		default:
 			;

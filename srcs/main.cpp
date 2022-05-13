@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:54:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 16:11:03 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ void	loop (IRC *server)
 			{
 				server->remove_user(buffer.first);
 			}
-			else if (buffer.second == "QUIT\n")
-			{
-				break;
-			}
 			else
 			{
 				cmd_parse(buffer.second, server, server->get_user(buffer.first));
@@ -52,11 +48,13 @@ void	loop (IRC *server)
 
 int	main(int argc, char **argv)
 {
-	int	port;
+	std::string	password;
+	int			port;
 
-	port = (argc == 2) ? std::atoi(argv[1]) : PORT;
+	port = (argc >= 2) ? std::atoi(argv[1]) : PORT;
+	password = (argc == 3) ? argv[2] : PASS;
 
-	IRC	server(port);
+	IRC	server(port, password);
 
 	loop (&server);
 

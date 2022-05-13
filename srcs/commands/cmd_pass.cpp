@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.hpp                                         :+:      :+:    :+:   */
+/*   cmd_pass.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 16:10:21 by atrouill         ###   ########.fr       */
+/*   Created: 2022/05/13 15:58:28 by atrouill          #+#    #+#             */
+/*   Updated: 2022/05/13 16:06:42 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONFIG_HPP
-# define CONFIG_HPP
-
-# include <iostream>
-
-# define SERVERNAME			"pIRCarre"
-# define VERSION			"0.0.0.0.0.1"
-
-# define MAX_CLIENTS_CONNECTION		30
-
-# define PORT						6667
-# define PASS						"password"
-
-# define MOTD "\
-BONJOUR LES COPAIN.E.S\n\
-VOUS ETES TOUS BEAUX\n"
+#include "RPL.hpp"
+#include "config.hpp"
+#include "IRC.Class.hpp"
+#include "User.Class.hpp"
+#include "utils.hpp"
+#include "functions.hpp"
 
 
-#endif
+void	cmd_pass ( IRC *serv, User *user, std::string & args )
+{
+	
+}

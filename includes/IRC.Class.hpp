@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 11:38:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 16:09:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,29 @@ class IRC
 		TCPServer									_tcp;
 
 	private:
+		std::string							_password;
 
-		std::map<int, User*>						_connected_user;
-		std::map<std::string, Channel*>				_channels;
-		static std::map<std::string, command>		_available_command;
+		std::map<int, User*>				_connected_user;
+		std::map<std::string, Channel*>		_channels;
+		std::map<std::string, command>		_available_command;
+
+		void	build_commands_map ( void );
 
 
 	public:
-		IRC ( int port );
+		IRC ( int port, std::string _password );
 		~IRC ();
+
+		command						get_cmd ( const std::string & name ) const;
 
 		void						add_user ( int fd, std::string hostname );
 		void						remove_user ( int fd );
 		User*						get_user ( int fd );
-		std::pair<bool, User*>		get_user ( std::string const & nick_name );
+		std::pair<bool, User*>		get_user ( std::string const & nick_name ) const;
 
 		void						create_channel ( std::string & name, User * chan_operator );
 		void						remove_channel ( std::string & name );
-		std::pair<bool, Channel*>	get_channel ( std::string & name );
+		std::pair<bool, Channel*>	get_channel ( std::string & name ) const;
 
 
 };

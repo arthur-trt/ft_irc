@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.hpp                                         :+:      :+:    :+:   */
+/*   cmd_not_found.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 16:10:21 by atrouill         ###   ########.fr       */
+/*   Created: 2022/05/13 15:46:13 by atrouill          #+#    #+#             */
+/*   Updated: 2022/05/13 15:48:44 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONFIG_HPP
-# define CONFIG_HPP
+#include "RPL.hpp"
+#include "utils.hpp"
+#include "IRC.Class.hpp"
+#include "commands.hpp"
+#include "functions.hpp"
 
-# include <iostream>
-
-# define SERVERNAME			"pIRCarre"
-# define VERSION			"0.0.0.0.0.1"
-
-# define MAX_CLIENTS_CONNECTION		30
-
-# define PORT						6667
-# define PASS						"password"
-
-# define MOTD "\
-BONJOUR LES COPAIN.E.S\n\
-VOUS ETES TOUS BEAUX\n"
-
-
-#endif
+void	cmd_not_found ( IRC *serv, User *user, std::string & args )
+{
+	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(421, serv, user, args)));
+}

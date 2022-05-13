@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:55:04 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 10:33:50 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:38:19 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,45 @@
 #include "commands.hpp"
 #include "functions.hpp"
 
-int		cmd_user ( IRC *serv, User *user, std::string args )
+static bool	valid_args ( IRC *serv, User *user, std::string args )
 {
 	std::vector<std::string>	parsed;
-	std::string					answer;
 
+	if (args.find(':') == std::string::npos)
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "USER")));
+		return (false);
+	}
 	parsed = ft_split(args, " ");
-	//if (parsed.size() < 4)
-	//{
-	//	// ERROR HERE
-	//}
-	debug("parsed[0] : %s", parsed[0].c_str());
-	debug("parsed[1] : %s", parsed[1].c_str());
-	debug("parsed[2] : %s", parsed[2].c_str());
-	debug("parsed[3] : %s", parsed[3].c_str());
+	if (args.size() < 4)
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "USER")));
+		return (false);
+	}
+	if (user->_user_name != "" || user->_real_name != "")
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(462, serv, user)));
+		return (false);
+	}
+	return (true);
+}
 
-	user->_user_name = parsed[0];
-	user->_real_name = parsed[3];
+void	cmd_user ( IRC *serv, User *user, std::string & args )
+{
+	std::vector<std::string>	parsed;
 
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(1, serv, user)));
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(2, serv, user)));
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(3, serv, user)));
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(4, serv, user)));
-	return (0);
+	if (valid_args(serv, user, args))
+	{
+		parsed = ft_split(args, ":");
+		user->_real_name = trim_copy(parsed[1]);
+		parsed = ft_split(args, " ");
+		user->_user_name = trim_copy(parsed[0]);
+		if (user->_nick_name != "" && user->_connected == false)
+		{
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(1, serv, user)));
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(2, serv, user)));
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(3, serv, user)));
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(4, serv, user)));
+		}
+	}
 }

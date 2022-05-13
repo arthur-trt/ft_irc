@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 10:33:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:55:36 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 
 		std::string	cmd, args;
 
-		str_upper(cmd);
 		if (pos != std::string::npos)
 		{
 			cmd = trim_copy(tmp.substr(0, pos));
@@ -43,14 +42,8 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 			cmd = trim_copy(entry);
 			args = "";
 		}
-		if (cmd == "NICK")
-		{
-			cmd_nick(serv, user, args);
-		}
-		else if (cmd == "USER")
-		{
-			cmd_user(serv, user, args);
-		}
+		str_upper(cmd);
+		serv->get_cmd(cmd)(serv, user, args);
 		commands.erase(commands.begin());
 	}
 	return (0);

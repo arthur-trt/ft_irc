@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:37:42 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 16:06:37 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 #include "IRC.Class.hpp"
 #include "User.Class.hpp"
 
-int		cmd_nick ( IRC *serv, User *user, std::string args );
 int		cmd_parse ( std::string entry, IRC *serv, User *user );
-int		cmd_user ( IRC *serv, User *user, std::string args );
+
+void	cmd_ignore ( IRC *serv, User *user, std::string & args );
+void	cmd_not_found ( IRC *serv, User *user, std::string & args );
+void	cmd_pass ( IRC *serv, User *user, std::string & args );
+void	cmd_nick ( IRC *serv, User *user, std::string & args );
+void	cmd_user ( IRC *serv, User *user, std::string & args );
 
 #endif

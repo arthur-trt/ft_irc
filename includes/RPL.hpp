@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 11:12:09 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 15:47:42 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,14 @@
 	(" :No nickname given\r\n")																// 431
 # define ERR_NICKNAMEINUSE(nick)		\
 	(" " + nick + " :Nickname is already in use\r\n")										// 433
+# define ERR_ERRONEUSNICKNAME(nick)		\
+	(" " + nick + " :Erroneous nickname\r\n")												// 432
+# define ERR_NEEDMOREPARAMS(command)	\
+	(" " + command + " :Not enough parameters\r\n")											// 461
+# define ERR_ALREADYREGISTRED			\
+	(" :Unauthorized command (already registered)\r\n")										// 462
+# define ERR_UNKNOWNCOMMAND(command)	\
+	(" " + command + " :Unknown command\r\n")												// 421
+
 
 #endif
