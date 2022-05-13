@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:39:25 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:19:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #endif
 
 std::string	send_rpl(int rpl_num, IRC *serv, User *user);
+std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host);
 
 void ltrim(std::string &s);
 void rtrim(std::string &s);

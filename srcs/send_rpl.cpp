@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 17:54:45 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:38:49 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user)
 	{
 		case 1:
 			answer.append(RPL_WELCOME(user->_nick_name, user->_user_name, user->_hostname));
-			break;
 		case 2:
 			answer.append(RPL_YOURHOST);
-			break;
 		case 3:
 			answer.append(RPL_CREATED);
-			break;
 		case 4:
 			answer.append(RPL_MYINFO);
 		default:

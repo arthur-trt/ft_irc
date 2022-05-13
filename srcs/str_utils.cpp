@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:49:25 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 19:23:01 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/12 21:39:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ std::vector<std::string>		ft_split(std::string s, std::string splitter)
 	return (now);
 }
 
-std::string					ft_to_string(size_t value)
+std::string					ft_to_string(long value)
 {
 	std::string output;
 	std::string sign;
