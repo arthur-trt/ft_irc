@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 10:31:20 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:30:04 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 ** From : (Take a look)
 ** https://www.amazon.com/dp/0201924889
 */
-static class nullptr_t
+const class nullptr_t
 {
 		public:
 				/*

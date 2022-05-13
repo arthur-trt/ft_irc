@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 16:09:47 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:37:47 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ IRC::~IRC ( void )
 
 }
 
+const std::string &		IRC::get_password ( void ) const
+{
+	return (this->_password);
+}
+
 void	IRC::build_commands_map ( void )
 {
 	this->_available_command.insert(std::make_pair("USER", &cmd_user));
 	this->_available_command.insert(std::make_pair("NICK", &cmd_nick));
+	this->_available_command.insert(std::make_pair("PASS", &cmd_pass));
 	this->_available_command.insert(std::make_pair("CAP", &cmd_ignore));
 }
 

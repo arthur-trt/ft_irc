@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:55:04 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 15:38:19 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:22:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	cmd_user ( IRC *serv, User *user, std::string & args )
 {
 	std::vector<std::string>	parsed;
 
-	if (valid_args(serv, user, args))
+	if (valid_args(serv, user, args) && user->_pass_send == true)
 	{
 		parsed = ft_split(args, ":");
 		user->_real_name = trim_copy(parsed[1]);

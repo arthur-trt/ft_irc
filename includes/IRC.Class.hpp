@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 16:09:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:15:22 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ class IRC
 	public:
 		IRC ( int port, std::string _password );
 		~IRC ();
+
+		const std::string &			get_password ( void ) const;
 
 		command						get_cmd ( const std::string & name ) const;
 

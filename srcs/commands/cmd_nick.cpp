@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:14:16 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 15:39:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:29:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cmd_nick ( IRC *serv, User *user, std::string & args )
 	std::string	answer;
 	std::string old_nick;
 
-	if (valid_args(serv, user, args))
+	if (valid_args(serv, user, args)  && user->_pass_send == true)
 	{
 		old_nick = user->_nick_name;
 		user->_nick_name = args;

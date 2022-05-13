@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 16:11:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:44:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	loop (IRC *server)
 		if (in_connection.first != 0)
 		{
 			server->add_user(in_connection.first, in_connection.second);
+			if (server->get_password() == "")
+			{
+				server->get_user(in_connection.first)->_pass_send = true;
+			}
 		}
 		buffer = server->_tcp.receive_data();
 		if (buffer.first != 0)
@@ -52,7 +56,7 @@ int	main(int argc, char **argv)
 	int			port;
 
 	port = (argc >= 2) ? std::atoi(argv[1]) : PORT;
-	password = (argc == 3) ? argv[2] : PASS;
+	password = (argc == 3) ? argv[2] : "";
 
 	IRC	server(port, password);
 

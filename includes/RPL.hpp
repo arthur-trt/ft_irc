@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 15:47:42 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 17:42:18 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define RPL_CREATED					\
 	(" :This server was created 01/01/1970\r\n")											//003
 # define RPL_MYINFO						\
-	(" :" SERVERNAME " " VERSION "aiwroOs OovaimnpsrtklbeI\r\n")							//004
+	(" :" SERVERNAME " " VERSION " aiwroOs OovaimnpsrtklbeI\r\n")							//004
 
 
 # define ERR_NONICKNAMEGIVEN			\
