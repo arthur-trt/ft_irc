@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:55:04 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:38:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:33:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "utils.hpp"
 #include "IRC.Class.hpp"
 #include "commands.hpp"
+#include "functions.hpp"
 
 int		cmd_user ( IRC *serv, User *user, std::string args )
 {

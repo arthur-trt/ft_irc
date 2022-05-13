@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:43:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 10:33:27 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "commands.hpp"
 #include "IRC.Class.hpp"
 #include "User.Class.hpp"
+#include "functions.hpp"
 #include <vector>
 #include <string>
 
@@ -39,7 +40,7 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 		}
 		else
 		{
-			cmd = entry;
+			cmd = trim_copy(entry);
 			args = "";
 		}
 		if (cmd == "NICK")
