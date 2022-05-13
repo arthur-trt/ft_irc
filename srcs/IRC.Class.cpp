@@ -6,11 +6,12 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 10:26:26 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:48:25 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "IRC.Class.hpp"
+# include "utils.hpp"
 
 /**
  * @brief Construct a new IRC::IRC object
