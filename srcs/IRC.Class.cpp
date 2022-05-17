@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:37:47 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:41:36 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("NICK", &cmd_nick));
 	this->_available_command.insert(std::make_pair("PASS", &cmd_pass));
 	this->_available_command.insert(std::make_pair("CAP", &cmd_ignore));
+	this->_available_command.insert(std::make_pair("JOIN", &cmd_join));
+	this->_available_command.insert(std::make_pair("PRIVMSG", &cmd_privmsg));
+	this->_available_command.insert(std::make_pair("NAMES", &cmd_names));
 }
 
 IRC::command	IRC::get_cmd ( const std::string & command ) const
@@ -136,11 +139,18 @@ std::pair<bool, User *>	IRC::get_user ( std::string const & nick_name ) const
  * @param name Channel name
  * @param chan_operator User who created the channel
  */
-void	IRC::create_channel ( std::string & name, User * chan_operator )
+Channel*	IRC::create_channel ( std::string & name, User * chan_operator )
 {
+	std::map<std::string, Channel*>::iterator					it;
+	std::pair<std::map<std::string, Channel*>::iterator, bool>	res;
 	Channel*	tmp = new Channel(this->_tcp, name, chan_operator);
 
-	this->_channels.insert(std::make_pair(name, tmp));
+	res = this->_channels.insert(std::make_pair(name, tmp));
+	if (res.second)
+	{
+		return ((res.first->second));
+	}
+	return (u_nullptr);
 }
 
 /**

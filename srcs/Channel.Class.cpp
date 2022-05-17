@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 10:56:50 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:24:27 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,38 @@ bool				Channel::kickUser ( User * user )
 		return (true);
 	}
 	return (false);
+}
+
+void				Channel::send ( IRC * serv, User * sender, std::string msg )
+{
+	std::map<User *, bool>::iterator	it;
+	
+	it = this->_joined_user.begin();
+	while (it != this->_joined_user.end())
+	{
+		if (it->first != sender)
+		{
+			debug("Send to : %s", it->first->_nick_name.c_str());
+			serv->_tcp.add_to_buffer(std::make_pair(it->first->_fd, msg));
+		}
+		it++;
+	}
+}
+
+void				Channel::send_all ( IRC * serv, std::string msg )
+{
+	std::map<User *, bool>::iterator	it;
+	
+	it = this->_joined_user.begin();
+	while (it != this->_joined_user.end())
+	{
+		debug("Send to : %s", it->first->_nick_name.c_str());
+		serv->_tcp.add_to_buffer(std::make_pair(it->first->_fd, msg));
+		it++;
+	}
+}
+
+const std::map<User *, bool> &	Channel::getUsers ( void ) const
+{
+	return (this->_joined_user);	
 }

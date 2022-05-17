@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 15:48:14 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:38:49 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 		case 421:
 			answer.append(ERR_UNKNOWNCOMMAND(args));
 			break;
+		case 353:
+			answer.append(RPL_NAMREPLY(args));
+			break;
+		case 366:
+			answer.append(RPL_ENDOFNAMES(args));
+			break;
 		default:
 			;
 	}
@@ -87,4 +93,9 @@ std::string	user_answer(const std::string & nick, const std::string & username, 
 	answer.append(" ");
 
 	return (answer);
+}
+
+std::string	user_answer(const User * user)
+{
+	return (user_answer(user->_nick_name, user->_user_name, user->_hostname));
 }

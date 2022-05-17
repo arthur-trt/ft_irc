@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:42:18 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/16 22:38:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 	(" :Unauthorized command (already registered)\r\n")										// 462
 # define ERR_UNKNOWNCOMMAND(command)	\
 	(" " + command + " :Unknown command\r\n")												// 421
-
-
+# define RPL_NAMREPLY(channel)			\
+	(" = " + channel + ":")																	// 353
+# define RPL_ENDOFNAMES(channel)		\
+	(" " + channel + " :End of NAMES list\r\n")												// 366
 #endif

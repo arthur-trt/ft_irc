@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:15:22 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:17:20 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <string>
 
 # define SPECIALS "[]\\`_^{|}"
+# define CHAN_FIRST "#+&!"
 
 
 class User;
@@ -55,7 +56,7 @@ class IRC
 		User*						get_user ( int fd );
 		std::pair<bool, User*>		get_user ( std::string const & nick_name ) const;
 
-		void						create_channel ( std::string & name, User * chan_operator );
+		Channel*					create_channel ( std::string & name, User * chan_operator );
 		void						remove_channel ( std::string & name );
 		std::pair<bool, Channel*>	get_channel ( std::string & name ) const;
 
