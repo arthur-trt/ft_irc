@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/19 21:40:20 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:21:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void		TCPServer::pending_activity ( void )
 	FD_SET(_main_socket, &_listen_socket);
 	max_sd = _main_socket;
 
-	// std::cout << "\t\tSTART FOR" << std::endl;
 	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 	{
 		if (_clients_socket[i] > 0)
@@ -80,14 +79,12 @@ void		TCPServer::pending_activity ( void )
 			max_sd = _clients_socket[i];
 	}
 
-	// std::cout << "\t\tSELECT WAIT" << std::endl;
 	if ((select( max_sd + 1, &_listen_socket, NULL, NULL, NULL) < 0
 		&& (errno != EINTR)))
 	{
 		debug("select");
 		std::cerr << std::strerror(errno) << std::endl;
 	}
-	// std::cout << "\t\tSELECT END" << std::endl;
 }
 
 /**
@@ -117,10 +114,6 @@ std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 					<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
 					<< "\tport : " << ntohs(_address.sin_port) << std::endl
 					<<	"\thostname : " << _host_name << std::endl;
-		//if (send(new_socket, MOTD, std::strlen(MOTD), 0) != std::strlen(MOTD))
-		//{
-		//	std::cerr << "Error when sending MOTD" << std::endl;
-		//}
 		for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 		{
 			if (_clients_socket[i] == 0)
