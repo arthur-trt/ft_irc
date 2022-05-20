@@ -21,6 +21,8 @@ SOURCES		+=                            		\
 		srcs/commands/cmd_user.cpp           	\
 		srcs/commands/cmd_not_found.cpp      	\
 		srcs/commands/cmd_parse.cpp          	\
+		srcs/commands/cmd_ping.cpp           	\
+		srcs/commands/cmd_topic.cpp          	\
 		srcs/commands/cmd_nick.cpp           	\
 		srcs/commands/cmd_pass.cpp           	\
 		srcs/commands/cmd_names.cpp          	\

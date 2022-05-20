@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/12 15:02:17 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:56:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "User.Class.hpp"
 
 # include <netdb.h>
+# include <netinet/tcp.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <arpa/inet.h>
 # include <sys/types.h>
@@ -40,8 +42,6 @@ class TCPServer
 		std::multimap<int, std::string>	_buffer_out;
 
 	public:
-		TCPServer( void );
-
 		TCPServer ( int port = PORT );
 
 		void						pending_activity ( void );

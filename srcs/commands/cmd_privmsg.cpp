@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/16 16:35:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:38:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 	message.append(user_answer(user));
 	message.append("PRIVMSG ");
 	message.append(target);
-	message.append(" ");
+	message.append(" :");
 	message.append(split[1]);
+	message.append("\r\n");
 	if (target.find_first_of(CHAN_FIRST, 0) == std::string::npos)
 	{
 		debug("Send message to user");

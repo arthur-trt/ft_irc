@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:44:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:40:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	loop (IRC *server)
 
 	while (true)
 	{
+		// std::cout  << std::endl << std::endl << "PENDING" << std::endl;
 		server->_tcp.pending_activity();
+		// std::cout << "INCOMING" << std::endl;
 		in_connection = server->_tcp.incoming_connection();
 		if (in_connection.first != 0)
 		{
@@ -34,6 +36,7 @@ void	loop (IRC *server)
 				server->get_user(in_connection.first)->_pass_send = true;
 			}
 		}
+		// std::cout << "RECEIVE" << std::endl;
 		buffer = server->_tcp.receive_data();
 		if (buffer.first != 0)
 		{
@@ -46,6 +49,7 @@ void	loop (IRC *server)
 				cmd_parse(buffer.second, server, server->get_user(buffer.first));
 			}
 		}
+		// std::cout << "SENDING" << std::endl;
 		server->_tcp.send_buffer();
 	}
 }

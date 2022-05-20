@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 14:49:25 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 11:41:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/17 12:33:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,55 @@ void	trim ( std::string &s )
 	rtrim(s);
 }
 
-// trim from start (copying)
+/**
+ * @brief Remove space from start
+ *
+ * @param s string to trim
+ */
 std::string	ltrim_copy ( std::string s )
 {
 	ltrim(s);
 	return s;
 }
 
-// trim from end (copying)
+/**
+ * @brief Remove space from end of the string
+ *
+ * @param s string to rtrim
+ */
 std::string	rtrim_copy ( std::string s )
 {
 	rtrim(s);
 	return s;
 }
 
-// trim from both ends (copying)
+/**
+ * @brief Remove space at the beggining and the end of a string
+ *
+ * @param s String to trim
+ */
 std::string	trim_copy ( std::string s )
 {
 	trim(s);
 	return s;
 }
 
+/**
+ * @brief Upper a char
+ * 
+ * @param ch Char to upper
+ * @return char char upperisé
+ */
 char		my_toupper ( char ch )
 {
     return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
 }
 
+/**
+ * @brief Upper a string
+ * 
+ * @param s String to upper
+ */
 void			str_upper ( std::string & s )
 {
 	for (size_t i = 0; i < s.length(); i++)
@@ -84,6 +107,13 @@ void			str_upper ( std::string & s )
 
 }
 
+/**
+ * @brief Split a string 
+ * 
+ * @param s String to split
+ * @param splitter Split keyword
+ * @return Each object of vector is a split 
+ */
 std::vector<std::string>		ft_split(std::string s, std::string splitter)
 {
 	std::vector<std::string>	now;
@@ -118,6 +148,12 @@ std::vector<std::string>		ft_split(std::string s, std::string splitter)
 	return (now);
 }
 
+/**
+ * @brief Convert a int to string
+ * 
+ * @param value Number to convert to string
+ * @return Strin with int value
+ */
 std::string					ft_to_string(int value)
 {
 	std::string output;

@@ -6,16 +6,13 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/11 19:14:08 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:40:20 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "TCPServer.Class.hpp"
 # include "utils.hpp"
 
-TCPServer::TCPServer( void )
-{
-}
 
 /**
  * @brief Construct a new TCPServer::TCPServer object
@@ -37,7 +34,7 @@ TCPServer::TCPServer ( int port )
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
 	}
-	if (setsockopt(_main_socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) < 0)
+	if (setsockopt(_main_socket, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof(optval)) < 0)
 	{
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
@@ -74,6 +71,7 @@ void		TCPServer::pending_activity ( void )
 	FD_SET(_main_socket, &_listen_socket);
 	max_sd = _main_socket;
 
+	// std::cout << "\t\tSTART FOR" << std::endl;
 	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 	{
 		if (_clients_socket[i] > 0)
@@ -82,12 +80,14 @@ void		TCPServer::pending_activity ( void )
 			max_sd = _clients_socket[i];
 	}
 
+	// std::cout << "\t\tSELECT WAIT" << std::endl;
 	if ((select( max_sd + 1, &_listen_socket, NULL, NULL, NULL) < 0
 		&& (errno != EINTR)))
 	{
 		debug("select");
 		std::cerr << std::strerror(errno) << std::endl;
 	}
+	// std::cout << "\t\tSELECT END" << std::endl;
 }
 
 /**
@@ -110,6 +110,7 @@ std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 			std::cerr << std::strerror(errno) << std::endl;
 			exit(EXIT_FAILURE);
 		}
+		fcntl(new_socket, F_SETFL, O_NONBLOCK);
 		getnameinfo((struct sockaddr *)&_address, addr_len, _host_name, 1024, NULL, 0, 0);
 		std::cout	<< "New connection." << std::endl
 					<< "\tsocket fd : " << new_socket << std::endl
@@ -151,7 +152,7 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 
 		if (FD_ISSET(sd, &_listen_socket))
 		{
-			if ((valread = read(sd, buffer, 1024)) == 0)
+			if ((valread = read(sd, buffer, 1024)) <= 0)
 			{
 				getpeername(sd, (struct sockaddr *)&_address, &addr_len);
 				std::cout	<< "Host disconnected" << std::endl
@@ -172,11 +173,19 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 	return (std::make_pair(0, std::string("")));
 }
 
+/**
+ * @brief Add message to the buffer before sending
+ * 
+ * @param buff std::pair->first is the fd where to send message. std::pair->second is the message to send
+ */
 void					TCPServer::add_to_buffer ( std::pair<int, std::string> buff )
 {
 	this->_buffer_out.insert(buff);
 }
 
+/**
+ * @brief Send and flush everything in the buffer 
+ */
 void					TCPServer::send_buffer ( void )
 {
 	std::map<int, std::string>::iterator	it = _buffer_out.begin();
@@ -190,6 +199,11 @@ void					TCPServer::send_buffer ( void )
 	_buffer_out.clear();
 }
 
+/**
+ * @brief Get the server hostname
+ * 
+ * @return server hostname
+ */
 const std::string &		TCPServer::getHostname ( void ) const
 {
 	return (this->_hostname);

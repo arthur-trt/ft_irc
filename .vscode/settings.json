@@ -50,6 +50,7 @@
 		"typeinfo": "cpp",
 		"ctime": "cpp",
 		"map": "cpp",
-		"numbers": "cpp"
+		"numbers": "cpp",
+		"list": "cpp"
 	}
 }

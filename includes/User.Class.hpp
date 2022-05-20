@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:11:46 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:53:17 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 # define USER_CLASS_HPP
 
 # include <string>
+# include <list>
 
+class Channel;
 class User
 {
 	public:
-		std::string		_user_name;
-		std::string		_nick_name;
-		std::string		_real_name;
-		std::string		_hostname;
+		std::string				_user_name;
+		std::string				_nick_name;
+		std::string				_real_name;
+		std::string				_hostname;
+
+		std::list<Channel *>	_channel_joined;
 		/**
 		 * Fd of the socket in use for the connection
 		 */

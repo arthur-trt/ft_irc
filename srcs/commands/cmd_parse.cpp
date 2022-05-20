@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 15:55:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/17 10:23:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 int		cmd_parse ( std::string entry, IRC *serv, User *user )
 {
 	std::vector<std::string>	commands;
+	IRC::command				cmd_ptr;
 
 	commands = ft_split(entry, "\r\n");
 	while (commands.size())
@@ -43,7 +44,11 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 			args = "";
 		}
 		str_upper(cmd);
-		serv->get_cmd(cmd)(serv, user, args);
+		cmd_ptr = serv->get_cmd(cmd);
+		if (cmd_ptr != &cmd_not_found)
+			cmd_ptr(serv, user, args);
+		else
+			cmd_ptr(serv, user, cmd);
 		commands.erase(commands.begin());
 	}
 	return (0);

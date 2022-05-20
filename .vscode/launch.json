@@ -6,9 +6,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/pIRCarre",
-		"args": [
-			"6667"
-		],
+		"args": [],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
 		"environment": [],

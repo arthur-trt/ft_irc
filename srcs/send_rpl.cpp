@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/16 22:38:49 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:54:40 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,21 @@
 #include "utils.hpp"
 #include "functions.hpp"
 
-
+/**
+ * @brief Build IRC RPL according to RFC2812.
+ * 
+ * @param rpl_num RPL number as described in RFC2812 (https://datatracker.ietf.org/doc/html/rfc2812#section-5)
+ * You can found all the define in `includes/RPL.hpp`
+ * @param serv IRC serv instance
+ * @param user User who provocate this message
+ * @param args Args (depending of the RPL)
+ * @return RPL formatted ready to be sent
+ */
 std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 {
 	std::string		answer = ":";
 	std::string		code;
 
-	(void)args;
 	answer.append(serv->_tcp.getHostname());
 	answer.append(" ");
 	if (rpl_num < 10)
@@ -74,27 +82,53 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 		case 366:
 			answer.append(RPL_ENDOFNAMES(args));
 			break;
+		case 331:
+			answer.append(RPL_NOTOPIC(args));
+			break;
+		case 332:
+			answer.append(RPL_TOPIC(args));
+			break;
+		case 442:
+			answer.append(ERR_NOTONCHANNEL(args));
+			break;
+		case 482:
+			answer.append(ERR_CHANOPRIVSNEEDED(args));
+			break;
 		default:
 			;
 	}
 	return (answer);
 }
 
+/**
+ * @brief Build a answer from and to user
+ * 
+ * @param nick Nickname of the user
+ * @param username Username of the user
+ * @param host Hostname of the user
+ * @return Answer formatted 
+ */
 std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host)
 {
 	std::string		answer;
 
 	answer.append(":");
 	answer.append(nick);
-	answer.append("@");
-	answer.append(username);
 	answer.append("!");
+	answer.append(username);
+	answer.append("@");
 	answer.append(host);
 	answer.append(" ");
 
 	return (answer);
 }
 
+/**
+ * @brief Build a answer from and to user
+ * 
+ * @param user User pointer
+ * @return Answer formatted 
+ */
 std::string	user_answer(const User * user)
 {
 	return (user_answer(user->_nick_name, user->_user_name, user->_hostname));

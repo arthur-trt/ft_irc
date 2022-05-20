@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/16 22:24:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:06:15 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,13 @@ bool				Channel::kickUser ( User * user )
 	return (false);
 }
 
+/**
+ * @brief Send a message to all users in a channel except the sender
+ * 
+ * @param serv IRC server instance
+ * @param sender Pointer to the sender
+ * @param msg Message to send
+ */
 void				Channel::send ( IRC * serv, User * sender, std::string msg )
 {
 	std::map<User *, bool>::iterator	it;
@@ -130,6 +137,12 @@ void				Channel::send ( IRC * serv, User * sender, std::string msg )
 	}
 }
 
+/**
+ * @brief Send a message to all users connected to a channel
+ * 
+ * @param serv IRC serv 
+ * @param msg Message to send
+ */
 void				Channel::send_all ( IRC * serv, std::string msg )
 {
 	std::map<User *, bool>::iterator	it;
@@ -146,4 +159,29 @@ void				Channel::send_all ( IRC * serv, std::string msg )
 const std::map<User *, bool> &	Channel::getUsers ( void ) const
 {
 	return (this->_joined_user);	
+}
+
+const std::string &				Channel::getTopic ( void ) const
+{
+	return (this->_topic);
+}
+
+void							Channel::setTopic ( std::string topic )
+{
+	this->_topic = topic;	
+}
+
+bool							Channel::userIsIn ( User * const & user ) const
+{
+	if (this->_joined_user.count(user) == 1)
+		return (true);
+	return (false);
+}
+
+const std::pair<User *, bool>  Channel::getUser ( User * const & user ) const
+{
+	std::map<User *, bool>::const_iterator	it;
+
+	it = this->_joined_user.find(user);
+	return (*it);
 }

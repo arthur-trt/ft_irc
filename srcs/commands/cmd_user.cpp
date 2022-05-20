@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:55:04 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:22:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:44:00 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	cmd_user ( IRC *serv, User *user, std::string & args )
 		user->_user_name = trim_copy(parsed[0]);
 		if (user->_nick_name != "" && user->_connected == false)
 		{
+			user->_connected = true;
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(1, serv, user)));
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(2, serv, user)));
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(3, serv, user)));

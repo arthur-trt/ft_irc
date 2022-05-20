@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/16 22:43:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:49:13 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 	notice.append(user_answer(user));
 	notice.append("JOIN ");
 	notice.append(chan);
+	notice.append("\r\n");
 	res = serv->get_channel(chan);
 	if (res.first)
 	{
 		res.second->addUser(user);
 		res.second->send_all(serv, notice);
-		cmd_names(serv, user, chan);
+		user->_channel_joined.push_back(res.second);
 	}
 	else
 	{
 		tmp = serv->create_channel(chan, user);
 		tmp->send_all(serv, notice);
-		cmd_names(serv, user, chan);
-
+		user->_channel_joined.push_back(tmp);
 	}
-	
+	cmd_names(serv, user, chan);
 }

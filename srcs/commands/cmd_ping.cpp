@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_ignore.cpp                                     :+:      :+:    :+:   */
+/*   cmd_ping.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 15:42:51 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/17 11:28:20 by atrouill         ###   ########.fr       */
+/*   Created: 2022/05/20 09:51:42 by atrouill          #+#    #+#             */
+/*   Updated: 2022/05/20 09:54:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "IRC.Class.hpp"
-# include "functions.hpp"
-# include "commands.hpp"
+#include "RPL.hpp"
+#include "utils.hpp"
+#include "IRC.Class.hpp"
+#include "commands.hpp"
+#include "functions.hpp"
 
-/**
- * @brief This command when a valid command is send by the client, but is not 
- * implemented. So we basicaly do nothing
- * 
- * @param serv 
- * @param user 
- * @param args 
- */
-void	cmd_ignore ( IRC *serv, User *user, std::string & args )
+void	cmd_ping ( IRC *serv, User *user, std::string & args )
 {
-	(void)serv;
-	(void)user;
-	(void)args;
+	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, "PONG " + args));
 }

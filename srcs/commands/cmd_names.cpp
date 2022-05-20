@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/16 22:44:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/17 10:33:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@
 void	cmd_names ( IRC *serv, User *user, std::string & args )
 {
 	std::string								msg;
-	std::pair<bool, Channel *>				res;
-	std::vector<std::string>				chan;
-	std::map<User *, bool>::iterator		it;
+	std::map<User *, bool>::iterator		user_it;
 	std::map<User *, bool>					connected_users;
 	
 	if (args != "")
 	{
+		std::vector<std::string>				chan;
+		std::pair<bool, Channel *>				res;
+		
 		chan = ft_split(args, ",");
 		for (size_t i = 0; i < chan.size(); i++)
 		{
@@ -35,24 +36,50 @@ void	cmd_names ( IRC *serv, User *user, std::string & args )
 			if (res.first)
 			{
 				connected_users = res.second->getUsers();
-				it = connected_users.begin();
+				user_it = connected_users.begin();
 				msg = send_rpl(353, serv, user, chan[i]);
-				msg.append(chan[i]);
-				msg.append(" :");
-				while (it != connected_users.end())
+				while (user_it != connected_users.end())
 				{
-					if (it->second)
+					if (user_it->second)
 						msg.append("@");
 					else
 						msg.append(" ");
-					msg.append(it->first->_nick_name);
+					msg.append(user_it->first->_nick_name);
 					msg.append(" ");
-					it++;
+					user_it++;
 				}
 				msg.append("\r\n");
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, msg));
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(366, serv, user, chan[i])));
 			}			
 		}
+	}
+	else
+	{
+		std::map<std::string, Channel*>				chan;
+		std::map<std::string, Channel*>::iterator	chan_it;
+
+		chan = serv->get_channel();
+		chan_it = chan.begin();
+		while (chan_it != chan.end())
+		{
+			connected_users = chan_it->second->getUsers();
+			user_it = connected_users.begin();
+			msg = send_rpl(353, serv, user, chan_it->first);
+			while (user_it != connected_users.end())
+			{
+				if (user_it->second)
+					msg.append("@");
+				else
+					msg.append(" ");
+				msg.append(user_it->first->_nick_name);
+				msg.append(" ");
+				user_it++;
+			}
+			msg.append("\r\n");
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, msg));
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(366, serv, user, chan_it->first)));
+			chan_it++;
+		}	
 	}
 }

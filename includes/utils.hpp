@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/13 17:30:04 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:04:57 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,14 @@ const class nullptr_t
 				void operator&() const;
 
 } u_nullptr = {};
+
+template< class T >
+T* addressof(T& arg) 
+{
+    return reinterpret_cast<T*>(
+               &const_cast<char&>(
+                  reinterpret_cast<const volatile char&>(arg)));
+}
+
 
 #endif
