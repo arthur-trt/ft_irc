@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:14:16 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/18 15:47:16 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:40:42 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	cmd_nick ( IRC *serv, User *user, std::string & args )
 		if (old_nick != "")
 		{
 			answer.append(user_answer(old_nick, user->_user_name, user->_hostname));
-			answer.append(old_nick);
 			answer.append(" NICK ");
 			answer.append(args);
 			answer.append("\r\n");
