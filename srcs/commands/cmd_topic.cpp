@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 10:56:47 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 12:12:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:45:16 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	cmd_topic (IRC *serv, User *user, std::string & args)
 			}
 			chan.second->setTopic(topic);
 			answer = user_answer(user);
-			answer.append(" TOPIC ");
+			answer.append("TOPIC ");
 			answer.append(channel);
 			answer.append(" :");
 			answer.append(topic);
