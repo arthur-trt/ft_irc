@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 14:55:55 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:09:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void	loop (IRC *server)
 	std::map<int, std::string>				cmd_in;
 	std::map<int, std::string>::iterator	it_cmd;
 	std::map<int, std::string>::iterator	old_it;
+	bool									looping = true;
 
-	while (true)
+	while (looping)
 	{
 		server->_tcp.pending_activity();
 		in_connection = server->_tcp.incoming_connection();
@@ -42,6 +43,10 @@ void	loop (IRC *server)
 			if (buffer.second == "Disconnected\n")
 			{
 				server->remove_user(buffer.first);
+			}
+			else if (buffer.second == "STOP_SERVER\n")
+			{
+				looping = false;
 			}
 			else
 			{

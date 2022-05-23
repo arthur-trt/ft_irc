@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/17 10:33:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:59:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	cmd_names ( IRC *serv, User *user, std::string & args )
 	std::string								msg;
 	std::map<User *, bool>::iterator		user_it;
 	std::map<User *, bool>					connected_users;
-	
+
 	if (args != "")
 	{
 		std::vector<std::string>				chan;
 		std::pair<bool, Channel *>				res;
-		
+
 		chan = ft_split(args, ",");
 		for (size_t i = 0; i < chan.size(); i++)
 		{
@@ -51,7 +51,7 @@ void	cmd_names ( IRC *serv, User *user, std::string & args )
 				msg.append("\r\n");
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, msg));
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(366, serv, user, chan[i])));
-			}			
+			}
 		}
 	}
 	else
@@ -80,6 +80,6 @@ void	cmd_names ( IRC *serv, User *user, std::string & args )
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, msg));
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(366, serv, user, chan_it->first)));
 			chan_it++;
-		}	
+		}
 	}
 }

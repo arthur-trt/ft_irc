@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/17 10:23:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:59:24 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 	std::vector<std::string>	commands;
 	IRC::command				cmd_ptr;
 
-	commands = ft_split(entry, "\r\n");
+	commands = ft_split(entry, "\n");
 	while (commands.size())
 	{
 		debug("Receive %s", commands.front().c_str());

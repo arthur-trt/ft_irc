@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 12:05:43 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:14:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class Channel
 
 	public:
 		Channel ( TCPServer & server, const std::string & name, User * chan_operator );
+		~Channel();
 		const std::string &				getName ( void ) const;
 		const std::map<User *, bool> &	getUsers ( void ) const;
 		const std::pair<User *, bool>   getUser ( User * const & user ) const;

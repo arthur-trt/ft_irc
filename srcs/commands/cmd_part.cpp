@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:27:52 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 14:24:43 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:53:10 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ void	cmd_part ( IRC *serv, User *user, std::string & args )
 
 					answer.append("PART ");
 					answer.append(chan_name);
-					answer.append(" :");
-					answer.append(msg_part);
+					if (msg_part != "")
+					{
+						answer.append(" :");
+						answer.append(msg_part);
+					}
 					answer.append("\r\n");
 
 					chan.second->send_all(serv, answer);

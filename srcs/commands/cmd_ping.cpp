@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 09:51:42 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 09:54:51 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:56:23 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@
 
 void	cmd_ping ( IRC *serv, User *user, std::string & args )
 {
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, "PONG " + args));
+	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, "PONG " + args + "\r\n"));
 }

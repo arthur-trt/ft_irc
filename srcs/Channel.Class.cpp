@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 12:04:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:24:08 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ Channel::Channel ( TCPServer & server, const std::string & name, User * chan_ope
 				<< "\tOperator : " << (chan_operator)->_user_name	<< std::endl;
 	this->_joined_user.insert(std::make_pair(chan_operator, true));
 	this->_members_count++;
+}
+
+Channel::~Channel ( void )
+{
+	std::cout	<< "Channel " << this->_name <<  " deleted !" << std::endl;
 }
 
 /**
@@ -101,8 +106,12 @@ bool				Channel::addUser ( User * user )
  */
 bool				Channel::kickUser ( User * user )
 {
-	if (this->_joined_user.count(user) != 0)
+	std::map<User *, bool>::iterator	it;
+
+	it = this->_joined_user.find(user);
+	if (it != this->_joined_user.end())
 	{
+		it->first->_channel_joined.remove(this);
 		this->_joined_user.erase(user);
 		this->_members_count--;
 		return (true);

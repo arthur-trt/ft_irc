@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 14:29:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:19:22 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ Channel*	IRC::create_channel ( std::string & name, User * chan_operator )
  */
 void	IRC::remove_channel ( const std::string & name )
 {
-	//delete this->_channels[name];
+	delete this->_channels[name];
 	this->_channels.erase(name);
 }
 
