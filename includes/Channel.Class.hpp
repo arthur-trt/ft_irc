@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 12:06:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:05:43 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ class Channel
 		const std::string &				getName ( void ) const;
 		const std::map<User *, bool> &	getUsers ( void ) const;
 		const std::pair<User *, bool>   getUser ( User * const & user ) const;
-		
+		size_t							getMembersCount ( void ) const;
+
 		bool							addUser ( User * user );
 		bool							kickUser ( User * user );
 		void							send ( IRC * serv, User * sender, std::string msg );

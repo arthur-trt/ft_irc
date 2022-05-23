@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 10:56:47 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 17:45:16 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 13:43:40 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	cmd_topic (IRC *serv, User *user, std::string & args)
 		chan = serv->get_channel(channel);
 		if (chan.first == false)
 			return ;
+
 		if (chan.second->userIsIn(user) == false)
 		{
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(442, serv, user, channel)));
@@ -65,11 +66,12 @@ void	cmd_topic (IRC *serv, User *user, std::string & args)
 		{
 			// SET TOPIC
 			topic = trim_copy(split[1]);
-			if (chan.second->getUser(user).second == false) // Is not operator
-			{
-				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, channel)));
-				return ;
-			}
+			// Test this only if channel is in mode "+t"
+			//if (chan.second->getUser(user).second == false) // Is not operator
+			//{
+			//	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, channel)));
+			//	return ;
+			//}
 			chan.second->setTopic(topic);
 			answer = user_answer(user);
 			answer.append("TOPIC ");

@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/18 15:46:57 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 12:04:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ class IRC
 		std::pair<bool, User*>		get_user ( std::string const & nick_name ) const;
 
 		Channel*					create_channel ( std::string & name, User * chan_operator );
-		void						remove_channel ( std::string & name );
+		void						remove_channel ( const std::string & name );
 		const std::pair<bool, Channel*>	get_channel ( std::string & name ) const;
 		const std::map<std::string, Channel*> & get_channel ( void ) const;
 

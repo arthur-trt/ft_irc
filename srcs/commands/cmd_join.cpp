@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/19 21:49:13 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:11:25 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include "functions.hpp"
 
 /**
- * @todo: 
+ * @todo:
  * -> Reply from the server
  * -> Error code
  * -> Channel mode
  * -> VIDA LOCA
- * 
+ *
  */
 
 // static bool	is_valid_channame ( std::string const & channel_name )
@@ -46,7 +46,7 @@
 
 // static bool	valid_args ( IRC *serv, User *user, std::string & args )
 // {
-	
+
 // }
 
 void	cmd_join ( IRC *serv, User *user, std::string & args )
@@ -66,12 +66,16 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		res.second->addUser(user);
 		res.second->send_all(serv, notice);
 		user->_channel_joined.push_back(res.second);
+		if (res.second->getTopic() != "")
+			cmd_topic(serv, user, chan);
 	}
 	else
 	{
 		tmp = serv->create_channel(chan, user);
 		tmp->send_all(serv, notice);
 		user->_channel_joined.push_back(tmp);
+		if (tmp->getTopic() != "")
+			cmd_topic(serv, user, chan);
 	}
 	cmd_names(serv, user, chan);
 }

@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/19 21:40:29 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:55:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 void	loop (IRC *server)
 {
-	std::pair<int, std::string>		in_connection;
-	std::pair<int, std::string>		buffer;
-	std::map<int, User>::iterator	it;
+	std::pair<int, std::string>				in_connection;
+	std::pair<int, std::string>				buffer;
+	std::map<int, std::string>				cmd_in;
+	std::map<int, std::string>::iterator	it_cmd;
+	std::map<int, std::string>::iterator	old_it;
 
 	while (true)
 	{
-		// std::cout  << std::endl << std::endl << "PENDING" << std::endl;
 		server->_tcp.pending_activity();
-		// std::cout << "INCOMING" << std::endl;
 		in_connection = server->_tcp.incoming_connection();
 		if (in_connection.first != 0)
 		{
@@ -36,7 +36,6 @@ void	loop (IRC *server)
 				server->get_user(in_connection.first)->_pass_send = true;
 			}
 		}
-		// std::cout << "RECEIVE" << std::endl;
 		buffer = server->_tcp.receive_data();
 		if (buffer.first != 0)
 		{
@@ -46,10 +45,24 @@ void	loop (IRC *server)
 			}
 			else
 			{
-				cmd_parse(buffer.second, server, server->get_user(buffer.first));
+				cmd_in[buffer.first].append(buffer.second);
 			}
 		}
-		// std::cout << "SENDING" << std::endl;
+		it_cmd = cmd_in.begin();
+		while (it_cmd != cmd_in.end())
+		{
+			if (it_cmd->second.find_first_of("\n") != std::string::npos)
+			{
+				cmd_parse(it_cmd->second, server, server->get_user(it_cmd->first));
+				old_it = it_cmd;
+				it_cmd++;
+				cmd_in.erase(old_it);
+			}
+			else
+			{
+				it_cmd++;
+			}
+		}
 		server->_tcp.send_buffer();
 	}
 }

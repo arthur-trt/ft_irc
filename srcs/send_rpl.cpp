@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 11:54:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:36:26 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /**
  * @brief Build IRC RPL according to RFC2812.
- * 
+ *
  * @param rpl_num RPL number as described in RFC2812 (https://datatracker.ietf.org/doc/html/rfc2812#section-5)
  * You can found all the define in `includes/RPL.hpp`
  * @param serv IRC serv instance
@@ -94,6 +94,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 		case 482:
 			answer.append(ERR_CHANOPRIVSNEEDED(args));
 			break;
+		case 403:
+			answer.append(ERR_NOSUCHCHANNEL(args));
+			break;
 		default:
 			;
 	}
@@ -102,11 +105,11 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 
 /**
  * @brief Build a answer from and to user
- * 
+ *
  * @param nick Nickname of the user
  * @param username Username of the user
  * @param host Hostname of the user
- * @return Answer formatted 
+ * @return Answer formatted
  */
 std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host)
 {
@@ -125,9 +128,9 @@ std::string	user_answer(const std::string & nick, const std::string & username, 
 
 /**
  * @brief Build a answer from and to user
- * 
+ *
  * @param user User pointer
- * @return Answer formatted 
+ * @return Answer formatted
  */
 std::string	user_answer(const User * user)
 {

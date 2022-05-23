@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 11:54:16 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 11:35:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@
 	(" " + channel + " :You're not on that channel\r\n")									// 442
 # define ERR_CHANOPRIVSNEEDED(channel)	\
 	(" " + channel + " :You're not channel operator\r\n")									// 482
+# define ERR_NOSUCHCHANNEL(channel)		\
+	(" " + channel + " :No such channel\r\n")												// 403
 
 #endif

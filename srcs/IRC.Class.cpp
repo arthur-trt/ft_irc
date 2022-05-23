@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 11:40:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:29:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ IRC::~IRC ( void )
 
 /**
  * @brief Get the password of a IRC serv
- * 
+ *
  * @return The IRC password
  */
 const std::string &		IRC::get_password ( void ) const
@@ -60,7 +60,7 @@ const std::string &		IRC::get_password ( void ) const
 
 /**
  * @brief Function only called by the constructor for build the command map
- * 
+ *
  */
 void	IRC::build_commands_map ( void )
 {
@@ -73,13 +73,15 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("NAMES", &cmd_names));
 	this->_available_command.insert(std::make_pair("PING", &cmd_ping));
 	this->_available_command.insert(std::make_pair("TOPIC", &cmd_topic));
+	this->_available_command.insert(std::make_pair("PART", &cmd_part));
+	this->_available_command.insert(std::make_pair("MODE", &cmd_ignore));
 }
 
 /**
  * @brief Get the CPP function according to IRC Commands
- * 
+ *
  * @param command typedef of function pointer used by command
- * @return a pointer function 
+ * @return a pointer function
  */
 IRC::command	IRC::get_cmd ( const std::string & command ) const
 {
@@ -176,9 +178,9 @@ Channel*	IRC::create_channel ( std::string & name, User * chan_operator )
  *
  * @param name channel name
  */
-void	IRC::remove_channel ( std::string & name )
+void	IRC::remove_channel ( const std::string & name )
 {
-	delete this->_channels[name];
+	//delete this->_channels[name];
 	this->_channels.erase(name);
 }
 
@@ -202,7 +204,7 @@ const std::pair<bool, Channel*> IRC::get_channel ( std::string & name ) const
 
 /**
  * @brief Get all the channel on the server
- * 
+ *
  * @return Map of channels. First is name of the channel, second pointer to the channel
  */
 const std::map<std::string, Channel*> & IRC::get_channel ( void ) const
