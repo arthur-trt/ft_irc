@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 17:21:14 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:30:38 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 
 /**
  * @brief Add message to the buffer before sending
- * 
+ *
  * @param buff std::pair->first is the fd where to send message. std::pair->second is the message to send
  */
 void					TCPServer::add_to_buffer ( std::pair<int, std::string> buff )
@@ -177,7 +177,7 @@ void					TCPServer::add_to_buffer ( std::pair<int, std::string> buff )
 }
 
 /**
- * @brief Send and flush everything in the buffer 
+ * @brief Send and flush everything in the buffer
  */
 void					TCPServer::send_buffer ( void )
 {
@@ -194,10 +194,28 @@ void					TCPServer::send_buffer ( void )
 
 /**
  * @brief Get the server hostname
- * 
+ *
  * @return server hostname
  */
 const std::string &		TCPServer::getHostname ( void ) const
 {
 	return (this->_hostname);
+}
+
+/**
+ * @brief Close a connection.
+ *
+ * @param fd fd to close
+ */
+void					TCPServer::close_connection ( const int & fd )
+{
+	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
+	{
+		if (this->_clients_socket[i] == fd)
+		{
+			close(fd);
+			this->_clients_socket[i] = 0;
+			break;
+		}
+	}
 }

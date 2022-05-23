@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/19 21:53:36 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:36:03 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ User&	User::operator= ( const User & rhs )
 User::~User ( void )
 {
 	std::list<Channel *>::iterator	it;
-	
+
 	_fd = 0;
 	it = this->_channel_joined.begin();
 	while (it != this->_channel_joined.end())
 	{
-		(*it)->kickUser(this);
+		(*it)->removeUser(this);
 		it++;
 	}
-	
+
 	//debug("User destructor for %s", _user_name.c_str());
 }

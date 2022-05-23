@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 17:14:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:35:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ class Channel
 
 		bool							addUser ( User * user );
 		bool							kickUser ( User * user );
+		bool							removeUser ( User * user );
 		void							send ( IRC * serv, User * sender, std::string msg );
 		void							send_all ( IRC * serv, std::string msg );
 

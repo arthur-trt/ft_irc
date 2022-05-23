@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 17:09:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:32:37 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	loop (IRC *server)
 			{
 				server->remove_user(buffer.first);
 			}
-			else if (buffer.second == "STOP_SERVER\n")
+			else if (buffer.second == "STOP_SERVER\n" || buffer.second == "STOP_SERVER\r\n")
 			{
 				looping = false;
 			}

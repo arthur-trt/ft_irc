@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 12:01:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:04:13 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	cmd_names ( IRC *serv, User *user, std::string & args );
 void	cmd_ping ( IRC *serv, User *user, std::string & args );
 void	cmd_topic (IRC *serv, User *user, std::string & args);
 void	cmd_part ( IRC *serv, User *user, std::string & args );
+void	cmd_quit ( IRC *serv, User *user, std::string & args );
 
 #endif

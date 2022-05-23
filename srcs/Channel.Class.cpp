@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 17:24:08 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:35:58 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,27 @@ bool				Channel::kickUser ( User * user )
 	if (it != this->_joined_user.end())
 	{
 		it->first->_channel_joined.remove(this);
+		this->_joined_user.erase(user);
+		this->_members_count--;
+		return (true);
+	}
+	return (false);
+}
+
+/**
+ * @brief Same as kickUser, but don't change anything on the list of joined_user on the User instance
+ *
+ * @param user User to remove
+ * @return true	If the user have been actuallye remove
+ * @return false If the user was not in the channel
+ */
+bool				Channel::removeUser ( User * user )
+{
+	std::map<User *, bool>::iterator	it;
+
+	it = this->_joined_user.find(user);
+	if (it != this->_joined_user.end())
+	{
 		this->_joined_user.erase(user);
 		this->_members_count--;
 		return (true);

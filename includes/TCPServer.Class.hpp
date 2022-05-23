@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/18 17:56:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:07:05 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ class TCPServer
 		void						send_buffer ( void );
 
 		const std::string &			getHostname ( void ) const;
+
+		void						close_connection ( const int & fd );
 
 };
 
