@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 11:36:26 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:01:32 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @param args Args (depending of the RPL)
  * @return RPL formatted ready to be sent
  */
-std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
+std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::string args2)
 {
 	std::string		answer = ":";
 	std::string		code;
@@ -87,6 +87,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args)
 			break;
 		case 332:
 			answer.append(RPL_TOPIC(args));
+			break;
+		case 441:
+			answer.append(ERR_USERNOTINCHANNEL(args, args2));
 			break;
 		case 442:
 			answer.append(ERR_NOTONCHANNEL(args));

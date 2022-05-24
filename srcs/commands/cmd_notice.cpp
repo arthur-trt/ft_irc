@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:15:26 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/24 16:12:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:28:38 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	cmd_notice (IRC *serv, User *user, std::string & args)
 
 		receiver = serv->get_channel(target);
 		if (receiver.first)
-			receiver.second->send(serv, user, message);
+		{
+			if (receiver.second->userIsIn(user))
+				receiver.second->send(serv, user, message);
+		}
 	}
 }

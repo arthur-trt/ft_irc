@@ -25,6 +25,7 @@ SOURCES		+=                            		\
 		srcs/commands/cmd_parse.cpp          	\
 		srcs/commands/cmd_user.cpp           	\
 		srcs/commands/cmd_ignore.cpp         	\
+		srcs/commands/cmd_kick.cpp           	\
 		srcs/commands/cmd_names.cpp          	\
 		srcs/commands/cmd_privmsg.cpp        	\
 		srcs/commands/cmd_ping.cpp           	\

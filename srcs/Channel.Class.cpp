@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 18:35:58 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:07:58 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,20 @@ bool							Channel::userIsIn ( User * const & user ) const
 {
 	if (this->_joined_user.count(user) == 1)
 		return (true);
+	return (false);
+}
+
+bool							Channel::userIsIn ( const std::string & user ) const
+{
+	std::map<User *, bool>::const_iterator	it;
+
+	it = this->_joined_user.begin();
+	while (it != this->_joined_user.end())
+	{
+		if (it->first->_nick_name == user)
+			return (true);
+		it++;
+	}
 	return (false);
 }
 

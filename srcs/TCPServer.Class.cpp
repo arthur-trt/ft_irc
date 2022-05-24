@@ -6,13 +6,14 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 19:30:38 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:14:19 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "TCPServer.Class.hpp"
 # include "utils.hpp"
 
+extern sig_atomic_t	g_looping;
 
 /**
  * @brief Construct a new TCPServer::TCPServer object
@@ -34,7 +35,7 @@ TCPServer::TCPServer ( int port )
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
 	}
-	if (setsockopt(_main_socket, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof(optval)) < 0)
+	if (setsockopt(_main_socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) < 0)
 	{
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
@@ -98,7 +99,7 @@ std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 	char		_host_name[1024];
 	socklen_t	addr_len = sizeof(_address);
 
-	if (FD_ISSET(_main_socket, &_listen_socket))
+	if (g_looping && FD_ISSET(_main_socket, &_listen_socket))
 	{
 		new_socket = accept(_main_socket, (struct sockaddr *)&_address, &addr_len);
 		if (new_socket < 0)
@@ -202,6 +203,11 @@ const std::string &		TCPServer::getHostname ( void ) const
 	return (this->_hostname);
 }
 
+const int &				TCPServer::getMainSocket ( void ) const
+{
+	return (this->_main_socket);
+}
+
 /**
  * @brief Close a connection.
  *
@@ -218,4 +224,17 @@ void					TCPServer::close_connection ( const int & fd )
 			break;
 		}
 	}
+}
+
+void					TCPServer::close_server ( void )
+{
+	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
+	{
+		if (this->_clients_socket[i] != 0)
+		{
+			close(this->_clients_socket[i]);
+			this->_clients_socket[i] = 0;
+		}
+	}
+	close(_main_socket);
 }
