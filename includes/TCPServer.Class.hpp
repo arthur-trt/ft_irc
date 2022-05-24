@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 14:22:33 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:15:27 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <unistd.h>
 # include <cerrno>
 # include <map>
+# include <signal.h>
 
 class TCPServer
 {

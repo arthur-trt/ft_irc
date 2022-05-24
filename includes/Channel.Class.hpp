@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 18:35:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:06:28 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ class Channel
 		void							setTopic ( std::string topic );
 
 		bool							userIsIn ( User * const & user ) const;
+		bool							userIsIn ( const std::string & user ) const;
 
 };
 

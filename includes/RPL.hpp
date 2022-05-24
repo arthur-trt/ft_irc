@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 11:35:55 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:00:35 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 	(" " + channel + " :No topic is set\r\n")												// 331
 # define RPL_TOPIC(channel)				\
 	(" " + channel + " :")																	// 332
+# define ERR_USERNOTINCHANNEL(nick, channel)	\
+	(" " + nick + " " + channel + " :They aren't on that channel\r\n")						// 441
 # define ERR_NOTONCHANNEL(channel)		\
 	(" " + channel + " :You're not on that channel\r\n")									// 442
 # define ERR_CHANOPRIVSNEEDED(channel)	\

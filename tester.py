@@ -9,20 +9,20 @@ class IRC:
 
 	def	send(self, user, msg) -> None:
 		# print("PRIVMSG " + user + " " + msg + "\n")
-		self.irc.send(bytes("PRIVMSG " + user + " :" + msg + "\n", "UTF-8"))
+		self.irc.send(bytes("PRIVMSG " + user + " :" + msg + "\r\n", "UTF-8"))
 		# print("MSG SENDED")
 
 	def connect(self, server, port, user, channel) -> None:
 		print("Connecting to " + server)
 		self.irc.connect((server, port))
 		time.sleep(1)
-		self.irc.send(bytes("PASS " + user + "\n", "UTF-8"))
+		self.irc.send(bytes("PASS " + user + "\r\n", "UTF-8"))
 		time.sleep(1)
-		self.irc.send(bytes("NICK " + user + "\n", "UTF-8"))
+		self.irc.send(bytes("NICK " + user + "\r\n", "UTF-8"))
 		time.sleep(1)
-		self.irc.send(bytes("USER " + user + " " + user + " " + user + " :" + user + " ", "UTF-8"))
+		self.irc.send(bytes("USER " + user + " " + user + " " + user + " :" + user + "\r\n", "UTF-8"))
 		time.sleep(3)
-		self.irc.send(bytes("JOIN " + channel + "\n", "UTF-8"))
+		self.irc.send(bytes("JOIN " + channel + "\r\n", "UTF-8"))
 		time.sleep(2)
 
 	def get_response(self) -> str:
@@ -36,7 +36,7 @@ class IRC:
 
 bot = IRC()
 
-bot.connect("localhost", 6667, "arthur", "#test")
+bot.connect("localhost", 6667, "botine", "#test")
 while (True):
 	bot.send("#test", "Ceci est un test")
 	time.sleep(0.1)
