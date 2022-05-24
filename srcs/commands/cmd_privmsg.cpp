@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/18 15:38:14 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:57:33 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 {
-	std::vector<std::string>	split;	
+	std::vector<std::string>	split;
 	std::string					target, message;
 
 	split = ft_split(args, ":");
@@ -39,7 +39,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 
 		receiver = serv->get_user(target);
 		if (receiver.first)
-			serv->_tcp.add_to_buffer(std::make_pair(receiver.second->_fd, message));			
+			serv->_tcp.add_to_buffer(std::make_pair(receiver.second->_fd, message));				
 	}
 	else
 	{
@@ -48,6 +48,11 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 
 		receiver = serv->get_channel(target);
 		if (receiver.first)
-			receiver.second->send(serv, user, message);
+		{
+			if (receiver.second->userIsIn(user))
+				receiver.second->send(serv, user, message);
+			else
+				std::cout << "error 404 : user not in the chan" << std::endl;  //user is in ? oui non 
+		}
 	}
 }
