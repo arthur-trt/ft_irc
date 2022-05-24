@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 19:07:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 14:22:33 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ class TCPServer
 
 		const std::string &			getHostname ( void ) const;
 
+		const int &					getMainSocket ( void ) const;
+
 		void						close_connection ( const int & fd );
+
+		void						close_server ( void );
 
 };
 

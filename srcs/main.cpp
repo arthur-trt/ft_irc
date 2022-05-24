@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 18:32:37 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:17:32 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include "utils.hpp"
 #include "IRC.Class.hpp"
 #include <map>
+#include <signal.h>
+
+sig_atomic_t	g_looping = true;
+int				g_main_socket = 0;
 
 void	loop (IRC *server)
 {
@@ -23,9 +27,8 @@ void	loop (IRC *server)
 	std::map<int, std::string>				cmd_in;
 	std::map<int, std::string>::iterator	it_cmd;
 	std::map<int, std::string>::iterator	old_it;
-	bool									looping = true;
 
-	while (looping)
+	while (g_looping)
 	{
 		server->_tcp.pending_activity();
 		in_connection = server->_tcp.incoming_connection();
@@ -46,7 +49,7 @@ void	loop (IRC *server)
 			}
 			else if (buffer.second == "STOP_SERVER\n" || buffer.second == "STOP_SERVER\r\n")
 			{
-				looping = false;
+				g_looping = false;
 			}
 			else
 			{
@@ -70,6 +73,16 @@ void	loop (IRC *server)
 		}
 		server->_tcp.send_buffer();
 	}
+	std::cout << "Closing everything" << std::endl;
+	server->_tcp.close_server();
+}
+
+
+// Signal handler to catch SIGTERM.
+void sigterm(int signo) {
+	(void)signo;
+	g_looping = false;
+	send(g_main_socket, "\r\n", 2, MSG_NOSIGNAL);
 }
 
 int	main(int argc, char **argv)
@@ -81,6 +94,14 @@ int	main(int argc, char **argv)
 	password = (argc == 3) ? argv[2] : "";
 
 	IRC	server(port, password);
+
+	g_main_socket = server._tcp.getMainSocket();
+
+	struct sigaction s;
+	s.sa_handler = sigterm;
+	sigemptyset(&s.sa_mask);
+	s.sa_flags = 0;
+	sigaction(SIGINT, &s, NULL);
 
 	loop (&server);
 
