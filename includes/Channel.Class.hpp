@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:06:28 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:28:34 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class Channel
 		TCPServer				&_server;
 		const std::string		_name;
 		std::map<User *, bool>	_joined_user;
+		std::vector< User *> 	_banned_user;
 		size_t					_members_count;
 		std::string				_topic;
 
@@ -40,6 +41,7 @@ class Channel
 		const std::pair<User *, bool>   getUser ( User * const & user ) const;
 		size_t							getMembersCount ( void ) const;
 
+		bool							isBanned ( User * const & user ) const;
 		bool							addUser ( User * user );
 		bool							kickUser ( User * user );
 		bool							removeUser ( User * user );
