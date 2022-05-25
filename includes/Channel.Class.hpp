@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 15:28:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:29:43 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CHANNEL_CLASS_HPP
 
 # include <map>
+# include <vector>
 # include "User.Class.hpp"
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
@@ -25,7 +26,7 @@ class Channel
 		TCPServer				&_server;
 		const std::string		_name;
 		std::map<User *, bool>	_joined_user;
-		std::vector< User *> 	_banned_user;
+		std::vector<User *> 	_banned_user;
 		size_t					_members_count;
 		std::string				_topic;
 
