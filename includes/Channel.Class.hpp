@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 16:29:43 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 14:43:48 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Channel
 		std::vector<User *> 	_banned_user;
 		size_t					_members_count;
 		std::string				_topic;
+		std::string				_mode;
 
 		Channel ( void );
 		Channel ( const Channel & src );
