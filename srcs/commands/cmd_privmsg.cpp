@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 15:57:33 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:21:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 		receiver = serv->get_channel(target);
 		if (receiver.first)
 		{
-			if (receiver.second->userIsIn(user))
-				receiver.second->send(serv, user, message);
+			if (!(receiver.second->userIsIn(user)))
+				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(404, serv, user, target)));
 			else
-				std::cout << "error 404 : user not in the chan" << std::endl;  //user is in ? oui non 
+				receiver.second->send(serv, user, message);
+				
 		}
 	}
 }

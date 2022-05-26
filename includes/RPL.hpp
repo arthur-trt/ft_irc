@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:00:35 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:33:37 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,7 @@
 	(" " + channel + " :You're not channel operator\r\n")									// 482
 # define ERR_NOSUCHCHANNEL(channel)		\
 	(" " + channel + " :No such channel\r\n")												// 403
+# define ERR_CANNOTSENDTOCHAN(channel)	\
+	(" " + channel + " :Cannot send to channel\r\n")										// 404
 
 #endif

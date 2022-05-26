@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:07:58 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:30:08 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,4 +229,19 @@ const std::pair<User *, bool>  Channel::getUser ( User * const & user ) const
 size_t					Channel::getMembersCount ( void ) const
 {
 	return (this->_members_count);
+}
+
+
+bool						Channel::isBanned ( User * const & user ) const
+{
+	std::vector<User *>::const_iterator	it;
+
+	it = this->_banned_user.begin();
+	while (it != this->_banned_user.end())
+	{
+		if ((*it)->_nick_name == user->_nick_name)
+			return (true);
+		it++;
+	}
+	return (false);
 }
