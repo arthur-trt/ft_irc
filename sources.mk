@@ -24,6 +24,7 @@ SOURCES		+=                            		\
 		srcs/commands/cmd_join.cpp           	\
 		srcs/commands/cmd_parse.cpp          	\
 		srcs/commands/cmd_user.cpp           	\
+		srcs/commands/cmd_mode.cpp           	\
 		srcs/commands/cmd_ignore.cpp         	\
 		srcs/commands/cmd_kick.cpp           	\
 		srcs/commands/cmd_names.cpp          	\
