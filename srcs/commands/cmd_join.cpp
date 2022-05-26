@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:37:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:33:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		return;
 	}
 	chans = ft_split(parse[0], ",");
-	keys = ft_split(parse[1], ",");
+	if (parse.size() > 1)
+	 	keys = ft_split(parse[1], ",");
 	std::vector<std::string>::iterator it = chans.begin();
 	for ( ; it < chans.end(); it ++ )
 	{
