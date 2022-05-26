@@ -1,17 +1,15 @@
 # FT_IRC
       
 ## Sommaire
-- [Introduction](#Introduction)
-- [Notions de bases](#Notions-de-bases)
-    - [serveur IRC](#+-SERVEUR-IRC)
-    - [client IRC](#CLIENT-IRC)
-    - [procole TCP/IP](#PROTOCOLE-TCP/IP)
-    - [sockets](#SOCKETS)
-- [Plan du projet](#Plan-du-projet)
-    - [Creation du serveur](#Creation-du-serveur)
-    - [ Implementation des commandes](#Implementation-des-commandes)
-- [Notes](#Notes)
-- [Ressources](#Ressources)
+- [FT_IRC](#ft_irc)
+  - [Sommaire](#sommaire)
+  - [Introduction](#introduction)
+  - [Notions de bases](#notions-de-bases)
+  - [Plan du projet](#plan-du-projet)
+    - [Creation du serveur](#creation-du-serveur)
+    - [Implementation des commandes](#implementation-des-commandes)
+  - [Notes](#notes)
+  - [Ressources](#ressources)
        
 ## Introduction
       
