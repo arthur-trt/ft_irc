@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_join.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 14:11:25 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/26 13:12:18 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,41 @@
 
 void	cmd_join ( IRC *serv, User *user, std::string & args )
 {
-	std::string 				chan = trim_copy(args);
+	std::vector<std::string>	chans;
+	std::vector<std::string>	keys;
+	std::vector<std::string>	parse;
 	std::pair<bool, Channel*>	res;
 	Channel*					tmp;
 	std::string					notice;
 
-	notice.append(user_answer(user));
-	notice.append("JOIN ");
-	notice.append(chan);
-	notice.append("\r\n");
-	res = serv->get_channel(chan);
-	if (res.first)
+	parse = ft_split(args, " ");
+	chans = ft_split(parse[0], ",");
+	keys = ft_split(parse[1], ",");
+	std::vector<std::string>::iterator it = chans.begin();
+	for ( ; it < chans.end(); it ++ )
 	{
-		res.second->addUser(user);
-		res.second->send_all(serv, notice);
-		user->_channel_joined.push_back(res.second);
-		if (res.second->getTopic() != "")
-			cmd_topic(serv, user, chan);
+		std::string chan = trim_copy(*it);
+		notice.append(user_answer(user));
+		notice.append("JOIN ");
+		notice.append(chan);
+		notice.append("\r\n");
+		res = serv->get_channel(chan);
+		if (res.first)
+		{
+			res.second->addUser(user);
+			res.second->send_all(serv, notice);
+			user->_channel_joined.push_back(res.second);
+			if (res.second->getTopic() != "")
+				cmd_topic(serv, user, chan);
+		}
+		else
+		{
+			tmp = serv->create_channel(chan, user);
+			tmp->send_all(serv, notice);
+			user->_channel_joined.push_back(tmp);
+			if (tmp->getTopic() != "")
+				cmd_topic(serv, user, chan);
+		}
+		cmd_names(serv, user, chan);
 	}
-	else
-	{
-		tmp = serv->create_channel(chan, user);
-		tmp->send_all(serv, notice);
-		user->_channel_joined.push_back(tmp);
-		if (tmp->getTopic() != "")
-			cmd_topic(serv, user, chan);
-	}
-	cmd_names(serv, user, chan);
 }
