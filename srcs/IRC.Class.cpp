@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:55:12 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:52:48 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,10 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("PING", &cmd_ping));
 	this->_available_command.insert(std::make_pair("TOPIC", &cmd_topic));
 	this->_available_command.insert(std::make_pair("PART", &cmd_part));
-	this->_available_command.insert(std::make_pair("MODE", &cmd_ignore));
+	this->_available_command.insert(std::make_pair("MODE", &cmd_mode));
 	this->_available_command.insert(std::make_pair("QUIT", &cmd_quit));
 	this->_available_command.insert(std::make_pair("NOTICE", &cmd_notice));
 	this->_available_command.insert(std::make_pair("KICK", &cmd_kick));
-	this->_available_command.insert(std::make_pair("MODE", &cmd_kick));
 	
 }
 

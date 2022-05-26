@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:43:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:11:14 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
 
+
+
 class IRC;
 class Channel
 {
@@ -29,7 +31,7 @@ class Channel
 		std::vector<User *> 	_banned_user;
 		size_t					_members_count;
 		std::string				_topic;
-		std::string				_mode;
+		std::vector<std::string> _mode;
 
 		Channel ( void );
 		Channel ( const Channel & src );
@@ -55,6 +57,8 @@ class Channel
 
 		bool							userIsIn ( User * const & user ) const;
 		bool							userIsIn ( const std::string & user ) const;
+		bool							isValidMode(std::vector<std::string> mode);
+		void							addModetoChan(std::vector<std::string> mode);
 
 };
 

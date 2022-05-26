@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 15:30:08 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:13:13 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "utils.hpp"
 #include "Channel.Class.hpp"
 
+static const std::string available_chan_mode = "+k-k";
 /**
  * @brief Construct a new Channel:: Channel object
  *
@@ -244,4 +245,24 @@ bool						Channel::isBanned ( User * const & user ) const
 		it++;
 	}
 	return (false);
+}
+
+bool	Channel::isValidMode(std::vector<std::string> mode)
+{
+	for (std::vector<std::string>::iterator it = mode.begin(); it < mode.end(); it++)
+	{
+		size_t found = available_chan_mode.find(*it);
+		if (found != std::string::npos)
+			return true;
+	}
+	return false;
+}
+void	Channel::addModetoChan(std::vector<std::string> mode)
+{
+	if (!isValidMode(mode))
+		_mode.insert(_mode.end() - 1, mode.begin(), mode.end());
+	for (std::vector<std::string>::iterator it = _mode.begin(); it < _mode.end(); it++)
+	{
+		std::cout << "MODES === "<< *it << std::endl;
+	}
 }

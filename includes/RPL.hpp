@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 16:33:37 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:08:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@
 	(" " + channel + " :No such channel\r\n")												// 403
 # define ERR_CANNOTSENDTOCHAN(channel)	\
 	(" " + channel + " :Cannot send to channel\r\n")										// 404
-
+# define ERR_UNKNOWNMODE(channel) \
+	(" " + channel + " :is unknown mode char to me for \r\n")
 #endif

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 18:36:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:37:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "User.Class.hpp"
 #include "utils.hpp"
+
 
 User::User ( void )
 {
@@ -27,6 +28,7 @@ User::User ( const std::string & hostname, const int fd ) :
 	_real_name = "";
 	_pass_send = false;
 	_connected = false;
+	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("user fd constructor called");
 }
 
@@ -38,6 +40,7 @@ User::User ( const std::string & user_name, const std::string & nick_name, const
 {
 	_pass_send = false;
 	_connected = false;
+	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("User constructor for %s", _user_name.c_str());
 }
 
@@ -50,6 +53,7 @@ User::User ( const User & src ) :
 	_pass_send(src._pass_send),
 	_connected(src._connected)
 {
+	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("Copy constructor called");
 }
 
@@ -63,6 +67,7 @@ User&	User::operator= ( const User & rhs )
 		this->_pass_send = rhs._pass_send;
 		this->_connected = rhs._connected;
 		this->_nick_name = rhs._nick_name;
+		//this->available_mode = "+a+i+w+r+o+O+s";
 	}
 	return (*this);
 }
