@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/26 18:22:11 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:55:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,43 @@
            O - local operator flag;
            s - marks a user for receipt of server notices.
 
-   Additional modes may be available later on.
-   The flag 'a' SHALL NOT be toggled by the user using the MODE command,
-   instead use of the AWAY command is REQUIRED.
-
-   If a user attempts to make themselves an operator using the "+o" or
-   "+O" flag, the attempt SHOULD be ignored as users could bypass the
-   authentication mechanisms of the OPER command.  There is no
-   restriction, however, on anyone `deopping' themselves (using "-o" or
-   "-O").
-
-   On the other hand, if a user attempts to make themselves unrestricted
-   using the "-r" flag, the attempt SHOULD be ignored.  There is no
-   restriction, however, on anyone `deopping' themselves (using "+r").
-   This flag is typically set by the server upon connection for
-   administrative reasons.  While the restrictions imposed are left up
-   to the implementation, it is typical that a restricted user not be
-   allowed to change nicknames, nor make use of the channel operator
-   status on channels.
-
-   The flag 's' is obsolete but MAY still be used.
-
    Numeric Replies:
 
            ERR_NEEDMOREPARAMS              ERR_USERSDONTMATCH
            ERR_UMODEUNKNOWNFLAG            RPL_UMODEIS
+Channel Modes
+
+   The various modes available for channels are as follows:
+
+        O - give "channel creator" status;
+        o - give/take channel operator privilege;
+        v - give/take the voice privilege;
+
+        a - toggle the anonymous channel flag;
+        i - toggle the invite-only channel flag;
+        m - toggle the moderated channel;
+        n - toggle the no messages to channel from clients on the
+            outside;
+        q - toggle the quiet channel flag;
+        p - toggle the private channel flag;
+        s - toggle the secret channel flag;
+        r - toggle the server reop channel flag;
+        t - toggle the topic settable by channel operator only flag;
+
+        k - set/remove the channel key (password);
+        l - set/remove the user limit to channel;
+
+        b - set/remove ban mask to keep users out;
+        e - set/remove an exception mask to override a ban mask;
+        I - set/remove an invitation mask to automatically override
+            the invite-only flag;
 */
 void	cmd_mode ( IRC *serv, User *user, std::string & args )
 {
+    //1.check if chan or user exists
+    //2.check if mode is available in available_chan/user mode 
+    //3.add in Chan or User
+    
     (void)user;
     (void)serv;
     std::vector<std::string> parse;
@@ -78,23 +87,20 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     std::pair<bool, Channel*>	res;
     
     parse = ft_split(args, " ");
-    name = parse[0];
+    name = trim_copy(parse[0]);
     if (parse.size() < 2)
     {
         serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user)));
 		return;
     }
-    //check if mode are on the list
+    
     std::vector<std::string> mode(parse.begin() + 1, parse.end());
-    if ( parse[1] == "#")
-    {
-        res = serv->get_channel(name);
-        if (res.first)
-            res.second->addModetoChan(mode);
-    }
+    res = serv->get_channel(name);
+    if (res.first)
+        res.second->addModetoChan(mode);
     else
     {
-        std::cout << "caca" << std::endl;
+        std::cout << "c'est pas un nom de chan" << std::endl;
     }
     std::cout << args << std::endl;
 }

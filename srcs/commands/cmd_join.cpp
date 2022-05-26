@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:37:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:59:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,13 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		return;
 	}
 	chans = ft_split(parse[0], ",");
-	keys = ft_split(parse[1], ",");
+	if (parse.size() > 1)
+	 	keys = ft_split(parse[1], ",");
 	std::vector<std::string>::iterator it = chans.begin();
+	//vector<std::string>::iterator kit = keys.begin();
 	for ( ; it < chans.end(); it ++ )
 	{
+		//kit++
 		std::string chan = trim_copy(*it);
 		notice.append(user_answer(user));
 		notice.append("JOIN ");
@@ -112,6 +115,8 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		res = serv->get_channel(chan);
 		if (res.first)
 		{
+			//if res.second->mode.find(+k)
+				//check appropriate key
 			res.second->addUser(user);
 			res.second->send_all(serv, notice);
 			user->_channel_joined.push_back(res.second);
