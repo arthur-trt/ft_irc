@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 18:18:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:15:19 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,26 +128,40 @@ void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
 	std::vector<std::string>	keys;
 	std::pair<bool, Channel*>	chan;
 	chans = ft_split(parse[0], ",");
-	keys = ft_split(parse[1], ",");
-	for (size_t i = 0; i < keys.size(); i++)
+	if (parse.size() > 1 )
 	{
-		chan = serv->get_channel(chans[i]);
-		if (chan.second->needsPass())
+		keys = ft_split(parse[1], ",");
+		for (size_t i = 0; i < keys.size(); i++)
 		{
-			if (chan.second->getPassword() != keys[i])
+			chan = serv->get_channel(chans[i]);
+			if (chan.first)
 			{
-				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
-				return ;
+				if (chan.second->getPassword() != "")
+				{
+					if (chan.second->getPassword() != keys[i])
+					{
+						serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
+						return ;
+					}
+				}
 			}
+			join(parse, serv, user);			 
 		}
-		join(parse, serv, user);			 
 	}
 	for (size_t i = keys.size(); i < chans.size(); i++)
 	{
+		std::cout << "laaaaaaaaaaaaaaaaaaaaaaaaaa ??" << std::endl;
 		chan = serv->get_channel(chans[i]);
-		if (!chan.second->needsPass())
-			join(parse, serv, user);
-		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
+		if (chan.first)
+		{
+			if (chan.second->getPassword() == "")
+			{
+				std::cout << "tu rentres la batars ??" << std::endl;
+				join(parse, serv, user);
+			}
+			else
+				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
+		}
 	}
 }
 
@@ -161,8 +175,5 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
 		return;
 	}
-	if (parse.size() > 1)
-		std::cout << "lol" << std::endl; //join_with_password(parse, serv, user);
-	else
-		join(parse, serv, user);
+	join_with_password(parse, serv, user);
 }

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 17:48:30 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:53:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ class IRC;
 class Channel
 {
 	private:
-		TCPServer				&_server;
-		const std::string		_name;
-		std::map<User *, bool>	_joined_user;
-		std::vector<User *> 	_banned_user;
-		size_t					_members_count;
-		std::string				_topic;
-		std::vector<std::string> _mode;
-		std::string _password;
+		TCPServer					&_server;
+		const std::string			_name;
+		std::map<User *, bool>		_joined_user;
+		std::vector<User *> 		_banned_user;
+		size_t						_members_count;
+		std::string					_topic;
+		std::vector<std::string>	_mode;
+		std::string					_password;
 
 		Channel ( void );
 		Channel ( const Channel & src );
