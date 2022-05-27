@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/26 18:55:30 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:15:21 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     std::vector<std::string> mode(parse.begin() + 1, parse.end());
     res = serv->get_channel(name);
     if (res.first)
+    {
         res.second->addModetoChan(mode);
+        //serv->updateMode adding password to chan
     else
     {
         std::cout << "c'est pas un nom de chan" << std::endl;

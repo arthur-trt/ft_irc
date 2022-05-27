@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:59:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:10:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ Command: JOIN
 */
 void	cmd_join ( IRC *serv, User *user, std::string & args )
 {
-	std::vector<std::string>	chans;
-	std::vector<std::string>	keys;
 	std::vector<std::string>	parse;
 	std::pair<bool, Channel*>	res;
 	Channel*					tmp;
@@ -99,14 +97,19 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
 		return;
 	}
-	chans = ft_split(parse[0], ",");
 	if (parse.size() > 1)
-	 	keys = ft_split(parse[1], ",");
+		join_with_password(parse, serv, user);
+	else
+		join(parse, serv, user);
+}
+
+void join(std::vector<std::string> chans, IRC *serv, User *user)
+{
+	std::vector<std::string>	chans;
+	chans = ft_split(parse[0], ",");
 	std::vector<std::string>::iterator it = chans.begin();
-	//vector<std::string>::iterator kit = keys.begin();
 	for ( ; it < chans.end(); it ++ )
 	{
-		//kit++
 		std::string chan = trim_copy(*it);
 		notice.append(user_answer(user));
 		notice.append("JOIN ");
@@ -115,8 +118,6 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		res = serv->get_channel(chan);
 		if (res.first)
 		{
-			//if res.second->mode.find(+k)
-				//check appropriate key
 			res.second->addUser(user);
 			res.second->send_all(serv, notice);
 			user->_channel_joined.push_back(res.second);
@@ -133,4 +134,19 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		}
 		cmd_names(serv, user, chan);
 	}
+}
+void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
+{
+	std::vector<std::string>	chans;
+	std::vector<std::string>	keys;
+	chans = ft_split(parse[0], ",");
+	keys = ft_split(parse[1], ",");
+	for (size_t i = 0; i < key.size(); i++)
+	{
+		if (chans[i].needsPass)
+			
+		//check chans[i]._mode.find("+k") 
+		
+	}
+				 
 }

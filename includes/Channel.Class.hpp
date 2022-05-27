@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:11:14 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:16:13 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class Channel
 		size_t					_members_count;
 		std::string				_topic;
 		std::vector<std::string> _mode;
+		std::map<bool, std::string> _password;
 
 		Channel ( void );
 		Channel ( const Channel & src );
@@ -59,6 +60,7 @@ class Channel
 		bool							userIsIn ( const std::string & user ) const;
 		bool							isValidMode(std::vector<std::string> mode);
 		void							addModetoChan(std::vector<std::string> mode);
+		bool							needsPass(void);
 
 };
 

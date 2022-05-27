@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:48:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 13:17:26 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,14 @@ bool						Channel::isBanned ( User * const & user ) const
 	return (false);
 }
 
+bool					Channel::needsPass(void)
+{
+	std::size_t found = this->_mode.find("+k");
+	if (found != std::string::npos)
+		return true;
+	return false;
+}
+
 bool	Channel::isValidMode(std::vector<std::string> mode)
 {
 	for (std::vector<std::string>::iterator it = mode.begin(); it < mode.end(); it++)
@@ -266,6 +274,7 @@ void	Channel::addModetoChan(std::vector<std::string> mode)
 	std::cout << "inserting mode " << *mode.begin() << std::endl;
 	if (isValidMode(mode))
 		_mode.insert(_mode.begin(), mode.begin(), mode.end());
+	//if its a k add a password 
 	for (std::vector<std::string>::iterator it = _mode.begin(); it < _mode.end(); it++)
 	{
 		std::cout << "MODES === "<< *it << std::endl;
