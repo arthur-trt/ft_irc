@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 17:49:41 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:47:14 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,8 +283,8 @@ void	Channel::addMode(std::string mode)
 
 void	Channel::setPassword ( std::string password )
 {
-	if (password[0] != '+')
-		return;
+	// if (password[0] != '+')
+	// 	return;
 	this->_password = password;
 }
 
