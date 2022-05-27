@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 20:15:19 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:31:39 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,15 @@ void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
 			join(parse, serv, user);			 
 		}
 	}
+	std::cout << "keys" << keys.size() << std::endl;
 	for (size_t i = keys.size(); i < chans.size(); i++)
 	{
-		std::cout << "laaaaaaaaaaaaaaaaaaaaaaaaaa ??" << std::endl;
+		std::cout << "[i]" << i << std::endl;	
 		chan = serv->get_channel(chans[i]);
+		std::cout << "chan  " << chan.first << std::endl;
 		if (chan.first)
 		{
+			
 			if (chan.second->getPassword() == "")
 			{
 				std::cout << "tu rentres la batars ??" << std::endl;
