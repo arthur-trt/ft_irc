@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/27 13:15:21 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 16:19:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ Channel Modes
         I - set/remove an invitation mask to automatically override
             the invite-only flag;
 */
+
 void	cmd_mode ( IRC *serv, User *user, std::string & args )
 {
     //1.check if chan or user exists
     //2.check if mode is available in available_chan/user mode 
     //3.add in Chan or User
-    
+    //Parameters: <channel> *( ( "-" / "+" ) *<modes> *<modeparams> )
     (void)user;
     (void)serv;
     std::vector<std::string> parse;
@@ -93,13 +94,15 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
         serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user)));
 		return;
     }
-    
-    std::vector<std::string> mode(parse.begin() + 1, parse.end());
+    std::vector<std::string> reparse = ft_split(parse[1], " ");
+    std::string mode = reparse[0];
+    std::string params = reparse[1];//(parse.begin() + 1, parse.end()); //lol pas du tout il faut recuperer le password
     res = serv->get_channel(name);
     if (res.first)
     {
         res.second->addModetoChan(mode);
-        //serv->updateMode adding password to chan
+        res.second.updateMode(mode, params);
+    }
     else
     {
         std::cout << "c'est pas un nom de chan" << std::endl;

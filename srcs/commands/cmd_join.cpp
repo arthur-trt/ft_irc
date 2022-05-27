@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 13:10:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:08:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,13 @@ Command: JOIN
            ERR_TOOMANYTARGETS              ERR_UNAVAILRESOURCE
            RPL_TOPIC
 */
-void	cmd_join ( IRC *serv, User *user, std::string & args )
+void join(std::vector<std::string> parse, IRC *serv, User *user)
 {
-	std::vector<std::string>	parse;
+	std::vector<std::string>	chans;
 	std::pair<bool, Channel*>	res;
 	Channel*					tmp;
 	std::string					notice;
-
-	parse = ft_split(args, " ");
-	if (parse.begin() == parse.end())
-	{
-		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
-		return;
-	}
-	if (parse.size() > 1)
-		join_with_password(parse, serv, user);
-	else
-		join(parse, serv, user);
-}
-
-void join(std::vector<std::string> chans, IRC *serv, User *user)
-{
-	std::vector<std::string>	chans;
+	
 	chans = ft_split(parse[0], ",");
 	std::vector<std::string>::iterator it = chans.begin();
 	for ( ; it < chans.end(); it ++ )
@@ -135,18 +120,35 @@ void join(std::vector<std::string> chans, IRC *serv, User *user)
 		cmd_names(serv, user, chan);
 	}
 }
-void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
-{
-	std::vector<std::string>	chans;
-	std::vector<std::string>	keys;
-	chans = ft_split(parse[0], ",");
-	keys = ft_split(parse[1], ",");
-	for (size_t i = 0; i < key.size(); i++)
-	{
-		if (chans[i].needsPass)
+// void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
+// {
+// 	std::vector<std::string>	chans;
+// 	std::vector<std::string>	keys;
+// 	chans = ft_split(parse[0], ",");
+// 	keys = ft_split(parse[1], ",");
+// 	for (size_t i = 0; i < keys.size(); i++)
+// 	{
+// 		if (chans[i].needsPass)
 			
-		//check chans[i]._mode.find("+k") 
+// 		//check chans[i]._mode.find("+k") 
 		
-	}
+// 	}
 				 
+// }
+void	cmd_join ( IRC *serv, User *user, std::string & args )
+{
+	std::vector<std::string>	parse;
+
+	parse = ft_split(args, " ");
+	if (parse.begin() == parse.end())
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
+		return;
+	}
+	if (parse.size() > 1)
+		std::cout << "join with pass_word" << std::endl;//join_with_password(parse, serv, user);
+	else
+		join(parse, serv, user);
 }
+
+
