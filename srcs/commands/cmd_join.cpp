@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:29 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:12:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ Command: JOIN
    Numeric Replies:
 
            ERR_NEEDMOREPARAMS    ok          ERR_BANNEDFROMCHAN
-           ERR_INVITEONLYCHAN              ERR_BADCHANNELKEY
+           ERR_INVITEONLYCHAN              ERR_BADCHANNELKEY ok
            ERR_CHANNELISFULL               ERR_BADCHANMASK
            ERR_NOSUCHCHANNEL               ERR_TOOMANYCHANNELS
            ERR_TOOMANYTARGETS              ERR_UNAVAILRESOURCE
            RPL_TOPIC
 */
+
 void join(std::vector<std::string> parse, IRC *serv, User *user)
 {
 	std::vector<std::string>	chans;
@@ -120,6 +121,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 		cmd_names(serv, user, chan);
 	}
 }
+
 // void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
 // {
 // 	std::vector<std::string>	chans;
@@ -129,12 +131,23 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 // 	for (size_t i = 0; i < keys.size(); i++)
 // 	{
 // 		if (chans[i].needsPass)
-			
-// 		//check chans[i]._mode.find("+k") 
-		
+// 		{
+// 			if (chans[i].getPassword() != keys[i])
+// 			{
+// 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
+// 				return ;
+// 			}
+// 		}
+// 		join(parse, serv, user);			 
 // 	}
-				 
+// 	for (size_t i = keys.size(); i < chans.size(); i++)
+// 	{
+// 		if (!chans[i].needsPass)
+// 			join(parse, serv, user);
+// 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
+// 	}
 // }
+
 void	cmd_join ( IRC *serv, User *user, std::string & args )
 {
 	std::vector<std::string>	parse;
@@ -146,9 +159,7 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		return;
 	}
 	if (parse.size() > 1)
-		std::cout << "join with pass_word" << std::endl;//join_with_password(parse, serv, user);
+		std::cout << "lol" << std::endl; //join_with_password(parse, serv, user);
 	else
 		join(parse, serv, user);
 }
-
-

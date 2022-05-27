@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 16:37:07 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:48:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ class Channel
 		bool							userIsIn ( User * const & user ) const;
 		bool							userIsIn ( const std::string & user ) const;
 		bool							isValidMode(std::string mode);
-		void							addModetoChan(std::string mode);
+		void							addMode(std::string mode);
 		bool							needsPass(void);
 		void							setPassword ( std::string password );
-		void							removePassword ( std::string params);
 		void							updateMode(std::string new_mode, std::string params);
+		const std::string &				getPassword ( void ) const;
 
 };
 

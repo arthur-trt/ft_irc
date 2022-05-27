@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/27 16:19:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:44:57 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,9 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     //3.add in Chan or User
     //Parameters: <channel> *( ( "-" / "+" ) *<modes> *<modeparams> )
     (void)user;
-    (void)serv;
     std::vector<std::string> parse;
     std::string name;
-    std::pair<bool, Channel*>	res;
+    std::pair<bool, Channel*>	chan;
     
     parse = ft_split(args, " ");
     name = trim_copy(parse[0]);
@@ -97,15 +96,30 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     std::vector<std::string> reparse = ft_split(parse[1], " ");
     std::string mode = reparse[0];
     std::string params = reparse[1];//(parse.begin() + 1, parse.end()); //lol pas du tout il faut recuperer le password
-    res = serv->get_channel(name);
-    if (res.first)
+    if (name[0] == '#')
     {
-        res.second->addModetoChan(mode);
-        res.second.updateMode(mode, params);
+        chan = serv->get_channel(name);
+        if (chan.first)
+        {
+            chan.second->addMode(mode);
+            chan.second->updateMode(mode, params);
+        }
+        else
+        {
+            std::cout << "c'est pas un nom de chan" << std::endl;
+        }
     }
     else
     {
-        std::cout << "c'est pas un nom de chan" << std::endl;
+        std::pair<bool, User*>	some_user;
+        some_user = serv->get_user(name);
+        if (some_user.first)
+        {
+            //some_user.second->addMode(mode);
+            //some_user.second->updateMode(mode, params);
+        }
+        
+        //userMode
+        std::cout << "coucou " << args << std::cout;
     }
-    std::cout << args << std::endl;
 }

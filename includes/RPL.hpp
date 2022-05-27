@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:08:29 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:05:18 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,6 @@
 	(" " + channel + " :Cannot send to channel\r\n")										// 404
 # define ERR_UNKNOWNMODE(channel) \
 	(" " + channel + " :is unknown mode char to me for \r\n")
+# define ERR_BADCHANNELKEY(channel) \
+	(" " + channel + " :Cannot join channel (+k) \r\n")
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 16:39:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:49:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,7 @@ bool	Channel::isValidMode(std::string mode)
 	std::cout << "this is not a valid mode " << std::endl;
 	return false;
 }
-void	Channel::addModetoChan(std::string mode)
+void	Channel::addMode(std::string mode)
 {
 	std::cout << "inserting mode " << mode << std::endl;
 	if (isValidMode(mode))
@@ -283,32 +283,30 @@ void	Channel::addModetoChan(std::string mode)
 
 void	Channel::setPassword ( std::string password )
 {
+	if (password[0] != '+')
+		return;
 	this->_password = password;
 }
-void	Channel::removePassword (std::string params)
-{
-	(void)params;
-	this->_password = "";
-	//this->_mode.find("+k")
-	//erase +k
-}
-typedef void (Channel::*Modes[2])(std::string param);
+
 	
 void	Channel::updateMode(std::string new_mode, std::string params)
 {
-	const std::string available_chan_mode[2] = {"+k", "-k"};
+	typedef void (Channel::*Modes)(std::string params);
+	const std::string chan_mode[2] = {"+k"};
     
-	Modes changeMode = {&Channel::setPassword(params), &Channel::removePassword(params)};
+	Modes changeMode[2] = {&Channel::setPassword};
     
 	for (int i = 0; i < 1; i++)
 	{
-		if (available_chan_mode[i] == new_mode)
+		if (chan_mode[i] == new_mode)
 		{
 			(this->*(changeMode[i]))(params);
 			return;
 		}
 	}
-
-
 	std::cout << " du coup ca n'a pas l'air changé ....." << std::endl;
+}
+const std::string &	Channel::getPassword ( void ) const
+{
+	return (this->_password);
 }

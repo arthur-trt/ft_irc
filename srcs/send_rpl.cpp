@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:07:53 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 18:11:06 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 472:
 			answer.append(ERR_UNKNOWNMODE(args));
+			break;
+		case 475:
+			answer.append(ERR_BADCHANNELKEY(args));
 			break;
 		default:
 			;
