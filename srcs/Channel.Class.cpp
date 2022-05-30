@@ -6,13 +6,15 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 15:30:08 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:37:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include "utils.hpp"
 #include "Channel.Class.hpp"
+
+static const std::string available_chan_mode = "+k-k";
 
 /**
  * @brief Construct a new Channel:: Channel object
@@ -31,6 +33,7 @@ Channel::Channel ( TCPServer & server, const std::string & name, User * chan_ope
 				<< "\tOperator : " << (chan_operator)->_user_name	<< std::endl;
 	this->_joined_user.insert(std::make_pair(chan_operator, true));
 	this->_members_count++;
+	this->_password = "";
 }
 
 Channel::~Channel ( void )
@@ -49,6 +52,8 @@ Channel::Channel ( const Channel & src ) :
 	_joined_user(src._joined_user),
 	_members_count(src._members_count)
 {
+	this->_password = "";
+
 	debug("Copy constructor for Channel");
 }
 
@@ -65,6 +70,7 @@ Channel &	Channel::operator= ( const Channel & rhs )
 		_server = rhs._server;
 		_joined_user = rhs._joined_user;
 		_members_count = rhs._members_count;
+		_password = rhs._password;
 	}
 	return (*this);
 }
@@ -244,4 +250,68 @@ bool						Channel::isBanned ( User * const & user ) const
 		it++;
 	}
 	return (false);
+}
+
+bool					Channel::needsPass(void)
+{
+	std::vector<std::string>::iterator it = std::find(_mode.begin(), _mode.end(), "+k");
+	if (it != _mode.end())
+		return true;
+	std::cout << "ila pas trouvé le pass cet enculé" << std::endl;
+	return false;
+}
+
+bool	Channel::isValidMode(std::string mode)
+{
+	size_t found = available_chan_mode.find(mode);
+	if (found != std::string::npos)
+	{
+		std::cout << "this is a valid mode " << std::endl;
+		return true;
+	}
+	std::cout << "this is not a valid mode " << std::endl;
+	return false;
+}
+
+void	Channel::addMode(std::string mode)
+{
+	//std::cout << "inserting mode " << mode << std::endl;
+	if (isValidMode(mode))
+		this->_mode.push_back(mode);
+	// for (std::vector<std::string>::iterator it = _mode.begin(); it < _mode.end(); it++)
+	// {
+	// 	std::cout << "MODES === "<< *it << std::endl;
+	// }
+}
+
+void	Channel::setPassword ( std::string password )
+{
+	// if (password[0] != '+')
+	// 	return;
+	std::cout << "password == " << password <<std::endl;
+	this->_password = password;
+}
+
+	
+void	Channel::updateMode(std::string new_mode, std::string params)
+{
+	typedef void (Channel::*Modes)(std::string params);
+	const std::string chan_mode[2] = {"+k"};
+    
+	Modes changeMode[2] = {&Channel::setPassword};
+    //std::cout << "ca rentre la ? " <<std::endl;
+	for (int i = 0; i < 1; i++)
+	{
+		if (chan_mode[i] == new_mode)
+		{
+			(this->*(changeMode[i]))(params);
+			return;
+		}
+	}
+	std::cout << " du coup ca n'a pas l'air changé ....." << std::endl;
+}
+
+const std::string &	Channel::getPassword ( void ) const
+{
+	return (this->_password);
 }

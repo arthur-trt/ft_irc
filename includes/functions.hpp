@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:31:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:00:56 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:53:02 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "IRC.Class.hpp"
 # include "User.Class.hpp"
 
-std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args = "", std::string args2 = "");
+std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args = "", std::string args2 = "", std::string args3 = "");
 std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host);
 std::string	user_answer(const User * user);
 

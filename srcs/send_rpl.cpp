@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 18:29:47 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:05:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  * @param args Args (depending of the RPL)
  * @return RPL formatted ready to be sent
  */
-std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::string args2)
+std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::string args2, std::string args3)
 {
 	std::string		answer = ":";
 	std::string		code;
@@ -102,6 +102,15 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 404:
 			answer.append(ERR_CANNOTSENDTOCHAN(args));
+			break;
+		case 472:
+			answer.append(ERR_UNKNOWNMODE(args));
+			break;
+		case 475:
+			answer.append(ERR_BADCHANNELKEY(args));
+			break;
+		case 324:
+			answer.append(RPL_CHANNELMODEIS(args, args2, args3));
 			break;
 		default:
 			;

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:43:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:53:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
 
+
+
 class IRC;
 class Channel
 {
 	private:
-		TCPServer				&_server;
-		const std::string		_name;
-		std::map<User *, bool>	_joined_user;
-		std::vector<User *> 	_banned_user;
-		size_t					_members_count;
-		std::string				_topic;
-		std::string				_mode;
+		TCPServer					&_server;
+		const std::string			_name;
+		std::map<User *, bool>		_joined_user;
+		std::vector<User *> 		_banned_user;
+		size_t						_members_count;
+		std::string					_topic;
+		std::vector<std::string>	_mode;
+		std::string					_password;
 
 		Channel ( void );
 		Channel ( const Channel & src );
@@ -55,6 +58,12 @@ class Channel
 
 		bool							userIsIn ( User * const & user ) const;
 		bool							userIsIn ( const std::string & user ) const;
+		bool							isValidMode(std::string mode);
+		void							addMode(std::string mode);
+		bool							needsPass(void);
+		void							setPassword ( std::string password );
+		void							updateMode(std::string new_mode, std::string params);
+		const std::string &				getPassword ( void ) const;
 
 };
 
