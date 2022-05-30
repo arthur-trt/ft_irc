@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 15:33:52 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:39:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,9 @@
 # define ERR_BADCHANNELKEY(channel) \
 	(" " + channel + " :Cannot join channel (+k) \r\n")										// 475
 # define RPL_CHANNELMODEIS(channel, mode, modeparams) \
-	(" " + channel + " " + mode + " " + modeparams + " \r\n")									// 324						
+	(" " + channel + " " + mode + " " + modeparams + " \r\n")								// 324
+# define RPL_UMODEIS(nick, mode, params) \
+	(" " + nick + " " + mode + " " + params + " \r\n")										// 221
+# define  ERR_UMODEUNKNOWNFLAG(mode) \
+	(" :Unknown " + mode + " flag \r\n")												// 501
 #endif

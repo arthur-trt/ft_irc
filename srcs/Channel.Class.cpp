@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 13:37:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:56:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,61 +257,38 @@ bool					Channel::needsPass(void)
 	std::vector<std::string>::iterator it = std::find(_mode.begin(), _mode.end(), "+k");
 	if (it != _mode.end())
 		return true;
-	std::cout << "ila pas trouvé le pass cet enculé" << std::endl;
 	return false;
 }
 
-bool	Channel::isValidMode(std::string mode)
-{
-	size_t found = available_chan_mode.find(mode);
-	if (found != std::string::npos)
-	{
-		std::cout << "this is a valid mode " << std::endl;
-		return true;
-	}
-	std::cout << "this is not a valid mode " << std::endl;
-	return false;
-}
-
-void	Channel::addMode(std::string mode)
-{
-	//std::cout << "inserting mode " << mode << std::endl;
-	if (isValidMode(mode))
-		this->_mode.push_back(mode);
-	// for (std::vector<std::string>::iterator it = _mode.begin(); it < _mode.end(); it++)
-	// {
-	// 	std::cout << "MODES === "<< *it << std::endl;
-	// }
-}
-
-void	Channel::setPassword ( std::string password )
-{
-	// if (password[0] != '+')
-	// 	return;
-	std::cout << "password == " << password <<std::endl;
-	this->_password = password;
-}
-
-	
-void	Channel::updateMode(std::string new_mode, std::string params)
-{
-	typedef void (Channel::*Modes)(std::string params);
-	const std::string chan_mode[2] = {"+k"};
-    
-	Modes changeMode[2] = {&Channel::setPassword};
-    //std::cout << "ca rentre la ? " <<std::endl;
-	for (int i = 0; i < 1; i++)
-	{
-		if (chan_mode[i] == new_mode)
-		{
-			(this->*(changeMode[i]))(params);
-			return;
-		}
-	}
-	std::cout << " du coup ca n'a pas l'air changé ....." << std::endl;
-}
 
 const std::string &	Channel::getPassword ( void ) const
 {
 	return (this->_password);
+}
+
+void	Channel::setPassword ( std::string password )
+{
+	this->_password = password;
+	_mode.push_back("+k");
+}
+void	Channel::setOperator(std::string user_name)
+{
+	_operators.push_back(user_name); // hmmm c'est pas terrible
+	_mode.push_back("+o");
+}
+bool	Channel::updateMode(std::string new_mode, std::string params)
+{
+	typedef void (Channel::*Modes)(std::string params);
+	const std::string chan_mode[2] = {"+k", "+o"};
+    
+	Modes changeMode[2] = {&Channel::setPassword, &Channel::setOperator};
+	for (int i = 0; i < 2; i++)
+	{
+		if (chan_mode[i] == new_mode)
+		{
+			(this->*(changeMode[i]))(params);
+			return true;
+		}
+	}
+	return false;
 }

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 17:37:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:22:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,37 @@ User::~User ( void )
 	}
 
 	//debug("User destructor for %s", _user_name.c_str());
+}
+
+void	User::deopping()
+{
+	std::vector<std::string>::iterator it;
+	it = std::find(_mode.begin(), _mode.end(), "+o");
+	if (it != _mode.end())
+	{
+		_mode.erase(it);
+		//on every chan ?????
+	}
+}
+void	User::setInvisible()
+{
+	_mode.push_back("+i");
+}
+
+bool	User::updateMode(std::string new_mode)
+{
+	typedef void (User::*Modes)();
+	const std::string chan_mode[2] = {"-o", "+i"};
+    
+	Modes changeMode[2] = {&User::deopping, &User::setInvisible};
+	for (int i = 0; i < 2; i++)
+	{
+		if (chan_mode[i] == new_mode)
+		{
+			(this->*(changeMode[i]))();
+			return true;
+		}
+	}
+	return false;
+	
 }
