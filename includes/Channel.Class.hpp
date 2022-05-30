@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 17:53:39 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:54:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Channel
 		const std::string			_name;
 		std::map<User *, bool>		_joined_user;
 		std::vector<User *> 		_banned_user;
+		std::vector<std::string> 	_operators;
 		size_t						_members_count;
 		std::string					_topic;
 		std::vector<std::string>	_mode;
@@ -58,10 +59,13 @@ class Channel
 
 		bool							userIsIn ( User * const & user ) const;
 		bool							userIsIn ( const std::string & user ) const;
-		bool							needsPass(void);
-		void							setPassword ( std::string password );
+
+		/************ MODES ***********************/				
 		bool							updateMode(std::string new_mode, std::string params);
+		void							setPassword ( std::string password );
+		bool							needsPass(void);
 		const std::string &				getPassword ( void ) const;
+		void							setOperator(std::string user_name);
 
 };
 

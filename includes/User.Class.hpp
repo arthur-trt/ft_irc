@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 17:59:07 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:22:21 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ class User
 		User&	operator= ( const User & rhs );
 
 		~User ( void );
-		bool	updateMode(std::string new_mode, std::string params);
-		void	deopping(std::string params);
-		void	setInvisible(std::string params);
+		bool	updateMode(std::string new_mode);
+		void	deopping();
+		void	setInvisible();
 
 
 };

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 18:19:38 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:22:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ User::~User ( void )
 	//debug("User destructor for %s", _user_name.c_str());
 }
 
-void	User::deopping(std::string params)
+void	User::deopping()
 {
-	(void)params;
 	std::vector<std::string>::iterator it;
 	it = std::find(_mode.begin(), _mode.end(), "+o");
 	if (it != _mode.end())
@@ -98,15 +97,14 @@ void	User::deopping(std::string params)
 		//on every chan ?????
 	}
 }
-void	User::setInvisible(std::string params)
+void	User::setInvisible()
 {
-	(void)params;
 	_mode.push_back("+i");
 }
 
-bool	User::updateMode(std::string new_mode, std::string params)
+bool	User::updateMode(std::string new_mode)
 {
-	typedef void (User::*Modes)(std::string params);
+	typedef void (User::*Modes)();
 	const std::string chan_mode[2] = {"-o", "+i"};
     
 	Modes changeMode[2] = {&User::deopping, &User::setInvisible};
@@ -114,11 +112,10 @@ bool	User::updateMode(std::string new_mode, std::string params)
 	{
 		if (chan_mode[i] == new_mode)
 		{
-			(this->*(changeMode[i]))(params);
+			(this->*(changeMode[i]))();
 			return true;
 		}
 	}
-	std::cout << "bah..." << std::endl;
 	return false;
 	
 }

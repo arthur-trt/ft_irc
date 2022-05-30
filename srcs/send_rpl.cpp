@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 17:45:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:30:34 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 221:
 			answer.append(RPL_UMODEIS(args, args2, args3));
+			break;
+		case 501:
+			answer.append(ERR_UMODEUNKNOWNFLAG(args));
 			break;
 		default:
 			;

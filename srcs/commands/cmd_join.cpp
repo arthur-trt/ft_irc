@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 16:05:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:45:45 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ bool check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, Us
 {
 	std::vector<std::string>	keys;
 
-	std::cout << "loooooooooooooooooool" << std::endl;
 	if (parse.size() > 1)
 	{
 		keys = ft_split(parse[1], ",");
@@ -97,21 +96,19 @@ bool check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, Us
 		{
 			if (chan->getPassword() != keys[i])
 			{
-				std::cout << "cacaaaaaaaaaaa" << std::endl;
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
 				return false;
 			}
-			std::cout << "ici ?" << std::endl;
 		}
 	}
 	else
 	{
-		std::cout << "ca devrait rentrer la" << std::cout;
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
  		return false;
 	}
 	return true;
 }
+
 void join(std::vector<std::string> parse, IRC *serv, User *user)
 {
 	std::vector<std::string>	chans;
@@ -147,6 +144,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 			tmp = serv->create_channel(chan, user);
 			tmp->send_all(serv, notice);
 			user->_channel_joined.push_back(tmp);
+			user->_mode.push_back("+o");
 			if (tmp->getTopic() != "")
 				cmd_topic(serv, user, chan);
 		}
@@ -155,62 +153,15 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 }
 
 
-
-// void join_with_password(std::vector<std::string> parse, IRC *serv, User *user)
-// {
-// 	std::vector<std::string>	chans;
-// 	std::vector<std::string>	keys;
-// 	std::pair<bool, Channel*>	chan;
-// 	chans = ft_split(parse[0], ",");
-// 	if (parse.size() > 1 )
-// 	{
-// 		keys = ft_split(parse[1], ",");
-// 		for (size_t i = 0; i < keys.size(); i++)
-// 		{
-// 			chan = serv->get_channel(chans[i]);
-// 			if (chan.first)
-// 			{
-// 				if (chan.second->getPassword() != "")
-// 				{
-// 					if (chan.second->getPassword() != keys[i])
-// 					{
-// 						
-// 					}
-// 				}
-// 			}
-// 			join(parse, serv, user);			 
-// 		}
-// 	}
-// 	std::cout << "keys" << keys.size() << std::endl;
-// 	for (size_t i = keys.size(); i < chans.size(); i++)
-// 	{
-// 		std::cout << "[i]" << i << std::endl;	
-// 		chan = serv->get_channel(chans[i]);
-// 		std::cout << "chan  " << chan.first << std::endl;
-// 		if (chan.first)
-// 		{
-			
-// 			if (chan.second->getPassword() == "")
-// 			{
-// 				std::cout << "tu rentres la batars ??" << std::endl;
-// 				join(parse, serv, user);
-// 			}
-// 			else
-// 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
-// 		}
-// 	}
-// }
-
 void	cmd_join ( IRC *serv, User *user, std::string & args )
 {
 	std::vector<std::string>	parse;
 	
 	parse = ft_split(args, " ");
-	// if (parse.begin() == parse.end())
-	// {
-	// 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
-	// 	return;
-	// }
+	if (args == "")
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
+		return;
+	}
 	join(parse, serv, user);
-	//join_with_password(parse, serv, user);
 }
