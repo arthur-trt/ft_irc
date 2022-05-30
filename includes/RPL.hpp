@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/27 18:05:18 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:03:07 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@
 # define ERR_CANNOTSENDTOCHAN(channel)	\
 	(" " + channel + " :Cannot send to channel\r\n")										// 404
 # define ERR_UNKNOWNMODE(channel) \
-	(" " + channel + " :is unknown mode char to me for \r\n")
+	(" " + channel + " :is unknown mode char to me for \r\n")								// 472
 # define ERR_BADCHANNELKEY(channel) \
-	(" " + channel + " :Cannot join channel (+k) \r\n")
+	(" " + channel + " :Cannot join channel (+k) \r\n")										// 475
+# define RPL_CHANNELMODEIS(channel, mode, modeparams) \
+	(" " + channel + " " + mode + " " + modeparams " :")									// 324						
 #endif
