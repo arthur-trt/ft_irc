@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.Class.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:55:12 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:13:54 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("NOTICE", &cmd_notice));
 	this->_available_command.insert(std::make_pair("KICK", &cmd_kick));
 	this->_available_command.insert(std::make_pair("MODE", &cmd_kick));
-	
+	this->_available_command.insert(std::make_pair("WHO", &cmd_who));
 }
 
 /**
@@ -230,4 +230,9 @@ void						IRC::send_everyone ( const std::string & msg )
 		}
 		++it;
 	}
+}
+
+const std::map<int, User*> &		IRC::get_user ( void ) const
+{
+	return (this->_connected_user);
 }

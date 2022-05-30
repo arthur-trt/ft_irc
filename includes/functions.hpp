@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 10:31:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:00:56 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:14:34 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string>
 # include "IRC.Class.hpp"
 # include "User.Class.hpp"
+# include "masks.hpp"
 
 std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args = "", std::string args2 = "");
 std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host);

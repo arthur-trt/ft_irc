@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 14:53:53 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:12:58 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ void	cmd_quit ( IRC *serv, User *user, std::string & args );
 void	cmd_notice (IRC *serv, User *user, std::string & args);
 void	cmd_kick ( IRC *serv, User *user, std::string & args );
 void	cmd_mode ( IRC *serv, User *user, std::string & args );
+void	cmd_who ( IRC *serv, User *user, std::string & args );
 
 #endif
