@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/30 16:06:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 18:18:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     std::string name;
     std::pair<bool, Channel*>	chan;
     std::string notice;
-    
 
-    std::cout << " args  ===" << args << std::endl;  
     parse = ft_split(args, " ");
     name = trim_copy(parse[0]);
     
@@ -97,43 +95,30 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
         serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user)));
 		return;
     }
-    //std::vector<std::string> reparse = ft_split(parse[1], " ");
     std::string mode = parse[1];
-    std::cout << "receiving  mode == " << mode << std::endl;
-    std::cout << "reparse.size() ==" << parse.size() << std::endl;
     std::string params = "";
     if (parse.size() > 2)
         params = parse[2];
-    //std::cout <<"params == "<<  params << std::endl;
-
-    chan = serv->get_channel(name);
-    if (chan.first)
+    if (name.find_first_of(CHAN_FIRST, 0) != std::string::npos)
     {
-        chan.second->addMode(mode);
-        chan.second->updateMode(mode, params);
-        std::cout << "needsPass" << chan.second->needsPass() << std::endl;
-        serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
-        // notice = user_answer(user);
-        // notice += ("MODE " + name + mode + params + "/r/n");
-        // chan.second->send_all(serv, notice);
+        chan = serv->get_channel(name);
+        if (chan.first)
+        {
+            if (chan.second->updateMode(mode, params))
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
+            // notice = user_answer(user);
+            // notice += ("MODE " + name + mode + params + "/r/n");
+            // chan.second->send_all(serv, notice);
+        }
     }
     else
     {
-        std::cout << "c'est pas un nom de chan" << std::endl;
+        std::pair<bool, User*>	some_user;
+        some_user = serv->get_user(name);
+        if (some_user.first)
+        {
+            if (some_user.second->updateMode(mode, params))
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(221, serv, user, mode, params)));
+        }
     }
-    // else
-    // {
-    //     std::pair<bool, User*>	some_user;
-    //     some_user = serv->get_user(name);
-    //     if (some_user.first)
-    //     {
-    //         std::cout << "coucou " << params << std::cout;
-    //         //some_user.second->addMode(mode);
-    //         //some_user.second->updateMode(mode, params);
-    //     }
-    //     else
-    //     {
-    //         std::cout << "wrong username" << std::endl;
-    //     }
-    // }
 }

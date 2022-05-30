@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/26 18:10:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 17:59:07 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class User
 		std::string					_nick_name;
 		std::string					_real_name;
 		std::string					_hostname;
-	
+		std::vector<std::string>	_mode;
 		std::vector<std::string>	_active_mode;
 		std::list<Channel *>		_channel_joined;
 		
@@ -62,6 +62,9 @@ class User
 		User&	operator= ( const User & rhs );
 
 		~User ( void );
+		bool	updateMode(std::string new_mode, std::string params);
+		void	deopping(std::string params);
+		void	setInvisible(std::string params);
 
 
 };
