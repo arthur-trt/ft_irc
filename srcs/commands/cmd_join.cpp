@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 13:42:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:05:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ Command: JOIN
            RPL_TOPIC
 */
 
-void check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, User *user, size_t i)
+bool check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, User *user, size_t i)
 {
 	std::vector<std::string>	keys;
+
+	std::cout << "loooooooooooooooooool" << std::endl;
 	if (parse.size() > 1)
 	{
 		keys = ft_split(parse[1], ",");
@@ -97,15 +99,18 @@ void check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, Us
 			{
 				std::cout << "cacaaaaaaaaaaa" << std::endl;
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
-				return ;
+				return false;
 			}
+			std::cout << "ici ?" << std::endl;
 		}
 	}
 	else
 	{
+		std::cout << "ca devrait rentrer la" << std::cout;
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(475, serv, user)));
- 		return ;
+ 		return false;
 	}
+	return true;
 }
 void join(std::vector<std::string> parse, IRC *serv, User *user)
 {
@@ -126,12 +131,16 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 		if (res.first)
 		{
 			if (res.second->needsPass())
-				check_password(res.second, parse, serv, user, i);
-			res.second->addUser(user);
-			res.second->send_all(serv, notice);
-			user->_channel_joined.push_back(res.second);
-			if (res.second->getTopic() != "")
-				cmd_topic(serv, user, chan);
+			{
+				if (check_password(res.second, parse, serv, user, i))
+				{
+					res.second->addUser(user);
+					res.second->send_all(serv, notice);
+					user->_channel_joined.push_back(res.second);
+					if (res.second->getTopic() != "")
+						cmd_topic(serv, user, chan);
+				}
+			}
 		}
 		else
 		{

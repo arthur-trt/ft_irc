@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/27 19:27:38 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:06:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     std::vector<std::string> parse;
     std::string name;
     std::pair<bool, Channel*>	chan;
+    std::string notice;
     
 
     std::cout << " args  ===" << args << std::endl;  
@@ -104,32 +105,35 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     if (parse.size() > 2)
         params = parse[2];
     //std::cout <<"params == "<<  params << std::endl;
-    if (name[0] == '#')
+
+    chan = serv->get_channel(name);
+    if (chan.first)
     {
-        chan = serv->get_channel(name);
-        if (chan.first)
-        {
-            chan.second->addMode(mode);
-            chan.second->updateMode(mode, params);
-        }
-        else
-        {
-            std::cout << "c'est pas un nom de chan" << std::endl;
-        }
+        chan.second->addMode(mode);
+        chan.second->updateMode(mode, params);
+        std::cout << "needsPass" << chan.second->needsPass() << std::endl;
+        serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
+        // notice = user_answer(user);
+        // notice += ("MODE " + name + mode + params + "/r/n");
+        // chan.second->send_all(serv, notice);
     }
     else
     {
-        std::pair<bool, User*>	some_user;
-        some_user = serv->get_user(name);
-        if (some_user.first)
-        {
-            std::cout << "coucou " << params << std::cout;
-            //some_user.second->addMode(mode);
-            //some_user.second->updateMode(mode, params);
-        }
-        else
-        {
-            std::cout << "wrong username" << std::endl;
-        }
+        std::cout << "c'est pas un nom de chan" << std::endl;
     }
+    // else
+    // {
+    //     std::pair<bool, User*>	some_user;
+    //     some_user = serv->get_user(name);
+    //     if (some_user.first)
+    //     {
+    //         std::cout << "coucou " << params << std::cout;
+    //         //some_user.second->addMode(mode);
+    //         //some_user.second->updateMode(mode, params);
+    //     }
+    //     else
+    //     {
+    //         std::cout << "wrong username" << std::endl;
+    //     }
+    // }
 }
