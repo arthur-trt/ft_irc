@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 15:39:29 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 15:17:32 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/30 14:10:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "commands.hpp"
 #include "utils.hpp"
 #include "IRC.Class.hpp"
+#include "masks.hpp"
 #include <map>
 #include <signal.h>
 

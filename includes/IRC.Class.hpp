@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 12:04:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/30 13:34:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,19 @@ class IRC
 		IRC ( int port, std::string _password );
 		~IRC ();
 
-		const std::string &			get_password ( void ) const;
+		const std::string &					get_password ( void ) const;
 
-		command						get_cmd ( const std::string & name ) const;
+		command								get_cmd ( const std::string & name ) const;
 
-		void						add_user ( int fd, std::string hostname );
-		void						remove_user ( int fd );
-		User*						get_user ( int fd );
-		std::pair<bool, User*>		get_user ( std::string const & nick_name ) const;
+		void								add_user ( int fd, std::string hostname );
+		void								remove_user ( int fd );
+		User*								get_user ( int fd );
+		std::pair<bool, User*>				get_user ( std::string const & nick_name ) const;
+		const std::map<int, User*> &		get_user ( void ) const;
 
-		Channel*					create_channel ( std::string & name, User * chan_operator );
-		void						remove_channel ( const std::string & name );
-		const std::pair<bool, Channel*>	get_channel ( std::string & name ) const;
+		Channel*							create_channel ( std::string & name, User * chan_operator );
+		void								remove_channel ( const std::string & name );
+		const std::pair<bool, Channel*>		get_channel ( std::string & name ) const;
 		const std::map<std::string, Channel*> & get_channel ( void ) const;
 
 		void						send_everyone ( const std::string & msg );

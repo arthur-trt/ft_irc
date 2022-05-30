@@ -18,6 +18,7 @@
 # include <string>
 # include "IRC.Class.hpp"
 # include "User.Class.hpp"
+# include "masks.hpp"
 
 std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args = "", std::string args2 = "", std::string args3 = "");
 std::string	user_answer(const std::string & nick, const std::string & username, const std::string & host);
