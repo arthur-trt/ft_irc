@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_join.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 18:45:45 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 12:26:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 	std::pair<bool, Channel*>	res;
 	Channel*					tmp;
 	std::string					notice;
-	
+
 	chans = ft_split(parse[0], ",");
 	for (size_t i = 0; i < chans.size(); i++)
 	{
@@ -138,6 +138,14 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 						cmd_topic(serv, user, chan);
 				}
 			}
+			else
+			{
+				res.second->addUser(user);
+				res.second->send_all(serv, notice);
+				user->_channel_joined.push_back(res.second);
+				if (res.second->getTopic() != "")
+					cmd_topic(serv, user, chan);
+			}
 		}
 		else
 		{
@@ -156,7 +164,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 void	cmd_join ( IRC *serv, User *user, std::string & args )
 {
 	std::vector<std::string>	parse;
-	
+
 	parse = ft_split(args, " ");
 	if (args == "")
 	{
