@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 10:43:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:31:28 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,13 +276,18 @@ void	Channel::setOperator(std::string user_name)
 	_operators.push_back(user_name); // hmmm c'est pas terrible
 	_mode.push_back("+o");
 }
+
+void	Channel::ban(std::string params)
+{
+	std::cout << params << std::endl;
+}
 bool	Channel::updateMode(std::string new_mode, std::string params)
 {
 	typedef void (Channel::*Modes)(std::string params);
-	const std::string chan_mode[2] = {"+k", "+o"};
+	const std::string chan_mode[3] = {"+k", "+o", "+b"};
     
-	Modes changeMode[2] = {&Channel::setPassword, &Channel::setOperator};
-	for (int i = 0; i < 2; i++)
+	Modes changeMode[3] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban};
+	for (int i = 0; i < 3; i++)
 	{
 		if (chan_mode[i] == new_mode)
 		{

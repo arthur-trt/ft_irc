@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 10:43:35 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:31:10 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ class Channel
 		const std::string &				getPassword ( void ) const;
 		void							setOperator(std::string user_name);
 		const std::string				getMode(void) const;
+		void							ban(std::string params);
 
 };
 
