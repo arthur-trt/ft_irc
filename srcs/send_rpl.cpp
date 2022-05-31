@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 18:30:34 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:36:17 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,14 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 4:
 			answer.append(RPL_MYINFO);
 			break;
-		case 431:
-			answer.append(ERR_NONICKNAMEGIVEN);
+		case 221:
+			answer.append(RPL_UMODEIS(args, args2, args3));
 			break;
-		case 433:
-			answer.append(ERR_NICKNAMEINUSE(args));
+		case 315:
+			answer.append(RPL_ENDOFWHO(args));
 			break;
-		case 432:
-			answer.append(ERR_ERRONEUSNICKNAME(args));
-			break;
-		case 461:
-			answer.append(ERR_NEEDMOREPARAMS(args));
-			break;
-		case 462:
-			answer.append(ERR_ALREADYREGISTRED);
-			break;
-		case 421:
-			answer.append(ERR_UNKNOWNCOMMAND(args));
-			break;
-		case 353:
-			answer.append(RPL_NAMREPLY(args));
-			break;
-		case 366:
-			answer.append(RPL_ENDOFNAMES(args));
+		case 324:
+			answer.append(RPL_CHANNELMODEIS(args, args2, args3));
 			break;
 		case 331:
 			answer.append(RPL_NOTOPIC(args));
@@ -88,14 +73,14 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 332:
 			answer.append(RPL_TOPIC(args));
 			break;
-		case 441:
-			answer.append(ERR_USERNOTINCHANNEL(args, args2));
+		case 353:
+			answer.append(RPL_NAMREPLY(args));
 			break;
-		case 442:
-			answer.append(ERR_NOTONCHANNEL(args));
+		case 366:
+			answer.append(RPL_ENDOFNAMES(args));
 			break;
-		case 482:
-			answer.append(ERR_CHANOPRIVSNEEDED(args));
+		case 402:
+			answer.append(ERR_NOSUCHSERVER(args));
 			break;
 		case 403:
 			answer.append(ERR_NOSUCHCHANNEL(args));
@@ -103,17 +88,38 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 404:
 			answer.append(ERR_CANNOTSENDTOCHAN(args));
 			break;
+		case 421:
+			answer.append(ERR_UNKNOWNCOMMAND(args));
+			break;
+		case 431:
+			answer.append(ERR_NONICKNAMEGIVEN);
+			break;
+		case 432:
+			answer.append(ERR_ERRONEUSNICKNAME(args));
+			break;
+		case 441:
+			answer.append(ERR_USERNOTINCHANNEL(args, args2));
+			break;
+		case 442:
+			answer.append(ERR_NOTONCHANNEL(args));
+			break;
+		case 433:
+			answer.append(ERR_NICKNAMEINUSE(args));
+			break;
+		case 461:
+			answer.append(ERR_NEEDMOREPARAMS(args));
+			break;
+		case 462:
+			answer.append(ERR_ALREADYREGISTRED);
+			break;
 		case 472:
 			answer.append(ERR_UNKNOWNMODE(args));
 			break;
 		case 475:
 			answer.append(ERR_BADCHANNELKEY(args));
 			break;
-		case 324:
-			answer.append(RPL_CHANNELMODEIS(args, args2, args3));
-			break;
-		case 221:
-			answer.append(RPL_UMODEIS(args, args2, args3));
+		case 482:
+			answer.append(ERR_CHANOPRIVSNEEDED(args));
 			break;
 		case 501:
 			answer.append(ERR_UMODEUNKNOWNFLAG(args));
