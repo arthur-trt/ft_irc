@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/05/30 18:34:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:17:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,8 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
     parse = ft_split(args, " ");
     name = trim_copy(parse[0]);
     
-    if (parse.size() < 2)
-    {
-        serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user)));
-		return;
-    }
-    std::string mode = parse[1];
     std::string params = "";
+    
     if (parse.size() > 2)
         params = parse[2];
     if (name.find_first_of(CHAN_FIRST, 0) != std::string::npos)
@@ -103,10 +98,19 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
         chan = serv->get_channel(name);
         if (chan.first)
         {
-            if (chan.second->updateMode(mode, params))
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
+            if (parse.size() < 2)
+            {
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, chan.second->getMode(), params)));
+                return;
+            }
             else
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(472, serv, user, name)));
+            {
+                std::string mode = parse[1];
+                if (chan.second->updateMode(mode, params))
+                    serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
+                else
+                    serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(472, serv, user, name)));
+            }
             // notice = user_answer(user);
             // notice += ("MODE " + name + mode + params + "/r/n");
             // chan.second->send_all(serv, notice);
@@ -118,10 +122,19 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
         some_user = serv->get_user(name);
         if (some_user.first)
         {
-            if (some_user.second->updateMode(mode))
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(221, serv, user, mode, params)));
+            if (parse.size() < 2)
+            {
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, some_user.second->getMode(), params)));
+                return;
+            }
             else
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(501, serv, user, mode)));
+            {
+                std::string mode = parse[1];
+                if (some_user.second->updateMode(mode))
+                    serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(221, serv, user, mode, params)));
+                else
+                    serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(501, serv, user, mode)));
+            }
         }   
     }
 }

@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 18:22:21 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 11:11:47 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ class User
 		bool	updateMode(std::string new_mode);
 		void	deopping();
 		void	setInvisible();
+		const std::string				getMode(void) const;
 
 
 };

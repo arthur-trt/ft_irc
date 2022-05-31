@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 18:56:54 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:43:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,4 +291,14 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 		}
 	}
 	return false;
+}
+
+const std::string	Channel::getMode(void) const
+{
+	std::string mode_str;
+	
+	std::vector<std::string>::const_iterator it;
+	for(it = _mode.begin(); it < _mode.end(); it++)
+		mode_str += *it;
+	return (mode_str);
 }
