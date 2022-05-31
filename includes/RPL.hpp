@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 14:33:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:40:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 	(" " + nick + " " + mode + " " + params + " \r\n")										// 221
 # define RPL_ENDOFWHO(name)			\
 	(" "+ name + " :End of WHO list\r\n")													// 315
+# define RPL_LIST(chan, topic)		\
+	(" " + chan + " :" + topic + "\r\n")													// 322
+# define RPL_LISTEND				\
+	(" :End of LIST\r\n")																	// 323
 # define RPL_CHANNELMODEIS(channel, mode, modeparams) \
 	(" " + channel + " " + mode + " " + modeparams + " \r\n")								// 324
 # define RPL_NOTOPIC(channel)			\

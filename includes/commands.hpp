@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 14:12:58 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:42:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	cmd_notice (IRC *serv, User *user, std::string & args);
 void	cmd_kick ( IRC *serv, User *user, std::string & args );
 void	cmd_mode ( IRC *serv, User *user, std::string & args );
 void	cmd_who ( IRC *serv, User *user, std::string & args );
+void	cmd_list ( IRC *serv, User *user, std::string & args );
 
 #endif
