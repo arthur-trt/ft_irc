@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:39:57 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 14:27:22 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:05:49 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,60 @@ std::list<User *>	user_masks (IRC * serv, std::string args)
 	std::map<int, User *>			users;
 	std::map<int, User *>::iterator	it;
 
-	std::string				pat_nick, pat_user, pat_hostname;
-	std::string::size_type	nick_end, user_end;
-
-	// Obtain the three pattern
-	nick_end = args.find('!');
-	user_end = args.find('@');
-	pat_nick = args.substr(0, nick_end);
-	pat_user = args.substr(nick_end + 1, (user_end - nick_end - 1));
-	pat_hostname = args.substr(user_end + 1, args.size());
-
 	users = serv->get_user();
 	it = users.begin();
-	while (it != users.end())
+
+	if (args.find_first_of('!') != std::string::npos && args.find_first_of('@') != std::string::npos)
 	{
-		if (pattern_match(it->second->_nick_name, pat_nick)	&&
-			pattern_match(it->second->_user_name, pat_user) &&
-			pattern_match(it->second->_hostname, pat_hostname))
+		std::string				pat_nick, pat_user, pat_hostname;
+		std::string::size_type	nick_end, user_end;
+
+		// Obtain the three pattern
+		nick_end = args.find('!');
+		user_end = args.find('@');
+		pat_nick = args.substr(0, nick_end);
+		pat_user = args.substr(nick_end + 1, (user_end - nick_end - 1));
+		pat_hostname = args.substr(user_end + 1, args.size());
+
+		while (it != users.end())
+		{
+			if (pattern_match(it->second->_nick_name, pat_nick)	&&
+				pattern_match(it->second->_user_name, pat_user) &&
+				pattern_match(it->second->_hostname, pat_hostname))
+			{
+				res.push_back(it->second);
+			}
+			it++;
+		}
+	}
+	else
+	{
+		while(it != users.end())
+		{
+			if (pattern_match(it->second->_nick_name, args) ||
+				pattern_match(it->second->_user_name, args) ||
+				pattern_match(it->second->_hostname, args) ||
+				pattern_match(it->second->_real_name, args))
+			{
+				res.push_back(it->second);
+			}
+			it++;
+		}
+	}
+	return (res);
+}
+
+std::list<Channel *>	channel_masks (IRC * serv, std::string args)
+{
+	std::list<Channel *>						res;
+	std::map<std::string, Channel *>			chans;
+	std::map<std::string, Channel *>::iterator	it;
+
+	chans = serv->get_channel();
+	it = chans.begin();
+	while (it != chans.end())
+	{
+		if (pattern_match(it->second->getName(), args))
 		{
 			res.push_back(it->second);
 		}
@@ -97,10 +134,3 @@ std::list<User *>	user_masks (IRC * serv, std::string args)
 	}
 	return (res);
 }
-
-//std::list<Channel *>	channel_masks (IRC * serv, std::string args)
-//{
-//	(void)serv;
-//	(void)args;
-
-//}
