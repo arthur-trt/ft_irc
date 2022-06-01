@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:21:58 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:44:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 		res = serv->get_channel(chan);
 		if (res.first)
 		{
-			if (!res.second->isBanned(user) && res.second->isInvited(user))
+			if (res.second->isBanned(user) && res.second->isInvited(user))
 			{
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(474, serv, user, res.second->getName())));
 				return;

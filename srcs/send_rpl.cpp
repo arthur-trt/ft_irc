@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:47:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:07:25 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			answer.append(ERR_NOTONCHANNEL(args));
 			break;
 		case 443:
-			answer.append(ERR_ONCHANNEL(args, args2));  //to treat with invite
+			answer.append(ERR_USERONCHANNEL(args, args2));  //to treat with invite
 			break;
 		case 433:
 			answer.append(ERR_NICKNAMEINUSE(args));

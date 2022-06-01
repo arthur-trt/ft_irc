@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 15:00:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:07:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 	(" " + nick + " " + channel + " :They aren't on that channel\r\n")						// 441
 # define ERR_NOTONCHANNEL(channel)		\
 	(" " + channel + " :You're not on that channel\r\n")									// 442
-# define ERR_ONCHANNEL(nick, channel)		\
+# define ERR_USERONCHANNEL(nick, channel)		\
 	(" " + nick + channel + " :is already on channel\r\n")									// 443
 # define ERR_NEEDMOREPARAMS(command)	\
 	(" " + command + " :Not enough parameters\r\n")											// 461
