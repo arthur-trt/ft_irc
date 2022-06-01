@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 14:41:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:00:05 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 442:
 			answer.append(ERR_NOTONCHANNEL(args));
 			break;
+		case 443:
+			answer.append(ERR_ONCHANNEL(args, args2));  //to treat with invite
+			break;
 		case 433:
 			answer.append(ERR_NICKNAMEINUSE(args));
 			break;
@@ -118,8 +121,17 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 462:
 			answer.append(ERR_ALREADYREGISTRED);
 			break;
+		case 467:
+			answer.append(ERR_KEYSET(args)); //
+			break;
 		case 472:
 			answer.append(ERR_UNKNOWNMODE(args));
+			break;
+		case 473:
+			answer.append(ERR_INVITEONLYCHAN(args));
+			break;
+		case 474:
+			answer.append(ERR_BANNEDFROMCHAN(args)); //
 			break;
 		case 475:
 			answer.append(ERR_BADCHANNELKEY(args));
@@ -129,6 +141,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 501:
 			answer.append(ERR_UMODEUNKNOWNFLAG(args));
+			break;
+		case 502:
+			answer.append(ERR_USERSDONTMATCH);
 			break;
 		default:
 			;

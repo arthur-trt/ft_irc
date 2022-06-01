@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_join.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 12:26:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:22:24 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,13 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 		res = serv->get_channel(chan);
 		if (res.first)
 		{
-			if (res.second->needsPass())
+			if (res.second->isBanned(user))
+			{
+				std::cout << "srv_name " << res.second->getName() << std::endl;
+				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(474, serv, user, res.second->getName())));
+				return;
+			}			
+			else if (res.second->needsPass())
 			{
 				if (check_password(res.second, parse, serv, user, i))
 				{

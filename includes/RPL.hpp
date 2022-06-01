@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 14:40:46 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:00:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,28 @@
 	(" " + nick + " " + channel + " :They aren't on that channel\r\n")						// 441
 # define ERR_NOTONCHANNEL(channel)		\
 	(" " + channel + " :You're not on that channel\r\n")									// 442
+# define ERR_ONCHANNEL(nick, channel)		\
+	(" " + nick + channel + " :is already on channel\r\n")									// 443
 # define ERR_NEEDMOREPARAMS(command)	\
 	(" " + command + " :Not enough parameters\r\n")											// 461
 # define ERR_ALREADYREGISTRED			\
 	(" :Unauthorized command (already registered)\r\n")										// 462
+# define ERR_KEYSET(channel)	\
+	(" " + channel + ":Channel key already set\r\n")										// 467
 # define ERR_UNKNOWNMODE(channel) \
 	(" " + channel + " :is unknown mode char to me for \r\n")								// 472
+# define ERR_INVITEONLYCHAN(channel) \
+	(channel + ":Cannot join channel (+i)\r\n")												// 473
+# define ERR_BANNEDFROMCHAN(channel) \
+	(channel + ":Cannot join channel (+b)\r\n")												// 474
 # define ERR_BADCHANNELKEY(channel) \
 	(" " + channel + " :Cannot join channel (+k) \r\n")										// 475
 # define ERR_CHANOPRIVSNEEDED(channel)	\
 	(" " + channel + " :You're not channel operator\r\n")									// 482
 # define  ERR_UMODEUNKNOWNFLAG(mode) \
 	(" :Unknown " + mode + " flag \r\n")													// 501
+# define  ERR_USERSDONTMATCH \
+	(" :Cannot change mode for other users \r\n")											// 502
 
 
 #endif

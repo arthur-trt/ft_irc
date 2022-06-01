@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 13:31:10 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:06:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
 
-
+#define CHAN_MODE "biklmnoprstv"
 
 class IRC;
 class Channel
@@ -28,7 +28,7 @@ class Channel
 		TCPServer					&_server;
 		const std::string			_name;
 		std::map<User *, bool>		_joined_user;
-		std::vector<User *> 		_banned_user;
+		std::vector<std::string> 	_banned_user;
 		std::vector<std::string> 	_operators;
 		size_t						_members_count;
 		std::string					_topic;
@@ -62,12 +62,12 @@ class Channel
 
 		/************ MODES ***********************/				
 		bool							updateMode(std::string new_mode, std::string params);
-		void							setPassword ( std::string password );
+		const std::string				getMode(void) const;
 		bool							needsPass(void);
 		const std::string &				getPassword ( void ) const;
-		void							setOperator(std::string user_name);
-		const std::string				getMode(void) const;
-		void							ban(std::string params);
+		void							setPassword (char op, std::string password );
+		void							setOperator(char op, std::string user_name);
+		void							ban(char op, std::string params);
 
 };
 
