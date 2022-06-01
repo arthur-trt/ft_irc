@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 12:00:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:47:50 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 366:
 			answer.append(RPL_ENDOFNAMES(args));
+			break;
+		case 401:
+			answer.append(ERR_NOSUCHNICK(args));
 			break;
 		case 402:
 			answer.append(ERR_NOSUCHSERVER(args));

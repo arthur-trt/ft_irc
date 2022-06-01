@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 11:06:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:57:33 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ class Channel
 		const std::string			_name;
 		std::map<User *, bool>		_joined_user;
 		std::vector<std::string> 	_banned_user;
+		std::vector<std::string> 	_invited_user;
 		std::vector<std::string> 	_operators;
 		size_t						_members_count;
 		std::string					_topic;
@@ -64,11 +65,12 @@ class Channel
 		bool							updateMode(std::string new_mode, std::string params);
 		const std::string				getMode(void) const;
 		bool							needsPass(void);
+		bool							isInvited(User *user);
 		const std::string &				getPassword ( void ) const;
 		void							setPassword (char op, std::string password );
 		void							setOperator(char op, std::string user_name);
 		void							ban(char op, std::string params);
-
+		void							invite(char op, std::string params);
 };
 
 #endif

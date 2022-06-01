@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 12:00:16 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:00:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 	(" = " + channel + " :")																// 353
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
+# define ERR_NOSUCHNICK(nick)		\
+	(" " + nick + " :No such nick/channel\r\n")											// 401
 # define ERR_NOSUCHSERVER(server)		\
 	(" " + server + " :No such server\r\n")													// 402
 # define ERR_NOSUCHCHANNEL(channel)		\

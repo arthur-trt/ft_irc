@@ -6,15 +6,14 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 10:47:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:59:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include "utils.hpp"
 #include "Channel.Class.hpp"
-
-static const std::string available_chan_mode = "+k-k";
+#define out(x) std::cout << x << std::endl; 
 
 /**
  * @brief Construct a new Channel:: Channel object
@@ -238,7 +237,7 @@ size_t					Channel::getMembersCount ( void ) const
 }
 
 
-bool						Channel::isBanned ( User * const & user ) const
+bool		Channel::isBanned ( User * const & user ) const
 {
 	std::vector<std::string>::const_iterator	it;
 
@@ -305,27 +304,49 @@ void	Channel::ban(char op, std::string params)
 {
 	if (op == '+')
 	{
-		_banned_user.push_back(params);
+		if (params != "")
+			_banned_user.push_back(params);
+		else
+		{
+			out("CACAACA"); //list of the banned
+			// std::vector<std::string>::iterator it;
+			// for (it = _banned_user.begin(); it < _banned_user.end(); it++)
+			// 	std::cout << *it << std::endl;
+		}
 	}
 	// if (op == '-')
 	// {
 	// 	std::vector<std::string>iterator kit;
-	// 	kit = std::find(_mode.begin(), _mode.end(), user_name);
+	// 	kit = std::find(_mode.begin(), _mode.end(), 'b');
 	// 	if (it != _mode.end())
 	// 		_mode.erase(it);
 		
 	// }
-	std::cout << params << std::endl;
+}
+void	Channel::invite(char op, std::string params)
+{
+	if (op == '+')
+	{
+		_mode.push_back("i");
+		_invited_user.push_back(params);
+	}
+	if (op == '-')
+	{
+		std::vector<std::string>::iterator it;
+		it = std::find(_mode.begin(), _mode.end(), "i");
+		if (it != _mode.end())
+			_mode.erase(it);
+	}
 }
 bool	Channel::updateMode(std::string new_mode, std::string params)
 {
 	typedef void (Channel::*Modes)(char op, std::string params);
-	const std::string chan_mode[3] = {"k", "o", "b"};
+	const std::string chan_mode[4] = {"k", "o", "b", "i"};
     
 	char op = new_mode[0];
 	new_mode = &new_mode[1];
-	Modes changeMode[3] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban};
-	for (int i = 0; i < 3; i++)
+	Modes changeMode[4] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite};
+	for (int i = 0; i < 4; i++)
 	{
 		if (chan_mode[i] == new_mode)
 		{
@@ -344,4 +365,21 @@ const std::string	Channel::getMode(void) const
 	for(it = _mode.begin(); it < _mode.end(); it++)
 		mode_str += *it;
 	return (mode_str);
+}
+
+bool	Channel::isInvited(User *user)
+{
+	std::vector<std::string>::iterator kit;
+	kit = std::find(_mode.begin(), _mode.end(), "i");
+	if (kit != _mode.end())
+	{
+		std::vector<std::string>::const_iterator it;
+		it = std::find(_invited_user.begin(), _invited_user.end(), user->_nick_name);
+		if (it != _invited_user.end())
+		{
+			return (true);
+		}
+		return (false);
+	}
+	return (true);
 }
