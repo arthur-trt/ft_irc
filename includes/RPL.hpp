@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 09:44:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 11:55:22 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,21 @@
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
 # define ERR_NOSUCHNICK(nick)		\
-	(" " + nick + " :No such nick/channel\r\n")											// 401
+	(" " + nick + " :No such nick/channel\r\n")												// 401
 # define ERR_NOSUCHSERVER(server)		\
 	(" " + server + " :No such server\r\n")													// 402
 # define ERR_NOSUCHCHANNEL(channel)		\
 	(" " + channel + " :No such channel\r\n")												// 403
 # define ERR_CANNOTSENDTOCHAN(channel)	\
 	(" " + channel + " :Cannot send to channel\r\n")										// 404
+# define ERR_NORECIPIENT(command)		\
+	(" :No recipient given " + command + "\r\n")											// 411
+# define ERR_NOTEXTTOSEND				\
+	(" :No text to send\r\n")																// 412
+# define ERR_NOTOPLEVEL(mask)			\
+	(" " + mask + " :No toplevel domain specified\r\n")										// 413
+# define ERR_WILDTOPLEVEL(mask)			\
+	(" " + mask + " :Wildcard in toplevel domain\r\n")										// 414
 # define ERR_UNKNOWNCOMMAND(command)	\
 	(" " + command + " :Unknown command\r\n")												// 421
 # define ERR_NONICKNAMEGIVEN			\

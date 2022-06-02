@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:15:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:34:06 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ User::User ( const std::string & hostname, const int fd ) :
 	_real_name = "";
 	_pass_send = false;
 	_connected = false;
+	_isOperator = true;
 	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("user fd constructor called");
 }
@@ -106,7 +107,7 @@ bool	User::updateMode(std::string new_mode)
 {
 	typedef void (User::*Modes)();
 	const std::string chan_mode[2] = {"-o", "+i"};
-    
+
 	Modes changeMode[2] = {&User::deopping, &User::setInvisible};
 	for (int i = 0; i < 2; i++)
 	{
@@ -117,12 +118,12 @@ bool	User::updateMode(std::string new_mode)
 		}
 	}
 	return false;
-	
+
 }
 const std::string	User::getMode(void) const
 {
 	std::string mode_str;
-	
+
 	std::vector<std::string>::const_iterator it;
 	for(it = _mode.begin(); it < _mode.end(); it++)
 		mode_str += *it;

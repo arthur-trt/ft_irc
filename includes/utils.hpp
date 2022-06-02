@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:36:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 12:04:57 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 10:54:10 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <vector>
 # include "IRC.Class.hpp"
 # include "User.Class.hpp"
+	#define _GLIBCXX_DEBUG 1
+	#define _GNU_SOURCE 1
 
 #if DEBUG
 	#include <stdio.h>
-	#define _GLIBCXX_DEBUG 1
-	#define _GNU_SOURCE 1
 	#define debug(x, ...)      do{fprintf(stderr, "%s:%s(%u): " x "\n", __FILE__, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}while(0)
 #else
 	#define debug(x, ...)      /* x */
@@ -63,7 +63,7 @@ const class nullptr_t
 } u_nullptr = {};
 
 template< class T >
-T* addressof(T& arg) 
+T* addressof(T& arg)
 {
     return reinterpret_cast<T*>(
                &const_cast<char&>(

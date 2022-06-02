@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:37:09 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:16:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:50:56 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	cmd_kick ( IRC *serv, User *user, std::string & args )
 		if (args.find_first_of(":") != std::string::npos)
 		{
 			tmp = ft_split(args, ":");
-			kick_message = tmp[1];
+			kick_message = (tmp.size() > 1) ? tmp[1] : "";
+			//tmp[1];
 		}
 		else
 		{
@@ -79,15 +80,15 @@ void	cmd_kick ( IRC *serv, User *user, std::string & args )
 								answer.append("KICK ");
 								answer.append(channels[i]);
 								answer.append(" ");
-								answer.append(users[i]);
+								answer.append(users[j]);
 								answer.append(" :");
 								if (kick_message != "")
 									answer.append(kick_message);
 								else
-									answer.append(users[i]);
+									answer.append(users[j]);
 								answer.append("\r\n");
 								chan_tmp.second->send_all(serv, answer);
-								to_kick = serv->get_user(users[i]);
+								to_kick = serv->get_user(users[j]);
 								chan_tmp.second->kickUser(to_kick.second);
 							}
 							else

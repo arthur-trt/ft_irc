@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/25 14:21:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:04:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,57 @@
 #include <vector>
 #include <string>
 
+static bool		valid_mask ( IRC *serv, User *user, std::string & args )
+{
+	std::string		tld;
+
+	if (args.find_first_of('.') == std::string::npos)
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(
+			user->_fd,
+			send_rpl(413, serv, user, args)
+		));
+		return (false);
+	}
+	tld = args.substr(args.find_last_of('.'), args.size());
+	if (tld.find_first_of('*') != std::string::npos || tld.find_first_of('?') != std::string::npos)
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(
+			user->_fd,
+			send_rpl(414, serv, user, args)
+		));
+		return (false);
+	}
+	return (true);
+}
+
+static bool		valid_args ( IRC *serv, User *user, std::string & args )
+{
+	std::vector<std::string>	split;
+	std::string					target, message;
+
+	split = ft_split(args, ":");
+	target = trim_copy(split[0]);
+	if (target == "")
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(
+			user->_fd,
+			send_rpl(411, serv, user, "PRIVMSG")
+		));
+		return (false);
+	}
+	message = trim_copy(split[0]);
+	if (message == "")
+	{
+		serv->_tcp.add_to_buffer(std::make_pair(
+			user->_fd,
+			send_rpl(412, serv, user)
+		));
+		return (false);
+	}
+	return (true);
+}
+
 void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 {
 	std::vector<std::string>	split;
@@ -26,34 +77,33 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 
 	split = ft_split(args, ":");
 	target = trim_copy(split[0]);
-	message.append(user_answer(user));
-	message.append("PRIVMSG ");
-	message.append(target);
-	message.append(" :");
-	message.append(split[1]);
-	message.append("\r\n");
-	if (target.find_first_of(CHAN_FIRST, 0) == std::string::npos)
+	if (valid_args(serv, user, args))
 	{
-		debug("Send message to user");
-		std::pair<bool, User*>	receiver;
-
-		receiver = serv->get_user(target);
-		if (receiver.first)
-			serv->_tcp.add_to_buffer(std::make_pair(receiver.second->_fd, message));				
-	}
-	else
-	{
-		debug("Send message to channel");
-		std::pair<bool, Channel*>	receiver;
-
-		receiver = serv->get_channel(target);
-		if (receiver.first)
+		// Test if server mask
+		if (target[0] == '$')
 		{
-			if (!(receiver.second->userIsIn(user)))
-				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(404, serv, user, target)));
+			if (user->_isOperator)
+			{
+				std::string	mask = trim_copy(target);
+				if (valid_mask(serv, user, mask))
+				{
+					if (pattern_match(serv->_tcp.getHostname(), mask))
+					{
+						message = user_answer(user);
+						message.append("PRIVMSG ");
+						message.append(mask);
+						message.append(" :");
+						message.append(split[1]);
+						message.append("\r\n");
+						serv->send_everyone(message);
+					}
+				}
+			}
 			else
-				receiver.second->send(serv, user, message);
-				
+			{
+				// NO ERROR CODE IN RFC WTF PEOPLE
+			}
 		}
+		
 	}
 }
