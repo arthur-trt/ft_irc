@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:57:33 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:02:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,22 @@ class Channel
 
 		bool							userIsIn ( User * const & user ) const;
 		bool							userIsIn ( const std::string & user ) const;
+		bool							isOperator(User const &user) const;
+		bool							inviteOnly(void) const;
+		
 
-		/************ MODES ***********************/				
+		/******************** MODES ***********************/
+					
 		bool							updateMode(std::string new_mode, std::string params);
 		const std::string				getMode(void) const;
 		bool							needsPass(void);
-		bool							isInvited(User *user);
+		bool							isInvited(User * user);
 		const std::string &				getPassword ( void ) const;
 		void							setPassword (char op, std::string password );
 		void							setOperator(char op, std::string user_name);
 		void							ban(char op, std::string params);
 		void							invite(char op, std::string params);
+		void							addInvited ( std::string nickname );
 };
 
 #endif

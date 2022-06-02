@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 09:44:03 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:46:06 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@
 	(" " + channel + " :No topic is set\r\n")												// 331
 # define RPL_TOPIC(channel)				\
 	(" " + channel + " :")																	// 332
+# define RPL_INVITING(channel, nick)			\
+	(" " + nick + channel + "\r\n")																// 341
 # define RPL_NAMREPLY(channel)			\
 	(" = " + channel + " :")																// 353
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
 # define ERR_NOSUCHNICK(nick)		\
-	(" " + nick + " :No such nick/channel\r\n")											// 401
+	(" " + nick + " :No such nick/channel\r\n")												// 401
 # define ERR_NOSUCHSERVER(server)		\
 	(" " + server + " :No such server\r\n")													// 402
 # define ERR_NOSUCHCHANNEL(channel)		\
@@ -78,9 +80,9 @@
 # define ERR_UNKNOWNMODE(channel) \
 	(" " + channel + " :is unknown mode char to me for \r\n")								// 472
 # define ERR_INVITEONLYCHAN(channel) \
-	(channel + ":Cannot join channel (+i)\r\n")												// 473
+	(" " + channel + " :Cannot join channel (+i)\r\n")										// 473
 # define ERR_BANNEDFROMCHAN(channel) \
-	(channel + ":Cannot join channel (+b)\r\n")												// 474
+	(" " + channel + " :Cannot join channel (+b)\r\n")										// 474
 # define ERR_BADCHANNELKEY(channel) \
 	(" " + channel + " :Cannot join channel (+k) \r\n")										// 475
 # define ERR_CHANOPRIVSNEEDED(channel)	\
