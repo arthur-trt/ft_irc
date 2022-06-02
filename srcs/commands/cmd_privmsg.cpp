@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 19:26:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:27:38 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 			}
 			else
 			{
-				debug("%s : Not operator", user->_nick_name);
+				debug("%s : Not operator", user->_nick_name.c_str());
 			}
 		}
 		// Test if it's a hostname mask
@@ -116,7 +116,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 				users_list_it = users_list.begin();
 				while (users_list_it != users_list.end())
 				{
-					debug("Mask match with : %s", (*users_list_it)->_nick_name);
+					debug("Mask match with : %s", (*users_list_it)->_nick_name.c_str());
 					if (*users_list_it != user)
 					{
 						serv->_tcp.add_to_buffer(std::make_pair(
@@ -129,7 +129,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 			}
 			else
 			{
-				debug("%s : Not operator", user->_nick_name);
+				debug("%s : Not operator", user->_nick_name.c_str());
 			}
 		}
 		else
