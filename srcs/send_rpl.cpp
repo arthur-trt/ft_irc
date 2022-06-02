@@ -6,11 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2022/06/02 09:41:11 by atrouill         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/02 09:38:50 by atrouill         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2022/06/02 09:44:20 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
