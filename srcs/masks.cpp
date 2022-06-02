@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:39:57 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 13:05:49 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:10:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 #include <list>
 
 
-static bool			pattern_match (std::string str, std::string pattern )
+bool			pattern_match (std::string str, std::string pattern )
 {
 	size_t n = str.size();
 	size_t m = pattern.size();

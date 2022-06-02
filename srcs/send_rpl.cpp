@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 11:04:09 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:53:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,18 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 404:
 			answer.append(ERR_CANNOTSENDTOCHAN(args));
+			break;
+		case 411:
+			answer.append(ERR_NORECIPIENT(args));
+			break;
+		case 412:
+			answer.append(ERR_NOTEXTTOSEND);
+			break;
+		case 413:
+			answer.append(ERR_NOTOPLEVEL(args));
+			break;
+		case 414:
+			answer.append(ERR_WILDTOPLEVEL(args));
 			break;
 		case 421:
 			answer.append(ERR_UNKNOWNCOMMAND(args));

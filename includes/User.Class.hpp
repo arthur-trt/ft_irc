@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:16:29 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:33:47 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ class User
 		std::vector<std::string>	_mode;
 		std::vector<std::string>	_active_mode;
 		std::list<Channel *>		_channel_joined;
-		
-		
+
+
 		/**
 		 * Fd of the socket in use for the connection
 		 */
@@ -48,7 +48,7 @@ class User
 		///**
 		// * Is the user operator ?
 		// */
-		//bool			_isOperator;
+		bool			_isOperator; //tmp;
 
 	public:
 		User ( void );
