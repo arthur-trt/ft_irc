@@ -6,58 +6,70 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/01 16:16:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:59:43 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string>
+#include "RPL.hpp"
 #include "utils.hpp"
-#include "Channel.Class.hpp"
-
+#include "IRC.Class.hpp"
+#include "commands.hpp"
+#include "functions.hpp"
 /*
         ERR_NEEDMOREPARAMS     ok         ERR_NOSUCHNICK ok
         ERR_NOTONCHANNEL      ok          ERR_USERONCHANNEL ok
-        ERR_CHANOPRIVSNEEDED
-        RPL_INVITING                    RPL_AWAY
+        ERR_CHANOPRIVSNEEDED  ok
+        RPL_INVITING
+          341    RPL_INVITING
+              "<channel> <nick>"
+
+         - Returned by the server to indicate that the
+           attempted INVITE message was successful and is
+           being passed onto the end client.             
 */
 
-void cmd_invite(std::vector<std::string> args, IRC *serv, User *user)
+void cmd_invite ( IRC *serv, User *user, std::string & args )
 {
     std::vector<std::string>	parse;
 	std::pair<bool, Channel*>	chan;
-	Channel*					tmp;
 	// std::string					notice;
-    std::string                 name;
+    std::string                 nick;
+    std::string                 chan_name;
     std::string                 user_invited;
     
     parse = ft_split(args, " ");
-    name = trim_copy(parse[0]);
+    nick = trim_copy(parse[0]);
     if (parse.size() < 2)
     {
         serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "INVITE")));
         return;
     }
-	//if (user is not op) faire une fonction isop
-	//serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(441, serv, user, user._nick_name)));
-    else if (chan.find_first_of(CHAN_FIRST, 0) != std::string::npos)
+    chan_name = trim_copy(parse[1]);
+    chan = serv->get_channel(chan_name);
+    if (chan.first)
     {
-        chan = serv->get_channel(name);
-        if (chan.first)
+        if (chan.second->isOperator(*user))
         {
-            std::pair<bool, User*>	new_user;
-            new_user = serv->get_user(name);
-            if (new_user.first)
-            {
-				if (!chan.second->userIsIn(user))
-					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(441, serv, user, user._nick_name)));
-                else if (chan.second->userIsIn(new_user))
-					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(443, serv, user, new_user._nick_name)));
-				else
-                	chan.second->_invited_user.push_back(new_user);
-            }
-            else
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(401, serv, user, new_user._nick_name)));
+            serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
+            return;
         }
+        std::pair<bool, User *> new_user;
+        new_user = serv->get_user(nick);
+        if (new_user.first)
+        {
+            if (!chan.second->userIsIn(user->_nick_name))
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(441, serv, user, user->_nick_name)));
+            else if (chan.second->userIsIn(nick))
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(443, serv, user, nick)));
+            else
+            {
+                chan.second->addUser(new_user.second);
+                chan.second->addInvited(new_user.second);//addUSer in invitedList
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(341, serv, user, nick)));
+            }
+        }
+        else
+            serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(401, serv, user, nick, chan_name)));
     }
 }
     

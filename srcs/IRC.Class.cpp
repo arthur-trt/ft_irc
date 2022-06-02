@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 15:41:48 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:14:03 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("MODE", &cmd_kick));
 	this->_available_command.insert(std::make_pair("WHO", &cmd_who));
 	this->_available_command.insert(std::make_pair("LIST", &cmd_list));
-	this->_available_command.insert(std::make_pair("INVITE", &cmd_list));
+	this->_available_command.insert(std::make_pair("INVITE", &cmd_invite));
 }
 
 /**

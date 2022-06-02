@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/01 16:06:39 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:01:44 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,13 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
 				else
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(472, serv, user, name)));
-				// notice = user_answer(user);
-				// notice.append("MODE ");
-				// notice.append(name);
-				// notice.append(mode);
-				// notice.append(params);
-				// notice.append("\r\n");
-				// chan.second->send_all(serv, notice);
+				notice = user_answer(user);
+				notice.append("MODE ");
+				notice.append(name + " ");
+				notice.append(mode + " ");
+				notice.append(params + " ");
+				notice.append("\r\n");
+				chan.second->send_all(serv, notice);
 			}
 		}
 	}
