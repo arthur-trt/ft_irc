@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 19:29:43 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:38:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 				while (users_list_it != users_list.end())
 				{
 					debug("Mask match with : %s", (*users_list_it)->_nick_name.c_str());
-					if (*users_list_it != user)
+					if ((*users_list_it)->_nick_name != user->_nick_name)
 					{
 						serv->_tcp.add_to_buffer(std::make_pair(
 							(*users_list_it)->_fd,
