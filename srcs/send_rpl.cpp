@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
 /*   Updated: 2022/06/02 11:04:09 by ldes-cou         ###   ########.fr       */
@@ -120,6 +120,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 433:
 			answer.append(ERR_NICKNAMEINUSE(args));
+			break;
+		case 451:
+			answer.append(ERR_NOTREGISTERED);
 			break;
 		case 461:
 			answer.append(ERR_NEEDMOREPARAMS(args));

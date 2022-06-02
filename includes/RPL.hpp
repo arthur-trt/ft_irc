@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
 /*   Updated: 2022/06/02 12:46:06 by ldes-cou         ###   ########.fr       */
@@ -69,6 +69,8 @@
 	(" " + channel + " :You're not on that channel\r\n")									// 442
 # define ERR_USERONCHANNEL(nick, channel)		\
 	(" " + nick + channel + " :is already on channel\r\n")									// 443
+# define ERR_NOTREGISTERED				\
+	(" :You have not registered\r\n")														// 451
 # define ERR_NEEDMOREPARAMS(command)	\
 	(" " + command + " :Not enough parameters\r\n")											// 461
 # define ERR_ALREADYREGISTRED			\
