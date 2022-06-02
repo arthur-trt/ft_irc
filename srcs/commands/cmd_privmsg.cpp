@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:04:39 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:20:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,21 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 	target = trim_copy(split[0]);
 	if (valid_args(serv, user, args))
 	{
+		message = user_answer(user);
+		message.append("PRIVMSG ");
+		message.append(target);
+		message.append(" :");
+		message.append(split[1]);
+		message.append("\r\n");
 		// Test if server mask
 		if (target[0] == '$')
 		{
 			if (user->_isOperator)
 			{
-				std::string	mask = trim_copy(target);
-				if (valid_mask(serv, user, mask))
+				if (valid_mask(serv, user, target))
 				{
-					if (pattern_match(serv->_tcp.getHostname(), mask))
+					if (pattern_match(serv->_tcp.getHostname(), target))
 					{
-						message = user_answer(user);
-						message.append("PRIVMSG ");
-						message.append(mask);
-						message.append(" :");
-						message.append(split[1]);
-						message.append("\r\n");
 						serv->send_everyone(message);
 					}
 				}
@@ -104,6 +103,64 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 				// NO ERROR CODE IN RFC WTF PEOPLE
 			}
 		}
-		
+		// Test if it's a hostname mask
+		else if (target[0] == '#' && args.find_first_of('.') != std::string::npos)
+		{
+			if (user->_isOperator)
+			{
+				std::list<User *>			users_list;
+				std::list<User *>::iterator	users_list_it;
+
+				users_list = user_masks(serv, "*!*@" + target);
+				users_list_it = users_list.begin();
+				while (users_list_it != users_list.end())
+				{
+					if (*users_list_it != user)
+					{
+						serv->_tcp.add_to_buffer(std::make_pair(
+							(*users_list_it)->_fd,
+							message
+						));
+					}
+					users_list_it++;
+				}
+			}
+		}
+		else
+		{
+			std::pair<bool, Channel *>	chan_tmp = serv->get_channel(target);
+			std::pair<bool, User *>		user_tmp = serv->get_user(target);
+
+			// If found a channel
+			if (chan_tmp.first)
+			{
+				if (chan_tmp.second->userIsIn(user))
+				{
+					chan_tmp.second->send(serv, user, message);
+				}
+				else
+				{
+					serv->_tcp.add_to_buffer(std::make_pair(
+						user->_fd,
+						send_rpl(404, serv, user, target)
+					));
+				}
+			}
+			// If found a user
+			else if (user_tmp.first)
+			{
+				serv->_tcp.add_to_buffer(std::make_pair(
+					user_tmp.second->_fd,
+					message
+				));
+			}
+			else
+			{
+				serv->_tcp.add_to_buffer(std::make_pair(
+					user->_fd,
+					send_rpl(401, serv, user, target)
+				));
+			}
+		}
 	}
 }
