@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 12:57:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:04:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,9 +401,9 @@ bool	Channel::isInvited(User *user)
 	}
 	return (true);
 }
-void	Channel::addInvited ( User * user )
+void	Channel::addInvited ( std::string nickname)
 {
-	_invited_user.push_back(user);
+	_invited_user.push_back(nickname);
 }
 bool	Channel::inviteOnly() const
 {

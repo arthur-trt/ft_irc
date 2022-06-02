@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 12:57:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:02:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ class Channel
 		void							setOperator(char op, std::string user_name);
 		void							ban(char op, std::string params);
 		void							invite(char op, std::string params);
-		void							addInvited ( User * user );
+		void							addInvited ( std::string nickname );
 };
 
 #endif

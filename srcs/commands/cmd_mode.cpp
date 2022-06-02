@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/02 12:01:44 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:10:40 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 				notice.append(mode + " ");
 				notice.append(params + " ");
 				notice.append("\r\n");
-				chan.second->send_all(serv, notice);
+				chan.second->send(serv, user, notice);
 			}
 		}
 	}
