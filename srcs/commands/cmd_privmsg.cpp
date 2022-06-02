@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 19:27:38 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:29:43 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 			{
 				if (valid_mask(serv, user, target))
 				{
-					if (pattern_match(serv->_tcp.getHostname(), target))
+					std::string					mask = target.substr(1);
+					if (pattern_match(serv->_tcp.getHostname(), mask))
 					{
 						debug("Server pattern mathc");
 						serv->send_everyone(message);
@@ -111,8 +112,9 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 			{
 				std::list<User *>			users_list;
 				std::list<User *>::iterator	users_list_it;
+				std::string					mask = target.substr(1);
 
-				users_list = user_masks(serv, "*!*@" + target);
+				users_list = user_masks(serv, "*!*@" + mask);
 				users_list_it = users_list.begin();
 				while (users_list_it != users_list.end())
 				{
