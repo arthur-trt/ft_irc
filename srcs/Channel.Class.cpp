@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:40:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:52:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,13 +317,6 @@ void	Channel::ban(char op, std::string params)
 	{
 		if (params != "")
 			_banned_user.push_back(params);
-		else
-		{
-			out("CACAACA"); //list of the banned
-			// std::vector<std::string>::iterator it;
-			// for (it = _banned_user.begin(); it < _banned_user.end(); it++)
-			// 	std::cout << *it << std::endl;
-		}
 	}
 	if (op == '-')
 	{
@@ -344,7 +337,7 @@ void	Channel::invite(char op, std::string params)
 		_mode.push_back("i");
 		_invited_user.push_back(params);
 	}
-	if (op == '-')
+	else if (op == '-')
 	{
 		std::vector<std::string>::iterator it;
 		it = std::find(_mode.begin(), _mode.end(), "i");
@@ -360,6 +353,8 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 	char op = new_mode[0];
 	new_mode = &new_mode[1];
 	bool ret (false);
+	if (op != '+' && op != '-')
+		return (ret); 
 	Modes changeMode[4] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite};
 	for (int i = 0; i < 4; i++)
 	{

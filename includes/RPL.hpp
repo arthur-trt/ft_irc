@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:53:08 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:48:05 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 # define RPL_HPP
 
 # include "config.hpp"
-
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define PINK "\x1B[45;1m"
+# define BLUE1 "\x1B[34m"
+# define PURPLE "\x1B[35m"
+# define BLUE2 "\x1B[36m"
+# define BLUE3 "\x1B[34;1m"
+# define END "\033[0m"
 
 # define RPL_WELCOME(nick, user, host)	\
 	(" :Welcome to the Internet Relay Network " + nick + "!" + user + "@" + host + "\r\n")	//001
@@ -42,11 +50,15 @@
 # define RPL_TOPIC(channel)				\
 	(" " + channel + " :")																	// 332
 # define RPL_INVITING(channel, nick)			\
-	(" " + nick + channel + "\r\n")																// 341
+	(" " + nick + channel + "\r\n")															// 341
 # define RPL_NAMREPLY(channel)			\
 	(" = " + channel + " :")																// 353
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
+# define RPL_BANLIST(channel, banmasks)		\
+	(" " + channel + banmasks + "\r\n")														// 367
+# define RPL_ENDOFBANLIST(channel)		\
+	(" " + channel + "\r\n")																// 368
 # define ERR_NOSUCHNICK(nick)		\
 	(" " + nick + " :No such nick/channel\r\n")												// 401
 # define ERR_NOSUCHSERVER(server)		\

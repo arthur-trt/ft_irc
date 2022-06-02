@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/02 15:49:52 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:50:35 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ Channel Modes
 		v - give/take the voice privilege;
 
 		a - toggle the anonymous channel flag;
-		i - toggle the invite-only channel flag;
+		i - toggle the invite-only channel flag; ok
 		m - toggle the moderated channel;
 		n - toggle the no messages to channel from clients on the
 			outside;
@@ -66,26 +66,45 @@ Channel Modes
 		r - toggle the server reop channel flag;
 		t - toggle the topic settable by channel operator only flag;
 
-		k - set/remove the channel key (password);
+		k - set/remove the channel key (password); ok
 		l - set/remove the user limit to channel;
 
-		b - set/remove ban mask to keep users out;
+		b - set/remove ban mask to keep users out; ok
 		e - set/remove an exception mask to override a ban mask;
-		I - set/remove an invitation mask to automatically override
+		I - set/remove an invitation mask to automatically override ???
 			the invite-only flag;
+		367    RPL_BANLIST
+              "<channel> <banmask>"
+       368    RPL_ENDOFBANLIST
+              "<channel> :End of channel ban list"
+
+         - When listing the active 'bans' for a given channel,
+           a server is required to send the list back using the
+           RPL_BANLIST and RPL_ENDOFBANLIST messages.  A separate
+           RPL_BANLIST is sent for each active banmask.  After the
+           banmasks have been listed (or if none present) a
+           RPL_ENDOFBANLIST MUST be sent.
 */
 void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 {
 	std::vector<std::string> banned = chan->getBannedUser();
 	std::string userMessage;
+	std::cout << RED << "ICI ?" <<  END << std::endl;
 	userMessage = user_answer(user);
 	for (size_t i = 0; i < banned.size(); i++)
 	{
+		std::cout << GREEN << "LA ?" <<  END << std::endl;
+		std::cout << banned[i]<< std::endl;
 		userMessage += banned[i];
 		userMessage += " ";
 	}
 	userMessage += "\r\n";
+	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(367, serv, user, chan->getName(), userMessage)));
+	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(368, serv, user, chan->getName())));
 	chan->send(serv, user, userMessage);
+	
+	
+	
 }
 
 void	cmd_mode ( IRC *serv, User *user, std::string & args )
