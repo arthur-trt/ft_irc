@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/01 14:05:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 12:16:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	cmd_kick ( IRC *serv, User *user, std::string & args );
 void	cmd_mode ( IRC *serv, User *user, std::string & args );
 void	cmd_who ( IRC *serv, User *user, std::string & args );
 void	cmd_list ( IRC *serv, User *user, std::string & args );
-void    cmd_invite(std::vector<std::string> parse, IRC *serv, User *user);
+void    cmd_invite ( IRC *serv, User *user, std::string & args );
 
 #endif

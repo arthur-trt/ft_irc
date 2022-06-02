@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 11:56:10 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:53:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 332:
 			answer.append(RPL_TOPIC(args));
+			break;
+		case 341:
+			answer.append(RPL_INVITING(args, args2));
 			break;
 		case 353:
 			answer.append(RPL_NAMREPLY(args));
