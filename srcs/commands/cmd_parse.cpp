@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 16:59:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:39:22 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 		}
 		str_upper(cmd);
 		cmd_ptr = serv->get_cmd(cmd);
+		if ((cmd_ptr != cmd_user && cmd_ptr != cmd_pass && cmd_ptr != cmd_nick) && user->_connected == false)
+		{
+			
+		}
 		if (cmd_ptr != &cmd_not_found)
 			cmd_ptr(serv, user, args);
 		else
