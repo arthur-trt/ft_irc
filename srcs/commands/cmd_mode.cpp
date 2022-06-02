@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/02 15:10:40 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:49:52 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,19 @@ Channel Modes
 		I - set/remove an invitation mask to automatically override
 			the invite-only flag;
 */
+void	printBannedUsers( IRC *serv, Channel * chan, User * user)
+{
+	std::vector<std::string> banned = chan->getBannedUser();
+	std::string userMessage;
+	userMessage = user_answer(user);
+	for (size_t i = 0; i < banned.size(); i++)
+	{
+		userMessage += banned[i];
+		userMessage += " ";
+	}
+	userMessage += "\r\n";
+	chan->send(serv, user, userMessage);
+}
 
 void	cmd_mode ( IRC *serv, User *user, std::string & args )
 {
@@ -106,7 +119,9 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 			else
 			{
 				std::string mode = parse[1];
-				if (chan.second->updateMode(mode, params))
+				if (mode == "b")
+					printBannedUsers(serv, chan.second, user);
+				else if (chan.second->updateMode(mode, params))
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
 				else
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(472, serv, user, name)));

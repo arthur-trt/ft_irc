@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:04:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/02 15:40:57 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,4 +411,9 @@ bool	Channel::inviteOnly() const
 	if (std::find(_mode.begin(), _mode.end(), "i") != _mode.end())
 		return (true);
 	return (false);
+}
+
+const std::vector<std::string> &Channel::getBannedUser( void ) const
+{
+	return (_banned_user);
 }
