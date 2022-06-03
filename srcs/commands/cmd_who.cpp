@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_who.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:37:24 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 13:32:09 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:49:16 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ void	cmd_who ( IRC *serv, User *user, std::string & args )
 		it = res.begin();
 		while (it != res.end())
 		{
-			answer =	"* " + (*it)->_user_name + " " + (*it)->_hostname
+			if (!(*it)->isInvisible())
+			{
+				answer =	"* " + (*it)->_user_name + " " + (*it)->_hostname
 						+ " " + serv->_tcp.getHostname() + " " + (*it)->_nick_name
 						+ " H :0 " + (*it)->_real_name;
-			who_helper(serv, user, answer);
+				who_helper(serv, user, answer);
+			}
 			it++;
 		}
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(315, serv, user, args)));
@@ -84,10 +87,13 @@ void	cmd_who ( IRC *serv, User *user, std::string & args )
 			it_users = users.begin();
 			while (it_users != users.end())
 			{
-				answer = (*it_chan)->getName() + " " + it_users->first->_user_name + " " + it_users->first->_hostname
-						+ " " + serv->_tcp.getHostname() + " " + it_users->first->_nick_name
-						+ " H :0 " + it_users->first->_real_name;
-				who_helper(serv, user, answer);
+				if (!(*it_users->first).isInvisible())
+				{
+					answer = (*it_chan)->getName() + " " + it_users->first->_user_name + " " + it_users->first->_hostname
+							+ " " + serv->_tcp.getHostname() + " " + it_users->first->_nick_name
+							+ " H :0 " + it_users->first->_real_name;
+					who_helper(serv, user, answer);
+				}
 				it_users++;
 			}
 			it_chan++;

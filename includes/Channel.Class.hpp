@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:41:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:29:20 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ class Channel
 		
 
 		/******************** MODES ***********************/
-					
+		bool							isModeThere(char mode);	
 		bool							updateMode(std::string new_mode, std::string params);
 		const std::string				getMode(void) const;
 		bool							needsPass(void);

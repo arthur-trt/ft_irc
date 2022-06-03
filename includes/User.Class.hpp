@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:38:28 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:33:47 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:48:54 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,12 @@ class User
 		User&	operator= ( const User & rhs );
 
 		~User ( void );
-		bool	updateMode(std::string new_mode);
-		void	deopping();
-		void	setInvisible();
-		const std::string				getMode(void) const;
+		bool					updateMode(std::string new_mode);
+		void					deopping( char mode, char op );
+		void					setInvisible( char mode, char op );
+		const std::string		getMode(void) const;
+		bool					isInvisible( void );
+		bool					isModeThere(char mode);
 
 
 };

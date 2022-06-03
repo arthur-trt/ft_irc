@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:34:06 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:48:46 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,36 +88,87 @@ User::~User ( void )
 	//debug("User destructor for %s", _user_name.c_str());
 }
 
-void	User::deopping()
+void	User::deopping(char mode, char op)
 {
-	std::vector<std::string>::iterator it;
-	it = std::find(_mode.begin(), _mode.end(), "+o");
-	if (it != _mode.end())
+	( void )mode;
+	if (op == '-')
 	{
-		_mode.erase(it);
-		//on every chan ?????
+		std::vector<std::string>::iterator it;
+		it = std::find(_mode.begin(), _mode.end(), "o");
+		if (it != _mode.end())
+		{
+			_mode.erase(it);
+		}
 	}
 }
-void	User::setInvisible()
+bool	User::isInvisible( void )
 {
-	_mode.push_back("+i");
+	std::vector<std::string>::iterator it;
+	it = std::find(_mode.begin(), _mode.end(), "i");
+	if (it != _mode.end())
+		return (true);
+	return (false);
+}
+void	User::setInvisible(char mode,  char op)
+{
+	std::cout << RED << op << END << std::endl;
+	if (op == '+')
+	{
+		std::cout << BLUE2 << op << END << std::endl;
+		if (!isModeThere(mode))
+			_mode.push_back("i");
+	}
+	else if (op == '-')
+	{
+		std::cout << RED << "caca" << END << std::endl;
+		std::vector<std::string>::iterator it;
+		it = std::find(_mode.begin(), _mode.end(), "i");
+		if (it != _mode.end())
+			_mode.erase(it);
+	}
+}
+
+bool	User::isModeThere(char mode)
+{
+	
+	std::vector<std::string>::iterator it;
+	for (it = _mode.begin(); it < _mode.end(); it++)
+	{
+		if (mode == (*it)[0])
+			return (true);
+	}
+	return (false);		
 }
 
 bool	User::updateMode(std::string new_mode)
 {
-	typedef void (User::*Modes)();
-	const std::string chan_mode[2] = {"-o", "+i"};
+	typedef void (User::*Modes)(char mode, char op);
+	const char chan_mode[2] = {'o', 'i'};
 
+	std::cout << BLUE2 << "NewMode =" << END << new_mode << std::endl;
+	char op = new_mode[0];
+	new_mode = &new_mode[1];
+	bool ret (false);
+	if (op != '+' && op != '-')
+		return (ret);
+	
+	std::cout << RED << "NewNewMode =" << new_mode << END << std::endl;
 	Modes changeMode[2] = {&User::deopping, &User::setInvisible};
 	for (int i = 0; i < 2; i++)
 	{
-		if (chan_mode[i] == new_mode)
+		for (size_t j = 0; j < new_mode.length(); j++)
 		{
-			(this->*(changeMode[i]))();
-			return true;
+			if (chan_mode[i] == new_mode[j])
+			{
+				{
+					std::cout << "Adding mode =" << new_mode[j] << std::endl;
+					(this->*(changeMode[i]))(new_mode[j], op);
+				}
+				ret = true;
+			}
 		}
 	}
-	return false;
+	return ret;
 
 }
 const std::string	User::getMode(void) const
