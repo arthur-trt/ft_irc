@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_join.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 14:50:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:54:30 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ Command: JOIN
 
    Numeric Replies:
 
-           ERR_NEEDMOREPARAMS    ok          ERR_BANNEDFROMCHAN
-           ERR_INVITEONLYCHAN              ERR_BADCHANNELKEY ok
-           ERR_CHANNELISFULL               ERR_BADCHANMASK
-           ERR_NOSUCHCHANNEL               ERR_TOOMANYCHANNELS
-           ERR_TOOMANYTARGETS              ERR_UNAVAILRESOURCE
-           RPL_TOPIC
+           ERR_NEEDMOREPARAMS    ok         ERR_BANNEDFROMCHAN	ok
+           ERR_INVITEONLYCHAN    ok         ERR_BADCHANNELKEY ok
+           ERR_CHANNELISFULL               	ERR_BADCHANMASK
+           ERR_NOSUCHCHANNEL     ok        	ERR_TOOMANYCHANNELS
+		   ERR_UNAVAILRESOURCE
+           RPL_TOPIC			ok
 */
 
 bool check_password(Channel *chan, std::vector<std::string> parse, IRC* serv, User *user, size_t i)
