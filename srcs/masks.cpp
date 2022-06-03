@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:39:57 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 12:10:46 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:53:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,40 @@ bool			pattern_match (std::string str, std::string pattern )
 		}
 	}
 	return T[n][m];
+}
+
+bool				user_masks ( User * user, std::string pattern )
+{
+	if (pattern.find_first_of('!') != std::string::npos && pattern.find_first_of('@') != std::string::npos)
+	{
+		std::string				pat_nick, pat_user, pat_hostname;
+		std::string::size_type	nick_end, user_end;
+
+		// Obtain the three pattern
+		nick_end = pattern.find('!');
+		user_end = pattern.find('@');
+		pat_nick = pattern.substr(0, nick_end);
+		pat_user = pattern.substr(nick_end + 1, (user_end - nick_end - 1));
+		pat_hostname = pattern.substr(user_end + 1, pattern.size());
+
+		if (pattern_match(user->_nick_name, pat_nick)	&&
+			pattern_match(user->_user_name, pat_user) &&
+			pattern_match(user->_hostname, pat_hostname))
+		{
+			return (true);
+		}
+	}
+	else
+	{
+		if (pattern_match(user->_nick_name, pattern) ||
+			pattern_match(user->_user_name, pattern) ||
+			pattern_match(user->_hostname, pattern) ||
+			pattern_match(user->_real_name, pattern))
+		{
+			return (true);
+		}
+	}
+	return (false);
 }
 
 std::list<User *>	user_masks (IRC * serv, std::string args)

@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:40:57 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:54:24 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include "utils.hpp"
 #include "Channel.Class.hpp"
-#define out(x) std::cout << x << std::endl; 
+#include "masks.hpp"
+#define out(x) std::cout << x << std::endl;
 
 /**
  * @brief Construct a new Channel:: Channel object
@@ -244,7 +245,7 @@ bool		Channel::isBanned ( User * const & user ) const
 	it = this->_banned_user.begin();
 	while (it != this->_banned_user.end())
 	{
-		if ((*it) == user->_nick_name)
+		if (user_masks(user, (*it)))
 			return (true);
 		it++;
 	}
@@ -278,7 +279,7 @@ void	Channel::setPassword (char op, std::string password )
 		if (kit != _mode.end())
 			_mode.erase(kit);
 	}
-	
+
 }
 
 void	Channel::setOperator(char op, std::string user_name)
@@ -356,7 +357,7 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 {
 	typedef void (Channel::*Modes)(char op, std::string params);
 	const char chan_mode[4] = {'k', 'o', 'b', 'i'};
-    
+
 	char op = new_mode[0];
 	new_mode = &new_mode[1];
 	bool ret (false);
@@ -378,7 +379,7 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 const std::string	Channel::getMode(void) const
 {
 	std::string mode_str;
-	
+
 	std::vector<std::string>::const_iterator it;
 	for(it = _mode.begin(); it < _mode.end(); it++)
 		mode_str += *it;
