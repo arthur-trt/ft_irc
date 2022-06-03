@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/02 15:02:08 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:53:49 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,13 @@
         ERR_NEEDMOREPARAMS     ok         ERR_NOSUCHNICK ok
         ERR_NOTONCHANNEL      ok          ERR_USERONCHANNEL ok
         ERR_CHANOPRIVSNEEDED  ok
-        RPL_INVITING
-          341    RPL_INVITING
-              "<channel> <nick>"
-
-         - Returned by the server to indicate that the
-           attempted INVITE message was successful and is
-           being passed onto the end client.             
+        RPL_INVITING          ok          
 */
 
 void cmd_invite ( IRC *serv, User *user, std::string & args )
 {
     std::vector<std::string>	parse;
 	std::pair<bool, Channel*>	chan;
-	// std::string					notice;
     std::string                 nick;
     std::string                 chan_name;
     std::string                 user_invited;
@@ -48,7 +41,7 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
     chan = serv->get_channel(chan_name);
     if (chan.first)
     {
-        if (chan.second->isOperator(*user))
+        if (chan.second->isOperator(*user) && (chan.second->inviteOnly() == true)) // check si le chan est +i
         {
             serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
             return;
@@ -64,7 +57,7 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
             else
             {
                 chan.second->addUser(new_user.second);
-                chan.second->addInvited(nick);//addUSer in invitedList
+                chan.second->addInvited(nick);
                 serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(341, serv, user, nick)));
             }
         }

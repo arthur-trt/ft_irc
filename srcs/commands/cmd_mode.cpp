@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/02 16:50:35 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:58:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "functions.hpp"
 #include <vector>
 #include <string>
+#define out(x) std::cout << x << std::endl; 
 
 /*User mode message
 
@@ -91,6 +92,8 @@ void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 	std::string userMessage;
 	std::cout << RED << "ICI ?" <<  END << std::endl;
 	userMessage = user_answer(user);
+	out("banned.size == " );
+	out(banned.size());
 	for (size_t i = 0; i < banned.size(); i++)
 	{
 		std::cout << GREEN << "LA ?" <<  END << std::endl;
@@ -98,6 +101,8 @@ void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 		userMessage += banned[i];
 		userMessage += " ";
 	}
+	// std::map<std::string, Channel *>::iterator	it;
+	// for ()
 	userMessage += "\r\n";
 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(367, serv, user, chan->getName(), userMessage)));
 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(368, serv, user, chan->getName())));

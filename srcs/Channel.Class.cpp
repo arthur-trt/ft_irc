@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 16:52:42 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:07:00 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ bool	Channel::isOperator(User const &user) const
 	}
 	return (false);
 }
+
 void	Channel::ban(char op, std::string params)
 {
 	if (op == '+')
@@ -320,14 +321,17 @@ void	Channel::ban(char op, std::string params)
 	}
 	if (op == '-')
 	{
-		std::vector<std::string>::iterator it;
-		it = std::find(_mode.begin(), _mode.end(), "b");
-		if (it != _mode.end())
-			_mode.erase(it);
-		std::vector<std::string>::iterator kit;
-		kit = std::find(_banned_user.begin(), _banned_user.end(), params);
-		if (kit != _banned_user.end())
-			_banned_user.erase(it);
+		if (params != "")
+		{
+			std::vector<std::string>::iterator it;
+			it = std::find(_mode.begin(), _mode.end(), "b");
+			if (it != _mode.end())
+				_mode.erase(it);
+			std::vector<std::string>::iterator kit;
+			kit = std::find(_banned_user.begin(), _banned_user.end(), params);
+			if (kit != _banned_user.end())
+				_banned_user.erase(kit);
+		}
 	}
 }
 void	Channel::invite(char op, std::string params)
