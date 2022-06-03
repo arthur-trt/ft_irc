@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 14:42:31 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:50:40 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,22 +183,19 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 	}
 	if (parse.size() >= 2)
 	{
-		if (parse.back() == "0")
-		{
-			std::list<Channel *>			users_chan;
-			std::list<Channel *>::iterator	chan_it;
-			std::string						chan_name;
+		std::list<Channel *>			users_chan;
+		std::list<Channel *>::iterator	chan_it;
+		std::string						chan_name;
 
-			users_chan = user->_channel_joined;
-			chan_it = users_chan.begin();
-			while (chan_it != users_chan.end())
-			{
-				chan_name = (*chan_it)->getName();
-				cmd_part(serv, user, chan_name);
-				chan_it++;
-			}
-			user->_channel_joined.clear();
+		users_chan = user->_channel_joined;
+		chan_it = users_chan.begin();
+		while (chan_it != users_chan.end())
+		{
+			chan_name = (*chan_it)->getName();
+			cmd_part(serv, user, chan_name);
+			chan_it++;
 		}
+		user->_channel_joined.clear();
 	}
 	join(parse, serv, user);
 }
