@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 16:48:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:09:41 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ User&	User::operator= ( const User & rhs )
 		this->_pass_send = rhs._pass_send;
 		this->_connected = rhs._connected;
 		this->_nick_name = rhs._nick_name;
-		//this->available_mode = "+a+i+w+r+o+O+s";
 	}
 	return (*this);
 }
@@ -111,16 +110,13 @@ bool	User::isInvisible( void )
 }
 void	User::setInvisible(char mode,  char op)
 {
-	std::cout << RED << op << END << std::endl;
 	if (op == '+')
 	{
-		std::cout << BLUE2 << op << END << std::endl;
 		if (!isModeThere(mode))
 			_mode.push_back("i");
 	}
 	else if (op == '-')
 	{
-		std::cout << RED << "caca" << END << std::endl;
 		std::vector<std::string>::iterator it;
 		it = std::find(_mode.begin(), _mode.end(), "i");
 		if (it != _mode.end())
@@ -145,14 +141,11 @@ bool	User::updateMode(std::string new_mode)
 	typedef void (User::*Modes)(char mode, char op);
 	const char chan_mode[2] = {'o', 'i'};
 
-	std::cout << BLUE2 << "NewMode =" << END << new_mode << std::endl;
 	char op = new_mode[0];
 	new_mode = &new_mode[1];
 	bool ret (false);
 	if (op != '+' && op != '-')
 		return (ret);
-	
-	std::cout << RED << "NewNewMode =" << new_mode << END << std::endl;
 	Modes changeMode[2] = {&User::deopping, &User::setInvisible};
 	for (int i = 0; i < 2; i++)
 	{
@@ -160,10 +153,7 @@ bool	User::updateMode(std::string new_mode)
 		{
 			if (chan_mode[i] == new_mode[j])
 			{
-				{
-					std::cout << "Adding mode =" << new_mode[j] << std::endl;
-					(this->*(changeMode[i]))(new_mode[j], op);
-				}
+				(this->*(changeMode[i]))(new_mode[j], op);
 				ret = true;
 			}
 		}

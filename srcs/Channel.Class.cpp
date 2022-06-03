@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 14:53:38 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:08:04 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,12 +265,13 @@ const std::string &	Channel::getPassword ( void ) const
 {
 	return (this->_password);
 }
-void	Channel::setPassword (char op, std::string password )
+void	Channel::setPassword (char mode, char op, std::string password )
 {
 	if (op == '+')
 	{
 		this->_password = password;
-		_mode.push_back("+k");
+		if (!isModeThere(mode))
+			_mode.push_back("+k");
 	}
 	else
 	{
@@ -282,12 +283,12 @@ void	Channel::setPassword (char op, std::string password )
 
 }
 
-void	Channel::setOperator(char op, std::string user_name)
+void	Channel::setOperator(char mode, char op, std::string user_name)
 {
+	(void)mode;
 	if (op == '+')
 	{
 		_operators.push_back(user_name); // hmmm c'est pas terrible
-		_mode.push_back("+o");
 	}
 	else if (op == '-')
 	{
@@ -313,13 +314,14 @@ bool	Channel::isOperator(User const &user) const
 	return (false);
 }
 
-void	Channel::ban(char op, std::string params)
+void	Channel::ban(char mode, char op, std::string params)
 {
+	(void)mode;
 	if (op == '+')
 	{
-		if (params != "")
-			_banned_user.push_back(params);
-	}
+			if (params != "")
+				_banned_user.push_back(params);
+	}	
 	if (op == '-')
 	{
 		if (params != "")
@@ -335,12 +337,15 @@ void	Channel::ban(char op, std::string params)
 		}
 	}
 }
-void	Channel::invite(char op, std::string params)
+void	Channel::invite(char mode, char op, std::string params)
 {
 	if (op == '+')
 	{
-		_mode.push_back("i");
-		_invited_user.push_back(params);
+		if (!isModeThere(mode))
+		{
+			_mode.push_back("i");
+			_invited_user.push_back(params);
+		}
 	}
 	else if (op == '-')
 	{
@@ -352,7 +357,7 @@ void	Channel::invite(char op, std::string params)
 }
 bool	Channel::updateMode(std::string new_mode, std::string params)
 {
-	typedef void (Channel::*Modes)(char op, std::string params);
+	typedef void (Channel::*Modes)(char mode, char op, std::string params);
 	const char chan_mode[4] = {'k', 'o', 'b', 'i'};
 
 	char op = new_mode[0];
@@ -367,8 +372,8 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 		{
 			if (chan_mode[i] == new_mode[j])
 			{
-				if (!isModeThere(new_mode[j]))
-					(this->*(changeMode[i]))(op, params);
+				
+				(this->*(changeMode[i]))(new_mode[j], op, params);
 				ret = true;
 			}
 		}

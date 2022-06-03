@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 14:29:20 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:02:23 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ class Channel
 		bool							needsPass(void);
 		bool							isInvited(User * user);
 		const std::string &				getPassword ( void ) const;
-		void							setPassword (char op, std::string password );
-		void							setOperator(char op, std::string user_name);
-		void							ban(char op, std::string params);
-		void							invite(char op, std::string params);
+		void							setPassword (char mode, char op, std::string password );
+		void							setOperator(char mode, char op, std::string user_name);
+		void							ban(char mode, char op, std::string params);
+		void							invite(char mode, char op, std::string params);
 		void							addInvited ( std::string nickname );
 		const std::vector<std::string> &getBannedUser( void ) const;
 };

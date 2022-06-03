@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/03 14:16:47 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:54:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,9 @@ void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 {
 	std::vector<std::string> banned = chan->getBannedUser();
 	std::string userMessage;
-	std::cout << RED << "ICI ?" <<  END << std::endl;
 	userMessage = user_answer(user);
 	for (size_t i = 0; i < banned.size(); i++)
 	{
-		std::cout << GREEN << "LA ?" <<  END << std::endl;
 		std::cout << banned[i]<< std::endl;
 		userMessage += banned[i];
 		userMessage += " ";
