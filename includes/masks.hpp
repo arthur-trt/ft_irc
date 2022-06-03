@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 11:52:23 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 12:11:04 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:52:21 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 bool			pattern_match (std::string str, std::string pattern );
 std::list<User *>		user_masks(IRC * serv, std::string args);
+bool					user_masks ( User * user, std::string pattern );
 std::list<Channel *>	channel_masks(IRC * serv, std::string args);
 
 template <typename T>
