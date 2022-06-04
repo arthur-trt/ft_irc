@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/30 14:16:20 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:41:25 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@
 # define PORT						6667
 # define PASS						"password"
 
-# define MOTD "\
-BONJOUR LES COPAIN.E.S\n\
-VOUS ETES TOUS BEAUX\n"
+# define OPER_USER					"ben"
+# define OPER_PASS					"great_power"
 
 
 #endif

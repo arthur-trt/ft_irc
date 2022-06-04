@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 16:33:50 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:47:04 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 368:
 			answer.append(RPL_ENDOFBANLIST(args));
 			break;
+		case 381:
+			answer.append(RPL_YOUREOPER);
+			break;
 		case 401:
 			answer.append(ERR_NOSUCHNICK(args));
 			break;
@@ -147,6 +150,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 462:
 			answer.append(ERR_ALREADYREGISTRED);
+			break;
+		case 464:
+			answer.append(ERR_PASSWDMISMATCH);
 			break;
 		case 467:
 			answer.append(ERR_KEYSET(args)); //

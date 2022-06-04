@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.Class.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 12:14:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:54:16 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("WHO", &cmd_who));
 	this->_available_command.insert(std::make_pair("LIST", &cmd_list));
 	this->_available_command.insert(std::make_pair("INVITE", &cmd_invite));
+	this->_available_command.insert(std::make_pair("OPER", &cmd_oper));
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 16:48:05 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:46:13 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@
 	(" " + channel + banmasks + "\r\n")														// 367
 # define RPL_ENDOFBANLIST(channel)		\
 	(" " + channel + "\r\n")																// 368
+# define RPL_YOUREOPER				\
+	(" :You are now an IRC operator\r\n")													// 381
 # define ERR_NOSUCHNICK(nick)		\
 	(" " + nick + " :No such nick/channel\r\n")												// 401
 # define ERR_NOSUCHSERVER(server)		\
@@ -95,6 +97,8 @@
 	(" " + command + " :Not enough parameters\r\n")											// 461
 # define ERR_ALREADYREGISTRED			\
 	(" :Unauthorized command (already registered)\r\n")										// 462
+# define ERR_PASSWDMISMATCH				\
+	(" :Password incorrect\r\n")															// 464
 # define ERR_KEYSET(channel)	\
 	(" " + channel + ":Channel key already set\r\n")										// 467
 # define ERR_UNKNOWNMODE(channel) \

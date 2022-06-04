@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 17:09:41 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/04 11:49:18 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ User::User ( const std::string & hostname, const int fd ) :
 	_real_name = "";
 	_pass_send = false;
 	_connected = false;
-	_isOperator = true;
+	_isOperator = false;
 	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("user fd constructor called");
 }
@@ -41,6 +41,7 @@ User::User ( const std::string & user_name, const std::string & nick_name, const
 {
 	_pass_send = false;
 	_connected = false;
+	_isOperator = false;
 	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("User constructor for %s", _user_name.c_str());
 }
@@ -52,7 +53,8 @@ User::User ( const User & src ) :
 	_hostname(src._hostname),
 	_fd(src._fd),
 	_pass_send(src._pass_send),
-	_connected(src._connected)
+	_connected(src._connected),
+	_isOperator(src._isOperator)
 {
 	//available_mode = "+a+i+w+r+o+O+s";
 	//debug("Copy constructor called");
@@ -126,14 +128,14 @@ void	User::setInvisible(char mode,  char op)
 
 bool	User::isModeThere(char mode)
 {
-	
+
 	std::vector<std::string>::iterator it;
 	for (it = _mode.begin(); it < _mode.end(); it++)
 	{
 		if (mode == (*it)[0])
 			return (true);
 	}
-	return (false);		
+	return (false);
 }
 
 bool	User::updateMode(std::string new_mode)
