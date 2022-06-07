@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 17:02:23 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:20:18 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <map>
 # include <vector>
+# include <sstream>
 # include "User.Class.hpp"
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
@@ -31,10 +32,10 @@ class Channel
 		std::vector<std::string> 	_banned_user;
 		std::vector<std::string> 	_invited_user;
 		std::vector<std::string> 	_operators;
-		size_t						_members_count;
 		std::string					_topic;
 		std::vector<std::string>	_mode;
 		std::string					_password;
+		size_t						_user_limit;
 
 		Channel ( void );
 		Channel ( const Channel & src );
@@ -47,6 +48,7 @@ class Channel
 		const std::map<User *, bool> &	getUsers ( void ) const;
 		const std::pair<User *, bool>   getUser ( User * const & user ) const;
 		size_t							getMembersCount ( void ) const;
+		size_t							_members_count;
 
 		bool							isBanned ( User * const & user ) const;
 		bool							addUser ( User * user );
@@ -77,6 +79,8 @@ class Channel
 		void							invite(char mode, char op, std::string params);
 		void							addInvited ( std::string nickname );
 		const std::vector<std::string> &getBannedUser( void ) const;
+		void							limit(char mode, char op, std::string params);
+		const size_t &					getUserLimit( void ) const;
 };
 
 #endif
