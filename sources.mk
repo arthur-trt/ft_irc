@@ -28,6 +28,7 @@ SOURCES		+=                            		\
 		srcs/commands/cmd_parse.cpp          	\
 		srcs/commands/cmd_ping.cpp           	\
 		srcs/commands/cmd_topic.cpp          	\
+		srcs/commands/cmd_motd.cpp           	\
 		srcs/commands/cmd_mode.cpp           	\
 		srcs/commands/cmd_invite.cpp         	\
 		srcs/commands/cmd_nick.cpp           	\

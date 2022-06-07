@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 12:13:32 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:16:27 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,15 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 		case 368:
 			answer.append(RPL_ENDOFBANLIST(args));
 			break;
+		case 372:
+			answer.append(RPL_MOTD(args));
+			break;
+		case 375:
+			answer.append(RPL_MOTDSTART(args));
+			break;
+		case 376:
+			answer.append(RPL_ENDOFMOTD);
+			break;
 		case 381:
 			answer.append(RPL_YOUREOPER);
 			break;
@@ -123,6 +132,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 421:
 			answer.append(ERR_UNKNOWNCOMMAND(args));
+			break;
+		case 422:
+			answer.append(ERR_NOMOTD);
 			break;
 		case 431:
 			answer.append(ERR_NONICKNAMEGIVEN);

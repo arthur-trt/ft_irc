@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 13:49:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:16:12 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@
 	(" " + channel + banmasks + "\r\n")														// 367
 # define RPL_ENDOFBANLIST(channel)		\
 	(" " + channel + "\r\n")																// 368
+# define RPL_MOTD(text)				\
+	(" :- " + text + "\r\n")																// 372
+# define RPL_MOTDSTART(server)		\
+	(" :- " + server + " Message of the day - \r\n")										// 375
+# define RPL_ENDOFMOTD				\
+	(" :End of MOTD command\r\n")															// 376
 # define RPL_YOUREOPER				\
 	(" :You are now an IRC operator\r\n")													// 381
 # define ERR_NOSUCHNICK(nick)		\
@@ -79,6 +85,8 @@
 	(" " + mask + " :Wildcard in toplevel domain\r\n")										// 414
 # define ERR_UNKNOWNCOMMAND(command)	\
 	(" " + command + " :Unknown command\r\n")												// 421
+# define ERR_NOMOTD						\
+	(" :MOTD File is missing\r\n")																// 422
 # define ERR_NONICKNAMEGIVEN			\
 	(" :No nickname given\r\n")																// 431
 # define ERR_ERRONEUSNICKNAME(nick)		\

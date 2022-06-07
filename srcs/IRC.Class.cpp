@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/04 11:54:16 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:23:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("LIST", &cmd_list));
 	this->_available_command.insert(std::make_pair("INVITE", &cmd_invite));
 	this->_available_command.insert(std::make_pair("OPER", &cmd_oper));
+	this->_available_command.insert(std::make_pair("MOTD", &cmd_motd));
 }
 
 /**
