@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 17:54:30 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:29:26 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,25 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(473, serv, user, res.second->getName())));
 				return;
 			}
-			else if (res.second->needsPass())
+			else
 			{
-				if (check_password(res.second, parse, serv, user, i))
+				if (res.second->_members_count++ > res.second->getUserLimit())
+				{
+					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(471, serv, user, res.second->getName())));
+					return;
+				}
+				else if (res.second->needsPass())
+				{
+					if (check_password(res.second, parse, serv, user, i))
+					{
+						res.second->addUser(user);
+						res.second->send_all(serv, notice);
+						user->_channel_joined.push_back(res.second);
+						if (res.second->getTopic() != "")
+							cmd_topic(serv, user, chan);
+					}
+				}
+				else
 				{
 					res.second->addUser(user);
 					res.second->send_all(serv, notice);
@@ -147,14 +163,6 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 					if (res.second->getTopic() != "")
 						cmd_topic(serv, user, chan);
 				}
-			}
-			else
-			{
-				res.second->addUser(user);
-				res.second->send_all(serv, notice);
-				user->_channel_joined.push_back(res.second);
-				if (res.second->getTopic() != "")
-					cmd_topic(serv, user, chan);
 			}
 		}
 		else

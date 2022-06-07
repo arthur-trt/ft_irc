@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 17:08:04 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:20:09 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Channel::Channel ( TCPServer & server, const std::string & name, User * chan_ope
 	this->_joined_user.insert(std::make_pair(chan_operator, true));
 	this->_members_count++;
 	this->_password = "";
+	this->_user_limit = INT32_MAX;
 }
 
 Channel::~Channel ( void )
@@ -188,20 +189,11 @@ void				Channel::send_all ( IRC * serv, std::string msg )
 	}
 }
 
-const std::map<User *, bool> &	Channel::getUsers ( void ) const
-{
-	return (this->_joined_user);
-}
-
-const std::string &				Channel::getTopic ( void ) const
-{
-	return (this->_topic);
-}
-
 void							Channel::setTopic ( std::string topic )
 {
 	this->_topic = topic;
 }
+
 
 bool							Channel::userIsIn ( User * const & user ) const
 {
@@ -222,19 +214,6 @@ bool							Channel::userIsIn ( const std::string & user ) const
 		it++;
 	}
 	return (false);
-}
-
-const std::pair<User *, bool>  Channel::getUser ( User * const & user ) const
-{
-	std::map<User *, bool>::const_iterator	it;
-
-	it = this->_joined_user.find(user);
-	return (*it);
-}
-
-size_t					Channel::getMembersCount ( void ) const
-{
-	return (this->_members_count);
 }
 
 
@@ -261,10 +240,6 @@ bool					Channel::needsPass(void)
 }
 
 
-const std::string &	Channel::getPassword ( void ) const
-{
-	return (this->_password);
-}
 void	Channel::setPassword (char mode, char op, std::string password )
 {
 	if (op == '+')
@@ -355,18 +330,38 @@ void	Channel::invite(char mode, char op, std::string params)
 			_mode.erase(it);
 	}
 }
+void	Channel::limit(char mode, char op, std::string params)
+{
+	if (op == '+')
+	{
+		std::stringstream ss;
+		if (!isModeThere(mode))
+			_mode.push_back("l");
+		ss << params;
+		ss >> _user_limit;
+	}
+	if (op == '-')
+	{
+		std::vector<std::string>::iterator it;
+		it = std::find(_mode.begin(), _mode.end(), "l");
+		if (it != _mode.end())
+			_mode.erase(it);
+	}
+}
 bool	Channel::updateMode(std::string new_mode, std::string params)
 {
+	//change params for string vector of params
+	
 	typedef void (Channel::*Modes)(char mode, char op, std::string params);
-	const char chan_mode[4] = {'k', 'o', 'b', 'i'};
+	const char chan_mode[5] = {'k', 'o', 'b', 'i', 'l'};
 
 	char op = new_mode[0];
 	new_mode = &new_mode[1];
 	bool ret (false);
 	if (op != '+' && op != '-')
 		return (ret); 
-	Modes changeMode[4] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite};
-	for (int i = 0; i < 4; i++)
+	Modes changeMode[5] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite, &Channel::limit};
+	for (int i = 0; i < 5; i++)
 	{
 		for (size_t j = 0; j < new_mode.length(); j++)
 		{
@@ -381,6 +376,11 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 	return (ret);
 }
 
+
+void	Channel::addInvited ( std::string nickname)
+{
+	_invited_user.push_back(nickname);
+}
 bool	Channel::isModeThere(char mode)
 {
 	
@@ -393,15 +393,6 @@ bool	Channel::isModeThere(char mode)
 	return (false);		
 }
 
-const std::string	Channel::getMode(void) const
-{
-	std::string mode_str;
-	
-	std::vector<std::string>::const_iterator it;
-	for(it = _mode.begin(); it < _mode.end(); it++)
-		mode_str += *it;
-	return (mode_str);
-}
 
 bool	Channel::isInvited(User *user)
 {
@@ -419,10 +410,7 @@ bool	Channel::isInvited(User *user)
 	}
 	return (true);
 }
-void	Channel::addInvited ( std::string nickname)
-{
-	_invited_user.push_back(nickname);
-}
+
 bool	Channel::inviteOnly() const
 {
 	std::vector<std::string>::const_iterator it;
@@ -431,7 +419,54 @@ bool	Channel::inviteOnly() const
 	return (false);
 }
 
+
+
+/****************************** 			GETTERS 			***********************************/
+
+const size_t &				Channel::getUserLimit( void ) const
+{
+	return (_user_limit);
+}
+
 const std::vector<std::string> &Channel::getBannedUser( void ) const
 {
 	return (_banned_user);
+}
+
+const std::map<User *, bool> &	Channel::getUsers ( void ) const
+{
+	return (this->_joined_user);
+}
+
+const std::string &				Channel::getTopic ( void ) const
+{
+	return (this->_topic);
+}
+
+const std::pair<User *, bool>  Channel::getUser ( User * const & user ) const
+{
+	std::map<User *, bool>::const_iterator	it;
+
+	it = this->_joined_user.find(user);
+	return (*it);
+}
+
+size_t					Channel::getMembersCount ( void ) const
+{
+	return (this->_members_count);
+}
+
+const std::string	Channel::getMode(void) const
+{
+	std::string mode_str;
+	
+	std::vector<std::string>::const_iterator it;
+	for(it = _mode.begin(); it < _mode.end(); it++)
+		mode_str += *it;
+	return (mode_str);
+}
+
+const std::string &	Channel::getPassword ( void ) const
+{
+	return (this->_password);
 }

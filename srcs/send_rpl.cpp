@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/04 11:47:04 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:13:32 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 467:
 			answer.append(ERR_KEYSET(args)); //
+			break;
+		case 471:
+			answer.append(ERR_CHANNELISFULL(args));
 			break;
 		case 472:
 			answer.append(ERR_UNKNOWNMODE(args));
