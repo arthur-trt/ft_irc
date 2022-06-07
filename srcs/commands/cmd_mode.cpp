@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/03 11:58:01 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:08:11 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,13 @@ void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 {
 	std::vector<std::string> banned = chan->getBannedUser();
 	std::string userMessage;
-	std::cout << RED << "ICI ?" <<  END << std::endl;
 	userMessage = user_answer(user);
-	out("banned.size == " );
-	out(banned.size());
 	for (size_t i = 0; i < banned.size(); i++)
 	{
-		std::cout << GREEN << "LA ?" <<  END << std::endl;
 		std::cout << banned[i]<< std::endl;
 		userMessage += banned[i];
 		userMessage += " ";
 	}
-	// std::map<std::string, Channel *>::iterator	it;
-	// for ()
 	userMessage += "\r\n";
 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(367, serv, user, chan->getName(), userMessage)));
 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(368, serv, user, chan->getName())));
@@ -147,15 +141,17 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 					printBannedUsers(serv, chan.second, user);
 				else if (chan.second->updateMode(mode, params))
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
-				else
+				else 
+				{
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(472, serv, user, name)));
-				notice = user_answer(user);
-				notice.append("MODE ");
-				notice.append(name + " ");
-				notice.append(mode + " ");
-				notice.append(params + " ");
-				notice.append("\r\n");
-				chan.second->send(serv, user, notice);
+					notice = user_answer(user);
+					notice.append("MODE ");
+					notice.append(name + " ");
+					notice.append(mode + " ");
+					notice.append(params + " ");
+					notice.append("\r\n");
+					chan.second->send(serv, user, notice);
+				}
 			}
 		}
 	}
