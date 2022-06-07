@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:14:16 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/20 17:45:02 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:43:41 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "utils.hpp"
 #include "IRC.Class.hpp"
 #include "User.Class.hpp"
+#include "commands.hpp"
 #include "functions.hpp"
 
 static bool	is_valid_nickname ( std::string const & nick_name )
@@ -82,6 +83,8 @@ void	cmd_nick ( IRC *serv, User *user, std::string & args )
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(2, serv, user)));
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(3, serv, user)));
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(4, serv, user)));
+			std::string		tmp = "";
+			cmd_motd(serv, user, tmp);
 		}
 	}
 }
