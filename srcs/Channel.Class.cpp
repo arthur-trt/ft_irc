@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 12:20:09 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:44:36 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,6 +346,7 @@ void	Channel::limit(char mode, char op, std::string params)
 		it = std::find(_mode.begin(), _mode.end(), "l");
 		if (it != _mode.end())
 			_mode.erase(it);
+		_user_limit = INT32_MAX;
 	}
 }
 bool	Channel::updateMode(std::string new_mode, std::string params)

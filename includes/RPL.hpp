@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 13:33:38 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:49:06 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@
 # define ERR_KEYSET(channel)	\
 	(" " + channel + " :Channel key already set\r\n")										// 467
 # define ERR_CHANNELISFULL(channel) \
-    (" " + channel + " :Cannot join channel (+l)\r\n")  										// 471
+    (" " + channel + " :Cannot join channel (+l)\r\n")  									// 471
 # define ERR_UNKNOWNMODE(channel) \
 	(" " + channel + " :is unknown mode char to me for \r\n")								// 472
 # define ERR_INVITEONLYCHAN(channel) \

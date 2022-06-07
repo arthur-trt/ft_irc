@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/03 11:53:49 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:48:03 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
     chan = serv->get_channel(chan_name);
     if (chan.first)
     {
-        if (chan.second->isOperator(*user) && (chan.second->inviteOnly() == true)) // check si le chan est +i
+        if (chan.second->isOperator(*user) && (chan.second->inviteOnly() == true)) // check si le chan est +i && user != operator
         {
             serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
             return;
