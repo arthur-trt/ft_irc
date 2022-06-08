@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 18:45:04 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:47:51 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,8 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 			}
 			else
 			{
-				valread = (buffer[0] == '\004') ? --valread : valread;
+				if (buffer[0] == '\004')
+					buffer[0] = '\0';
 				buffer[valread] = '\0';
 				return (std::make_pair(sd, std::string(buffer)));
 			}
