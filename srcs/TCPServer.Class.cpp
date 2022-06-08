@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 18:35:53 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:45:04 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,8 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 		if (FD_ISSET(sd, &_listen_socket))
 		{
 			memset(&buffer, 0, 1025);
-			if ((valread = read(sd, buffer, 1024)) <= 0)
+			valread = read(sd, buffer, 1024);
+			if (valread <= 0)
 			{
 				getpeername(sd, (struct sockaddr *)&_address, &addr_len);
 				std::cout	<< "Host disconnected" << std::endl
