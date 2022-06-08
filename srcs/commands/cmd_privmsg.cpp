@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 09:53:11 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:22:46 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ static bool		valid_args ( IRC *serv, User *user, std::string & args )
 	}
 	serv->_tcp.add_to_buffer(std::make_pair(
 		user->_fd,
-		send_rpl(412, serv, user)
-	));
+		send_rpl(412, serv, user)));
 	return (false);
 }
 
