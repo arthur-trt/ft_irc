@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:15:26 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 16:40:42 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:44:51 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <vector>
 #include <string>
 
-static bool		valid_args ( IRC *serv, User *user, std::string & args )
+static bool		valid_args (std::string & args )
 {
 	std::vector<std::string>	split;
 	std::string					target, message;
@@ -58,7 +58,7 @@ void	cmd_notice (IRC *serv, User *user, std::string & args)
 	}
 	else
 		return;
-	if (valid_args(serv, user, args))
+	if (valid_args(args))
 	{
 		message.append(user_answer(user));
 		message.append("NOTICE ");
