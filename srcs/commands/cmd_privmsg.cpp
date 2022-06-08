@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 15:22:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:35:28 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,16 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 	std::vector<std::string>	split;
 	std::string					target, message;
 
-	split = ft_split(args, ":");
-	target = trim_copy(split[0]);
+	if (args.find_first_of(':') != std::string::npos)
+	{
+		split = ft_split(args, ":");
+		if (split.size() != 0)
+			target = trim_copy(split[0]);
+		else
+			return;
+	}
+	else
+		return;
 	if (valid_args(serv, user, args))
 	{
 		message = user_answer(user);

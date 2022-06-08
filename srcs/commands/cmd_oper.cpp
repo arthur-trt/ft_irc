@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_oper.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:53:00 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/04 11:48:30 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:32:14 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	cmd_oper ( IRC *serv, User *user, std::string & args )
 			user->_fd,
 			send_rpl(461, serv, user, "OPER")
 		));
-	}
-	if (trim_copy(splited[0]) == OPER_USER && trim_copy(splited[1]) == OPER_PASS)
+	}	
+	else if (trim_copy(splited[0]) == OPER_USER && trim_copy(splited[1]) == OPER_PASS)
 	{
 		user->_isOperator = true;
 		std::string	mode_args = (user->_nick_name + " +o");
