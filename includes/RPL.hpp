@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 18:16:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:37:55 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
 # define RPL_BANLIST(channel, banmasks)		\
-	(" " + channel + banmasks + "\r\n")														// 367
+	(" " + channel + " " + banmasks + "\r\n")														// 367
 # define RPL_ENDOFBANLIST(channel)		\
 	(" " + channel + "\r\n")																// 368
 # define RPL_MOTD(text)				\

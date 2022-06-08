@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 11:01:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:38:15 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,9 @@ Channel Modes
 void	printBannedUsers( IRC *serv, Channel * chan, User * user)
 {
 	std::vector<std::string> banned = chan->getBannedUser();
-	std::string userMessage;
-	userMessage = user_answer(user);
 	for (size_t i = 0; i < banned.size(); i++)
-	{
-		std::cout << banned[i]<< std::endl;
-		userMessage += banned[i];
-		userMessage += " ";
-	}
-	userMessage += "\r\n";
-	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(367, serv, user, chan->getName(), userMessage)));
+		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(367, serv, user, chan->getName(), banned[i])));
 	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(368, serv, user, chan->getName())));
-	chan->send(serv, user, userMessage);
 
 
 
@@ -113,7 +104,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 
 	if (parse.size() > 2)
 		params = parse[2];
-	else if (name.find_first_of(CHAN_FIRST, 0) != std::string::npos)
+	if (name.find_first_of(CHAN_FIRST, 0) != std::string::npos)
 	{
 		chan = serv->get_channel(name);
 		if (chan.first)
