@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 12:29:26 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:28:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,24 +125,21 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 		notice.append(chan);
 		notice.append("\r\n");
 		res = serv->get_channel(chan);
-		if (res.first)
+		if (res.first && !res.second->userIsIn(user))
 		{
 			if (res.second->isBanned(user))
 			{
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(474, serv, user, res.second->getName())));
-				return;
 			}
 			else if(res.second->inviteOnly() && !res.second->isInvited(user))
 			{
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(473, serv, user, res.second->getName())));
-				return;
 			}
 			else
 			{
-				if (res.second->_members_count++ > res.second->getUserLimit())
+				if (res.second->_members_count >= res.second->getUserLimit())
 				{
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(471, serv, user, res.second->getName())));
-					return;
 				}
 				else if (res.second->needsPass())
 				{
@@ -164,17 +161,18 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 						cmd_topic(serv, user, chan);
 				}
 			}
+			cmd_names(serv, user, chan);
 		}
-		else
+		else if (!res.first)
 		{
 			tmp = serv->create_channel(chan, user);
 			tmp->send_all(serv, notice);
 			user->_channel_joined.push_back(tmp);
-			user->_mode.push_back("+o");
+			tmp->_operators.push_back(user->_nick_name);
 			if (tmp->getTopic() != "")
 				cmd_topic(serv, user, chan);
+			cmd_names(serv, user, chan);
 		}
-		cmd_names(serv, user, chan);
 	}
 }
 
@@ -189,7 +187,7 @@ void	cmd_join ( IRC *serv, User *user, std::string & args )
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user))); //not enough parameters
 		return;
 	}
-	if (parse.size() >= 2)
+	if (parse.back() == "0")
 	{
 		std::list<Channel *>			users_chan;
 		std::list<Channel *>::iterator	chan_it;

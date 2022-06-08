@@ -50,7 +50,7 @@
 # define RPL_TOPIC(channel)				\
 	(" " + channel + " :")																	// 332
 # define RPL_INVITING(channel, nick)			\
-	(" " + nick + channel + "\r\n")															// 341
+	(" " + channel + " " + nick + "\r\n")															// 341
 # define RPL_VERSION(debug, comments)			\
 	(" " VERSION "." + debug + " " SERVERNAME " :" + comments + " \r\n")					// 351
 # define RPL_NAMREPLY(channel)			\
@@ -58,7 +58,7 @@
 # define RPL_ENDOFNAMES(channel)		\
 	(" " + channel + " :End of NAMES list\r\n")												// 366
 # define RPL_BANLIST(channel, banmasks)		\
-	(" " + channel + banmasks + "\r\n")														// 367
+	(" " + channel + " " + banmasks + "\r\n")														// 367
 # define RPL_ENDOFBANLIST(channel)		\
 	(" " + channel + "\r\n")																// 368
 # define RPL_MOTD(text)				\

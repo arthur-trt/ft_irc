@@ -1,2 +1,4 @@
 obj/*
 pIRCarre
+.vscode/*.db
+.vscode/vc.*
