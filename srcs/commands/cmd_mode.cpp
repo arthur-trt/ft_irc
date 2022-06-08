@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 12:38:15 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:43:18 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 	std::string notice;
 
 
-	parse = ft_split(args, " ");
+	if (args.find_first_of(' ') != std::string::npos)
+		parse = ft_split(args, " ");
+	else
+		parse.push_back(args);
 	name = trim_copy(parse[0]);
 	std::string params = "";
 
@@ -109,14 +112,14 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 		chan = serv->get_channel(name);
 		if (chan.first)
 		{
-			if (chan.second->isOperator(*user))
+			if (!chan.second->isOperator(*user))
 			{
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
-            	return;
+				return;
 			}
 			else if (parse.size() < 2)
 			{
-				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, chan.second->getMode(), params)));
+				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, "kobil", params)));
 				return;
 			}
 			else

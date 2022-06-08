@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 12:37:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:19:12 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define RPL_TOPIC(channel)				\
 	(" " + channel + " :")																	// 332
 # define RPL_INVITING(channel, nick)			\
-	(" " + nick + channel + "\r\n")															// 341
+	(" " + channel + " " + nick + "\r\n")															// 341
 # define RPL_NAMREPLY(channel)			\
 	(" = " + channel + " :")																// 353
 # define RPL_ENDOFNAMES(channel)		\

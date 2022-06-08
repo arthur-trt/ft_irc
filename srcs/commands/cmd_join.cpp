@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_join.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 12:08:02 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:28:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 			tmp = serv->create_channel(chan, user);
 			tmp->send_all(serv, notice);
 			user->_channel_joined.push_back(tmp);
-			user->_mode.push_back("+o");
+			tmp->_operators.push_back(user->_nick_name);
 			if (tmp->getTopic() != "")
 				cmd_topic(serv, user, chan);
 			cmd_names(serv, user, chan);

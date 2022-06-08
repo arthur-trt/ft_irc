@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/07 13:48:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:19:27 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
             {
                 chan.second->addUser(new_user.second);
                 chan.second->addInvited(nick);
-                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(341, serv, user, nick)));
+                serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(341, serv, user, chan_name, nick)));
             }
         }
         else
