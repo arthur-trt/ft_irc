@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:44 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 18:39:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:01:06 by tpons            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	cmd_list ( IRC *serv, User *user, std::string & args );
 void    cmd_invite ( IRC *serv, User *user, std::string & args );
 void	cmd_oper ( IRC *serv, User *user, std::string & args );
 void	cmd_motd ( IRC *serv, User *user, std::string & args );
+void	cmd_version ( IRC *serv, User *user, std::string & args );
 
 #endif

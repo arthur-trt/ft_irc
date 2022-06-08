@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.Class.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 18:23:07 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:01:08 by tpons            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	IRC::build_commands_map ( void )
 	this->_available_command.insert(std::make_pair("INVITE", &cmd_invite));
 	this->_available_command.insert(std::make_pair("OPER", &cmd_oper));
 	this->_available_command.insert(std::make_pair("MOTD", &cmd_motd));
+	this->_available_command.insert(std::make_pair("VERSION", &cmd_version));
 }
 
 /**

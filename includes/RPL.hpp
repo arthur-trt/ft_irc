@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 18:16:12 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 14:30:21 by tpons            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 	(" " + channel + " :")																	// 332
 # define RPL_INVITING(channel, nick)			\
 	(" " + nick + channel + "\r\n")															// 341
+# define RPL_VERSION(debug, comments)			\
+	(" " VERSION "." + debug + " " SERVERNAME " :" + comments + " \r\n")					// 351
 # define RPL_NAMREPLY(channel)			\
 	(" = " + channel + " :")																// 353
 # define RPL_ENDOFNAMES(channel)		\
