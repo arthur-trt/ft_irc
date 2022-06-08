@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:07:36 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:34:46 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:58:18 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ int		cmd_parse ( std::string entry, IRC *serv, User *user )
 		}
 		str_upper(cmd);
 		cmd_ptr = serv->get_cmd(cmd);
-		if ((cmd_ptr != &cmd_user && cmd_ptr != &cmd_pass && cmd_ptr != &cmd_nick && cmd_ptr != &cmd_ignore) && user->_connected == false)
+		if (!(user->_pass_send == false && cmd_ptr != &cmd_pass))
 		{
-			serv->_tcp.add_to_buffer(std::make_pair(
-				user->_fd,
-				send_rpl(451, serv, user)
-			));
+			if ((cmd_ptr != &cmd_user && cmd_ptr != &cmd_pass && cmd_ptr != &cmd_nick && cmd_ptr != &cmd_ignore) && user->_connected == false)
+			{
+				serv->_tcp.add_to_buffer(std::make_pair(
+					user->_fd,
+					send_rpl(451, serv, user)
+				));
+			}
+			else if (cmd_ptr != &cmd_not_found)
+				cmd_ptr(serv, user, args);
+			else
+				cmd_ptr(serv, user, cmd);
 		}
-		if (cmd_ptr != &cmd_not_found)
-			cmd_ptr(serv, user, args);
-		else
-			cmd_ptr(serv, user, cmd);
 		commands.erase(commands.begin());
 	}
 	return (0);
