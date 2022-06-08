@@ -37,5 +37,6 @@ SOURCES		+=                            		\
 		srcs/commands/cmd_names.cpp          	\
 		srcs/commands/cmd_quit.cpp           	\
 		srcs/commands/cmd_oper.cpp           	\
+		srcs/commands/cmd_version.cpp			\
 
 
