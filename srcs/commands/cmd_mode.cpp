@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 14:51:00 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 16:13:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:23:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 		chan = serv->get_channel(name);
 		if (chan.first)
 		{
-			if (!chan.second->isOperator(*user))
-			{
-				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
-				return;
-			}
-			else if (parse.size() < 2)
+			if (parse.size() < 2)
 			{
 				serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, "kobil", params)));
 				return;
@@ -127,6 +122,11 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 				std::string mode = parse[1];
 				if (mode == "b")
 					printBannedUsers(serv, chan.second, user);
+				else if (!chan.second->isOperator(*user))
+				{
+					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
+					return;
+				}
 				else if (chan.second->updateMode(mode, params))
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(324, serv, user, name, mode, params)));
 				else
@@ -142,6 +142,8 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 				}
 			}
 		}
+		else
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(401, serv, user, name)));
 	}
 	else
 	{
@@ -163,5 +165,7 @@ void	cmd_mode ( IRC *serv, User *user, std::string & args )
 					serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(501, serv, user, mode)));
 			}
 		}
+		else
+        	serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(401, serv, user, name)));
 	}
 }
