@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 14:29:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:48:33 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "User.Class.hpp"
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
+
 
 #define CHAN_MODE "biklmnoprstv"
 
@@ -68,7 +69,7 @@ class Channel
 
 		/******************** MODES ***********************/
 		bool							isModeThere(char mode);	
-		bool							updateMode(std::string new_mode, std::string params);
+		bool							updateMode(std::string new_mode, std::vector<std::string> params);
 		const std::string				getMode(void) const;
 		bool							needsPass(void);
 		bool							isInvited(User * user);

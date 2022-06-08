@@ -32,13 +32,13 @@ OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT
 
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
-cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb
+cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fno-limit-debug-info
 cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer 
 CFLAGS				:= $(cflags.$(BUILD))
 CPPFLAGS			:= $(cflags.$(BUILD)) -std=c++98
 
 lib.release			:=
-lib.valgrind		:= $(lib.release)
+lib.valgrind		:= $(lib.release) -fno-limit-debug-info
 lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer 
 LIB					:= $(lib.$(BUILD))
 

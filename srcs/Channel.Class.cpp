@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 13:44:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:50:57 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,10 @@ void	Channel::setOperator(char mode, char op, std::string user_name)
 	(void)mode;
 	if (op == '+')
 	{
-		_operators.push_back(user_name); // hmmm c'est pas terrible
+		std::vector<std::string>::iterator it;
+		it = std::find(_operators.begin(), _operators.end(), user_name);
+		if (it != _operators.end())
+			_operators.push_back(user_name);
 	}
 	else if (op == '-')
 	{
@@ -349,11 +352,9 @@ void	Channel::limit(char mode, char op, std::string params)
 		_user_limit = INT32_MAX;
 	}
 }
-bool	Channel::updateMode(std::string new_mode, std::string params)
+bool	Channel::updateMode(std::string new_mode, std::vector<std::string> params)
 {
-	//change params for string vector of params
-	
-	typedef void (Channel::*Modes)(char mode, char op, std::string params);
+	typedef void (Channel::*Modes)(char mode, char op, std::string arg);
 	const char chan_mode[5] = {'k', 'o', 'b', 'i', 'l'};
 
 	char op = new_mode[0];
@@ -368,8 +369,9 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 		{
 			if (chan_mode[i] == new_mode[j])
 			{
-				
-				(this->*(changeMode[i]))(new_mode[j], op, params);
+				if (params.size() <= j)
+					params.push_back("");
+				(this->*(changeMode[i]))(new_mode[j], op, params[j]);
 				ret = true;
 			}
 		}
