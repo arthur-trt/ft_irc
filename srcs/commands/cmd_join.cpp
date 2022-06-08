@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 17:14:33 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:25:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 						user->_channel_joined.push_back(res.second);
 						if (res.second->getTopic() != "")
 							cmd_topic(serv, user, chan);
+						cmd_names(serv, user, chan);
 					}
 				}
 				else
@@ -159,9 +160,9 @@ void join(std::vector<std::string> parse, IRC *serv, User *user)
 					user->_channel_joined.push_back(res.second);
 					if (res.second->getTopic() != "")
 						cmd_topic(serv, user, chan);
+					cmd_names(serv, user, chan);
 				}
 			}
-			cmd_names(serv, user, chan);
 		}
 		else if (!res.first)
 		{
