@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:15:26 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 16:22:25 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:40:42 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,15 @@ static bool		valid_args ( IRC *serv, User *user, std::string & args )
 		target = trim_copy(split[0]);
 		if (target == "")
 		{
-			serv->_tcp.add_to_buffer(std::make_pair(
-				user->_fd,
-				send_rpl(411, serv, user, "PRIVMSG")
-			));
 			return (false);
 		}
 		message = trim_copy(split[1]);
 		if (message == "")
 		{
-			serv->_tcp.add_to_buffer(std::make_pair(
-				user->_fd,
-				send_rpl(412, serv, user)
-			));
 			return (false);
 		}
 		return (true);
 	}
-	serv->_tcp.add_to_buffer(std::make_pair(
-		user->_fd,
-		send_rpl(412, serv, user)));
 	return (false);
 }
 
