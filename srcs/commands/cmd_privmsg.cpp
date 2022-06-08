@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 15:57:55 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/08 09:53:11 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,34 @@ static bool		valid_args ( IRC *serv, User *user, std::string & args )
 	std::vector<std::string>	split;
 	std::string					target, message;
 
-	split = ft_split(args, ":");
-	target = trim_copy(split[0]);
-	if (target == "")
+	if (args.find_first_of(':') != std::string::npos)
 	{
-		serv->_tcp.add_to_buffer(std::make_pair(
-			user->_fd,
-			send_rpl(411, serv, user, "PRIVMSG")
-		));
-		return (false);
+		split = ft_split(args, ":");
+		target = trim_copy(split[0]);
+		if (target == "")
+		{
+			serv->_tcp.add_to_buffer(std::make_pair(
+				user->_fd,
+				send_rpl(411, serv, user, "PRIVMSG")
+			));
+			return (false);
+		}
+		message = trim_copy(split[1]);
+		if (message == "")
+		{
+			serv->_tcp.add_to_buffer(std::make_pair(
+				user->_fd,
+				send_rpl(412, serv, user)
+			));
+			return (false);
+		}
+		return (true);
 	}
-	message = trim_copy(split[0]);
-	if (message == "")
-	{
-		serv->_tcp.add_to_buffer(std::make_pair(
-			user->_fd,
-			send_rpl(412, serv, user)
-		));
-		return (false);
-	}
-	return (true);
+	serv->_tcp.add_to_buffer(std::make_pair(
+		user->_fd,
+		send_rpl(412, serv, user)
+	));
+	return (false);
 }
 
 void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
