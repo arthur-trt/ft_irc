@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:17:22 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/03 15:26:22 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:18:13 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ class IRC
 		const std::pair<bool, Channel*>		get_channel ( std::string & name ) const;
 		const std::map<std::string, Channel*> & get_channel ( void ) const;
 
-		void						send_everyone ( const std::string & msg );
+		void								send_everyone ( const std::string & msg );
 
 };
 

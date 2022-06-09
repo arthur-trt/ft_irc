@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/09 11:45:06 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:42:22 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
     std::string                 user_invited;
     
     parse = ft_split(args, " ");
-    nick = trim_copy(parse[0]);
+    if (parse.size() > 0)
+        nick = trim_copy(parse[0]);
+    else
+        return;
     if (parse.size() < 2)
     {
         serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "INVITE")));
