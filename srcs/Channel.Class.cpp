@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/09 10:24:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:11:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,11 @@ void	Channel::setOperator(char mode, char op, std::string user_name)
 	(void)mode;
 	if (op == '+')
 	{
-		_operators.push_back(user_name); // hmmm c'est pas terrible
+		std::vector<std::string>::iterator it;
+		it = std::find(_operators.begin(), _operators.end(), user_name);
+		if (it == _operators.end())
+			_operators.push_back(user_name);
+		_mode.push_back("o");
 	}
 	else if (op == '-')
 	{
@@ -320,6 +324,7 @@ void	Channel::invite(char mode, char op, std::string params)
 			_mode.push_back("i");
 			_invited_user.push_back(params);
 		}
+		//clear invited list ?
 	}
 	else if (op == '-')
 	{
@@ -345,14 +350,12 @@ void	Channel::limit(char mode, char op, std::string params)
 		it = std::find(_mode.begin(), _mode.end(), "l");
 		if (it != _mode.end())
 			_mode.erase(it);
-		_user_limit = INT32_MAX;
+		_user_limit = MAX_CLIENTS_CONNECTION;
 	}
 }
-bool	Channel::updateMode(std::string new_mode, std::string params)
+bool	Channel::updateMode(std::string new_mode, std::vector<std::string> params)
 {
-	//change params for string vector of params
-
-	typedef void (Channel::*Modes)(char mode, char op, std::string params);
+	typedef void (Channel::*Modes)(char mode, char op, std::string arg);
 	const char chan_mode[5] = {'k', 'o', 'b', 'i', 'l'};
 
 	char op = new_mode[0];
@@ -360,6 +363,8 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 	bool ret (false);
 	if (op != '+' && op != '-')
 		return (ret);
+	for (size_t i = 0; i < params.size(); i++)
+		_params.push_back(params[i]);
 	Modes changeMode[5] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite, &Channel::limit};
 	for (int i = 0; i < 5; i++)
 	{
@@ -367,8 +372,10 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 		{
 			if (chan_mode[i] == new_mode[j])
 			{
+				if (params.size() <= j)
+					params.push_back("");
+				(this->*(changeMode[i]))(new_mode[j], op, params[j]);
 
-				(this->*(changeMode[i]))(new_mode[j], op, params);
 				ret = true;
 			}
 		}
@@ -465,6 +472,19 @@ const std::string	Channel::getMode(void) const
 		mode_str += *it;
 	return (mode_str);
 }
+const std::string	Channel::getParams(void) const
+{
+	std::string params_str;
+	
+	std::vector<std::string>::const_iterator it;
+	for(it = _params.begin(); it < _params.end(); it++)
+	{
+		params_str += *it;
+		params_str += " ";
+	}
+	return (params_str);
+}
+
 
 const std::string &	Channel::getPassword ( void ) const
 {

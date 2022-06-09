@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 14:29:03 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:08:17 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "User.Class.hpp"
 # include "TCPServer.Class.hpp"
 # include "IRC.Class.hpp"
+
 
 #define CHAN_MODE "biklmnoprstv"
 
@@ -33,6 +34,7 @@ class Channel
 		std::vector<std::string> 	_invited_user;
 		std::string					_topic;
 		std::vector<std::string>	_mode;
+		std::vector<std::string>	_params;
 		std::string					_password;
 		size_t						_user_limit;
 
@@ -68,7 +70,7 @@ class Channel
 
 		/******************** MODES ***********************/
 		bool							isModeThere(char mode);	
-		bool							updateMode(std::string new_mode, std::string params);
+		bool							updateMode(std::string new_mode, std::vector<std::string> params);
 		const std::string				getMode(void) const;
 		bool							needsPass(void);
 		bool							isInvited(User * user);
@@ -81,6 +83,7 @@ class Channel
 		const std::vector<std::string> &getBannedUser( void ) const;
 		void							limit(char mode, char op, std::string params);
 		const size_t &					getUserLimit( void ) const;
+		const std::string				getParams(void) const;
 };
 
 #endif
