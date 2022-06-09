@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:37:09 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/02 15:50:56 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:43:38 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	cmd_kick ( IRC *serv, User *user, std::string & args )
 		}
 		else
 		{
-			tmp[0] = args;
+			tmp.push_back(args);
 			kick_message = "";
 		}
 
