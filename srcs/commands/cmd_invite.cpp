@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:04:28 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 17:12:12 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:45:06 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
     chan = serv->get_channel(chan_name);
     if (chan.first)
     {
-        if (chan.second->isOperator(*user) && (chan.second->inviteOnly() == true)) // check si le chan est +i && user != operator
+        if (!chan.second->isOperator(*user) && (chan.second->inviteOnly() == true)) // check si le chan est +i && user != operator
         {
             serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(482, serv, user, chan.second->getName())));
             return;
@@ -56,9 +56,14 @@ void cmd_invite ( IRC *serv, User *user, std::string & args )
                 serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(443, serv, user, nick)));
             else
             {
-                chan.second->addUser(new_user.second);
                 chan.second->addInvited(nick);
                 serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(341, serv, user, chan_name, nick)));
+                std::string notice = (user_answer(user));
+                notice.append("INVITE ");
+                notice.append(nick + " ");
+                notice.append(chan_name);
+                notice.append("\r\n");
+                serv->_tcp.add_to_buffer(std::make_pair(new_user.second->_fd, notice));
             }
         }
         else
