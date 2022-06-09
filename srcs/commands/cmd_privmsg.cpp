@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_privmsg.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:02:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 16:44:22 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:10:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static bool		valid_args ( IRC *serv, User *user, std::string & args )
 	std::vector<std::string>	split;
 	std::string					target, message;
 
-	if (args.find_first_of(':') != std::string::npos)
+	if (args.find_first_of(':') != std::string::npos && args[args.length() - 1] != ':')
 	{
 		split = ft_split(args, ":");
 		target = trim_copy(split[0]);
@@ -79,26 +79,16 @@ static bool		valid_args ( IRC *serv, User *user, std::string & args )
 
 void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 {
-	std::vector<std::string>	split;
 	std::string					target, message;
 
-	if (args.find_first_of(':') != std::string::npos)
-	{
-		split = ft_split(args, ":");
-		if (split.size() != 0)
-			target = trim_copy(split[0]);
-		else
-			return;
-	}
-	else
-		return;
 	if (valid_args(serv, user, args))
 	{
+		target = trim_copy(args.substr(0, args.find(':')));
 		message = user_answer(user);
 		message.append("PRIVMSG ");
 		message.append(target);
 		message.append(" :");
-		message.append(split[1]);
+		message.append(args.substr(args.find(':') + 1, args.size()));
 		message.append("\r\n");
 		// Test if server mask
 		if (target[0] == '$')
@@ -107,7 +97,7 @@ void	cmd_privmsg ( IRC *serv, User *user, std::string & args )
 			{
 				if (valid_mask(serv, user, target))
 				{
-					std::string					mask = target.substr(1);
+					std::string	mask = target.substr(1);
 					if (pattern_match(serv->_tcp.getHostname(), mask))
 					{
 						debug("Server pattern mathc");
