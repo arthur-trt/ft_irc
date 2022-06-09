@@ -5,7 +5,7 @@
             "label": "C/C++: Build project",
             "command": "/usr/bin/make",
             "args": [
-                "BUILD=valgrind"
+                "BUILD=debug"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
