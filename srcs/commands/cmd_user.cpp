@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 17:55:04 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 17:43:59 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:22:45 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static bool	valid_args ( IRC *serv, User *user, std::string args )
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "USER")));
 		return (false);
 	}
-	parsed = ft_split(args, " ");
-	if (args.size() < 4)
+	parsed = ft_split(args.substr(0, args.find(':')), " ");
+	if (parsed.size() != 3)
 	{
 		serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(461, serv, user, "USER")));
 		return (false);
