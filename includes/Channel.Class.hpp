@@ -6,7 +6,7 @@
 /*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 10:54:27 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 18:48:33 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 12:08:17 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ class Channel
 		std::vector<std::string> 	_invited_user;
 		std::string					_topic;
 		std::vector<std::string>	_mode;
+		std::vector<std::string>	_params;
 		std::string					_password;
 		size_t						_user_limit;
 
@@ -82,6 +83,7 @@ class Channel
 		const std::vector<std::string> &getBannedUser( void ) const;
 		void							limit(char mode, char op, std::string params);
 		const size_t &					getUserLimit( void ) const;
+		const std::string				getParams(void) const;
 };
 
 #endif
