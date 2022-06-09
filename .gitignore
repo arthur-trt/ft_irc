@@ -1,4 +1,5 @@
 obj/*
+obj/
 pIRCarre
-.vscode/*.db
-.vscode/vc.*
+.vscode/*
+!.vscode/*.json
