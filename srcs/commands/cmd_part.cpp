@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_part.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:27:52 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 16:53:10 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:15:01 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ void	cmd_part ( IRC *serv, User *user, std::string & args )
 	std::string					msg_part;
 	std::vector<std::string>	chan_to_quit;
 	std::pair<bool, Channel*>	chan;
-
+	
+	msg_part = "";
 	if (valid_args(serv, user, args))
 	{
 		if (args.find_first_of(":") != std::string::npos)
 		{
 			chan_to_quit = ft_split(args, ":");
-			msg_part = trim_copy(chan_to_quit[1]);
+			if (chan_to_quit.size() > 1)
+				msg_part = trim_copy(chan_to_quit[1]);
 			chan_to_quit = ft_split(chan_to_quit[0], ",");
 		}
 		else
