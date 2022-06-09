@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   User.Class.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 11:39:06 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/04 11:49:18 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:19:31 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	User::deopping(char mode, char op)
 		{
 			_mode.erase(it);
 		}
+		_isOperator = false;
 	}
 }
 bool	User::isInvisible( void )
