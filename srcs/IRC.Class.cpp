@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IRC.Class.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 15:28:02 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 14:01:08 by tpons            ###   ########.fr       */
+/*   Updated: 2022/06/09 10:24:14 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ IRC::command	IRC::get_cmd ( const std::string & command ) const
 {
 	std::map<std::string, IRC::command>::const_iterator	it;
 
-	debug("Command asked : %s", command.c_str());
+	debug("Command asked : <%s>", command.c_str());
 	it = this->_available_command.find(command);
 	if (it != this->_available_command.end())
 	{

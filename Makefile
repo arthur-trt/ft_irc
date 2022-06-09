@@ -38,8 +38,8 @@ CFLAGS				:= $(cflags.$(BUILD))
 CPPFLAGS			:= $(cflags.$(BUILD)) -std=c++98
 
 lib.release			:=
-lib.valgrind		:= $(lib.release) -fno-limit-debug-info
-lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer 
+lib.valgrind		:= $(lib.release)
+lib.debug			:= $(lib.release) -fsanitize=address -fno-omit-frame-pointer -fno-limit-debug-info
 LIB					:= $(lib.$(BUILD))
 
 INC					:= -I$(INCDIR) -I/usr/local/include

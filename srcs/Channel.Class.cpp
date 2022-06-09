@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
 /*   Updated: 2022/06/09 12:47:46 by ldes-cou         ###   ########.fr       */
@@ -14,7 +14,6 @@
 #include "utils.hpp"
 #include "Channel.Class.hpp"
 #include "masks.hpp"
-#define out(x) std::cout << x << std::endl;
 
 /**
  * @brief Construct a new Channel:: Channel object
@@ -34,7 +33,7 @@ Channel::Channel ( TCPServer & server, const std::string & name, User * chan_ope
 	this->_joined_user.insert(std::make_pair(chan_operator, true));
 	this->_members_count++;
 	this->_password = "";
-	this->_user_limit = INT32_MAX;
+	this->_user_limit = MAX_CLIENTS_CONNECTION;
 }
 
 Channel::~Channel ( void )
@@ -304,7 +303,7 @@ void	Channel::ban(char mode, char op, std::string params)
 	{
 			if (params != "")
 				_banned_user.push_back(params);
-	}	
+	}
 	if (op == '-')
 	{
 		if (params != "")
@@ -380,6 +379,7 @@ bool	Channel::updateMode(std::string new_mode, std::vector<std::string> params)
 				if (params.size() <= j)
 					params.push_back("");
 				(this->*(changeMode[i]))(new_mode[j], op, params[j]);
+
 				ret = true;
 			}
 		}
@@ -394,14 +394,14 @@ void	Channel::addInvited ( std::string nickname)
 }
 bool	Channel::isModeThere(char mode)
 {
-	
+
 	std::vector<std::string>::const_iterator it;
 	for (it = _mode.begin(); it < _mode.end(); it++)
 	{
 		if (mode == (*it)[0])
 			return (true);
 	}
-	return (false);		
+	return (false);
 }
 
 
@@ -470,7 +470,7 @@ size_t					Channel::getMembersCount ( void ) const
 const std::string	Channel::getMode(void) const
 {
 	std::string mode_str;
-	
+
 	std::vector<std::string>::const_iterator it;
 	for(it = _mode.begin(); it < _mode.end(); it++)
 		mode_str += *it;
