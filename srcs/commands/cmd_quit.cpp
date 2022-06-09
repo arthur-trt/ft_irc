@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:57:03 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 18:00:24 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/09 15:07:46 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void	cmd_quit ( IRC *serv, User *user, std::string & args )
 	}
 	cmd_part(serv, user, chans.append(quit_msg));
 	serv->_tcp.close_connection(user->_fd);
-	serv->send_everyone(answer);
+	serv->send_everyone(answer + "\r\n");
 	serv->remove_user(user->_fd);
 }
