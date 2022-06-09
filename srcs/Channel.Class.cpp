@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 13:44:36 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 10:24:27 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "utils.hpp"
 #include "Channel.Class.hpp"
 #include "masks.hpp"
-#define out(x) std::cout << x << std::endl;
 
 /**
  * @brief Construct a new Channel:: Channel object
@@ -34,7 +33,7 @@ Channel::Channel ( TCPServer & server, const std::string & name, User * chan_ope
 	this->_joined_user.insert(std::make_pair(chan_operator, true));
 	this->_members_count++;
 	this->_password = "";
-	this->_user_limit = INT32_MAX;
+	this->_user_limit = MAX_CLIENTS_CONNECTION;
 }
 
 Channel::~Channel ( void )
@@ -296,7 +295,7 @@ void	Channel::ban(char mode, char op, std::string params)
 	{
 			if (params != "")
 				_banned_user.push_back(params);
-	}	
+	}
 	if (op == '-')
 	{
 		if (params != "")
@@ -352,7 +351,7 @@ void	Channel::limit(char mode, char op, std::string params)
 bool	Channel::updateMode(std::string new_mode, std::string params)
 {
 	//change params for string vector of params
-	
+
 	typedef void (Channel::*Modes)(char mode, char op, std::string params);
 	const char chan_mode[5] = {'k', 'o', 'b', 'i', 'l'};
 
@@ -360,7 +359,7 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 	new_mode = &new_mode[1];
 	bool ret (false);
 	if (op != '+' && op != '-')
-		return (ret); 
+		return (ret);
 	Modes changeMode[5] = {&Channel::setPassword, &Channel::setOperator, &Channel::ban, &Channel::invite, &Channel::limit};
 	for (int i = 0; i < 5; i++)
 	{
@@ -368,7 +367,7 @@ bool	Channel::updateMode(std::string new_mode, std::string params)
 		{
 			if (chan_mode[i] == new_mode[j])
 			{
-				
+
 				(this->*(changeMode[i]))(new_mode[j], op, params);
 				ret = true;
 			}
@@ -384,14 +383,14 @@ void	Channel::addInvited ( std::string nickname)
 }
 bool	Channel::isModeThere(char mode)
 {
-	
+
 	std::vector<std::string>::const_iterator it;
 	for (it = _mode.begin(); it < _mode.end(); it++)
 	{
 		if (mode == (*it)[0])
 			return (true);
 	}
-	return (false);		
+	return (false);
 }
 
 
@@ -460,7 +459,7 @@ size_t					Channel::getMembersCount ( void ) const
 const std::string	Channel::getMode(void) const
 {
 	std::string mode_str;
-	
+
 	std::vector<std::string>::const_iterator it;
 	for(it = _mode.begin(); it < _mode.end(); it++)
 		mode_str += *it;
