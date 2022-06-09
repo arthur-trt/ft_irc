@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.Class.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 13:48:17 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/09 12:47:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:11:29 by ldes-cou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,10 +278,6 @@ void	Channel::setOperator(char mode, char op, std::string user_name)
 		kit = std::find(_mode.begin(), _mode.end(), "o");
 		if (kit != _mode.end())
 			_mode.erase(kit);
-		std::vector<std::string>::iterator kiit;
-		kiit = std::find(_params.begin(), _params.end(), params);
-		if (kiit != _params.end())
-			_params.erase(kiit);
 	}
 }
 
