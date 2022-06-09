@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_notice.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:15:26 by ldes-cou          #+#    #+#             */
-/*   Updated: 2022/06/08 16:44:51 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/09 14:34:39 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static bool		valid_args (std::string & args )
 	std::vector<std::string>	split;
 	std::string					target, message;
 
-	if (args.find_first_of(':') != std::string::npos)
+	if (args.find_first_of(':') != std::string::npos && args[args.length() - 1] != ':')
 	{
 		split = ft_split(args, ":");
 		target = trim_copy(split[0]);
@@ -44,36 +44,25 @@ static bool		valid_args (std::string & args )
 
 void	cmd_notice (IRC *serv, User *user, std::string & args)
 {
-	std::vector<std::string>	split;
 	std::string					target, message;
 
-
-	if (args.find_first_of(':') != std::string::npos)
-	{
-		split = ft_split(args, ":");
-		if (split.size() != 0)
-			target = trim_copy(split[0]);
-		else
-			return;
-	}
-	else
-		return;
 	if (valid_args(args))
 	{
-		message.append(user_answer(user));
+		target = trim_copy(args.substr(0, args.find(':')));
+		message = user_answer(user);
 		message.append("NOTICE ");
 		message.append(target);
 		message.append(" :");
-		message.append(split[1]);
+		message.append(args.substr(args.find(':') + 1, args.size()));
 		message.append("\r\n");
-		if (target.find_first_of(CHAN_FIRST, 0) == std::string::npos)
+		if (target.find_first_of(CHAN_FIRST) == std::string::npos)
 		{
 			debug("Send message to user");
 			std::pair<bool, User*>	receiver;
 
 			receiver = serv->get_user(target);
 			if (receiver.first)
-				serv->_tcp.add_to_buffer(std::make_pair(receiver.second->_fd, message));				
+				serv->_tcp.add_to_buffer(std::make_pair(receiver.second->_fd, message));
 		}
 		else
 		{
@@ -87,6 +76,6 @@ void	cmd_notice (IRC *serv, User *user, std::string & args)
 					receiver.second->send(serv, user, message);
 			}
 		}
-		
+
 	}
 }
