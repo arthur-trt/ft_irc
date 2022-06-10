@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 14:14:54 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/31 15:33:44 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:51:02 by tpons            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	cmd_list ( IRC *serv, User *user, std::string & args )
 	std::pair<bool, Channel *>					tmp;
 
 	params = ft_split(args, " ");
-	if (params.size() == 2)
+	if (params.size() > 1)
 	{
-		if (params[1] != serv->_tcp.getHostname())
+		if (!pattern_match(serv->_tcp.getHostname(), params[1]))
 		{
 			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(402, serv, user, params[1])));
 			return ;
