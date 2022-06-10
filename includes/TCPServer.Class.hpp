@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 16:50:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/24 16:15:27 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:54:55 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@
 class TCPServer
 {
 	private:
-		struct sockaddr_in				_address;
+		# if IPV6 == 1
+			struct sockaddr_in6				_address;
+		# else
+			struct sockaddr_in				_address;
+		# endif
 		std::string						_hostname;
 		int								_clients_socket[MAX_CLIENTS_CONNECTION];
 		fd_set							_listen_socket;
