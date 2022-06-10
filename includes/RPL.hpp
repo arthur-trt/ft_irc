@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RPL.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldes-cou <ldes-cou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 18:03:26 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/09 11:38:46 by ldes-cou         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:49:07 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@
 	(" " + channel + " :Cannot join channel (+b)\r\n")										// 474
 # define ERR_BADCHANNELKEY(channel) \
 	(" " + channel + " :Cannot join channel (+k) \r\n")										// 475
+# define ERR_BADCHANMASK(channel)	\
+	(" " + channel + " :Bad Channel Mask\r\n")												// 476
 # define ERR_CHANOPRIVSNEEDED(channel)	\
 	(" " + channel + " :You're not channel operator\r\n")									// 482
 # define  ERR_UMODEUNKNOWNFLAG(mode) \

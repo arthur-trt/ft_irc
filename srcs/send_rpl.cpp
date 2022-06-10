@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   send_rpl.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
+/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:01:45 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/08 14:01:12 by tpons            ###   ########.fr       */
+/*   Updated: 2022/06/10 11:56:29 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,9 @@ std::string	send_rpl(int rpl_num, IRC *serv, User *user, std::string args, std::
 			break;
 		case 475:
 			answer.append(ERR_BADCHANNELKEY(args));
+			break;
+		case 476:
+			answer.append(ERR_BADCHANMASK(args));
 			break;
 		case 482:
 			answer.append(ERR_CHANOPRIVSNEEDED(args));
