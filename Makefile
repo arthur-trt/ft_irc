@@ -11,8 +11,7 @@ ifeq ($(shell uname -s),Darwin)
 endif
 
 #The Target Binary Program
-TARGET				:= pIRCarre
-TARGET_BONUS		:= pIRCarre-bonus
+TARGET				:= ircserv
 
 BUILD				:= release
 
@@ -33,7 +32,7 @@ OBJECTS_BONUS		:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES_BONUS:.$(SRCEXT
 #Flags, Libraries and Includes
 cflags.release		:= -Wall -Werror -Wextra
 cflags.valgrind		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fno-limit-debug-info
-cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer 
+cflags.debug		:= -Wall -Werror -Wextra -DDEBUG -ggdb -fsanitize=address -fno-omit-frame-pointer
 CFLAGS				:= $(cflags.$(BUILD))
 CPPFLAGS			:= $(cflags.$(BUILD)) -std=c++98
 
@@ -66,13 +65,6 @@ all: $(TARGETDIR)/$(TARGET)
 	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
 	@$(ECHO) "$(C_SUCCESS)All done, compilation successful! 👌 $(C_RESET)"
 
-# Bonus rule
-bonus: CPPFLAGS += -DBONUS
-bonus: $(TARGETDIR)/$(TARGET_BONUS)
-	@$(ERASE)
-	@$(ECHO) "$(TARGET)\t\t[$(C_SUCCESS)✅$(C_RESET)]"
-	@$(ECHO) "$(C_SUCCESS)All done, compilation successful with bonus! 👌 $(C_RESET)"
-
 # Remake
 re: fclean all
 
@@ -81,11 +73,9 @@ clean:
 	@$(RM) -f *.d *.o
 	@$(RM) -rf $(BUILDDIR)
 
-
 # Full Clean, Objects and Binaries
 fclean: clean
 	@$(RM) -rf $(TARGET)
-
 
 # Pull in dependency info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
