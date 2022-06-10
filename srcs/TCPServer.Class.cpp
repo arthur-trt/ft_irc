@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/10 11:04:05 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:11:40 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,10 +263,29 @@ const int &				TCPServer::getMainSocket ( void ) const
  */
 void					TCPServer::close_connection ( const int & fd )
 {
+	char		buffer[1025];
+	socklen_t	addr_len = sizeof(_address);
+
 	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 	{
 		if (this->_clients_socket[i] == fd)
 		{
+			getpeername(fd, (struct sockaddr *)&_address, &addr_len);
+			#if IPV6 == 1
+				char	ip[INET6_ADDRSTRLEN];
+				inet_ntop(AF_INET6, &(_address.sin6_addr), ip, INET6_ADDRSTRLEN);
+				std::cout	<< "Host disconnected." << std::endl
+							<< "\tsocket fd : " << fd << std::endl
+							<< "\tip : " << ip << std::endl
+							<< "\tport : " << ntohs(_address.sin6_port) << std::endl;
+			# else
+				char	ip[INET_ADDRSTRLEN];
+				inet_ntop(AF_INET, &(_address.sin_addr), ip, INET_ADDRSTRLEN);
+				std::cout	<< "New connection." << std::endl
+							<< "\tsocket fd : " << fd << std::endl
+							<< "\tip : " << ip << std::endl
+							<< "\tport : " << ntohs(_address.sin_port) << std::endl;
+			#endif
 			close(fd);
 			this->_clients_socket[i] = 0;
 			break;
