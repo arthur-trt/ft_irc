@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 18:11:37 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/07 18:27:10 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:52:50 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define MOTD_FILE					"motd"
 
 # define MAX_CLIENTS_CONNECTION		30
+
+# define IPV6						1
 
 # define PORT						6667
 # define PASS						"password"

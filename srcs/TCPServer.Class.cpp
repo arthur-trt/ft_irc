@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/09 10:24:52 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:12:23 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,40 @@ TCPServer::TCPServer ( int port )
 
 	std::memset(&_clients_socket, 0, MAX_CLIENTS_CONNECTION * sizeof(int));
 
-	if ((_main_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
-	{
-		std::cerr << std::strerror(errno) << std::endl;
-		exit (EXIT_FAILURE);
-	}
+	#if IPV6 == 1
+		if ((_main_socket = socket(AF_INET6, SOCK_STREAM, 0)) == 0)
+		{
+			debug("Socket failed :");
+			std::cerr << std::strerror(errno) << std::endl;
+			exit (EXIT_FAILURE);
+		}
+	# else
+		if ((_main_socket = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+		{
+			debug("Socket failed :");
+			std::cerr << std::strerror(errno) << std::endl;
+			exit (EXIT_FAILURE);
+		}
+	#endif
 	if (setsockopt(_main_socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval)) < 0)
 	{
+		debug("Setsockoption failed :");
 		std::cerr << std::strerror(errno) << std::endl;
 		exit (EXIT_FAILURE);
 	}
 
 	//std::memset(&_address, 0, sizeof(_address));
-	_address.sin_family = AF_INET;
-	_address.sin_addr.s_addr = INADDR_ANY;
-	_address.sin_port = htons(port);
+
+
+	#if IPV6 == 1
+		_address.sin6_family = AF_INET6;
+		_address.sin6_addr = in6addr_any;
+		_address.sin6_port = htons(port);
+	# else
+		_address.sin_family = AF_INET;
+		_address.sin_addr.s_addr = INADDR_ANY;
+		_address.sin_port = htons(port);
+	#endif
 
 	if (bind(_main_socket, (struct sockaddr *)&_address, sizeof(_address)) < 0)
 	{
@@ -110,11 +129,25 @@ std::pair<int, std::string>	TCPServer::incoming_connection ( void )
 		}
 		fcntl(new_socket, F_SETFL, O_NONBLOCK);
 		getnameinfo((struct sockaddr *)&_address, addr_len, _host_name, 1024, NULL, 0, 0);
-		std::cout	<< "New connection." << std::endl
-					<< "\tsocket fd : " << new_socket << std::endl
-					<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
-					<< "\tport : " << ntohs(_address.sin_port) << std::endl
-					<<	"\thostname : " << _host_name << std::endl;
+
+		#if IPV6 == 1
+			char	ip[INET6_ADDRSTRLEN];
+			inet_ntop(AF_INET6, &(_address.sin6_addr), ip, INET6_ADDRSTRLEN);
+			std::cout	<< "New connection." << std::endl
+						<< "\tsocket fd : " << new_socket << std::endl
+						<< "\tip : " << ip << std::endl
+						<< "\tport : " << ntohs(_address.sin6_port) << std::endl
+						<<	"\thostname : " << _host_name << std::endl;
+		# else
+			char	ip[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, &(_address.sin_addr), ip, INET_ADDRSTRLEN);
+			std::cout	<< "New connection." << std::endl
+						<< "\tsocket fd : " << new_socket << std::endl
+						<< "\tip : " << ip << std::endl
+						<< "\tport : " << ntohs(_address.sin_port) << std::endl
+						<<	"\thostname : " << _host_name << std::endl;
+		#endif
+
 		for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 		{
 			if (_clients_socket[i] == 0)
@@ -151,10 +184,21 @@ std::pair<int, std::string>	TCPServer::receive_data ( void )
 			if (valread <= 0)
 			{
 				getpeername(sd, (struct sockaddr *)&_address, &addr_len);
-				std::cout	<< "Host disconnected" << std::endl
-							<< "\tsocket fd : " << sd << std::endl
-							<< "\tip : " << inet_ntoa(_address.sin_addr) << std::endl
-							<< "\tport : " << ntohs(_address.sin_port) << std::endl;
+				#if IPV6 == 1
+					char	ip[INET6_ADDRSTRLEN];
+					inet_ntop(AF_INET6, &(_address.sin6_addr), ip, INET6_ADDRSTRLEN);
+					std::cout	<< "Host disconnected." << std::endl
+								<< "\tsocket fd : " << sd << std::endl
+								<< "\tip : " << ip << std::endl
+								<< "\tport : " << ntohs(_address.sin6_port) << std::endl;
+				# else
+					char	ip[INET_ADDRSTRLEN];
+					inet_ntop(AF_INET, &(_address.sin_addr), ip, INET_ADDRSTRLEN);
+					std::cout	<< "New connection." << std::endl
+								<< "\tsocket fd : " << sd << std::endl
+								<< "\tip : " << ip << std::endl
+								<< "\tport : " << ntohs(_address.sin_port) << std::endl;
+				#endif
 				close (sd);
 				_clients_socket[i] = 0;
 				return (std::make_pair(sd, std::string("Disconnected\n")));
@@ -219,10 +263,28 @@ const int &				TCPServer::getMainSocket ( void ) const
  */
 void					TCPServer::close_connection ( const int & fd )
 {
+	socklen_t	addr_len = sizeof(_address);
+
 	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
 	{
 		if (this->_clients_socket[i] == fd)
 		{
+			getpeername(fd, (struct sockaddr *)&_address, &addr_len);
+			#if IPV6 == 1
+				char	ip[INET6_ADDRSTRLEN];
+				inet_ntop(AF_INET6, &(_address.sin6_addr), ip, INET6_ADDRSTRLEN);
+				std::cout	<< "Host disconnected." << std::endl
+							<< "\tsocket fd : " << fd << std::endl
+							<< "\tip : " << ip << std::endl
+							<< "\tport : " << ntohs(_address.sin6_port) << std::endl;
+			# else
+				char	ip[INET_ADDRSTRLEN];
+				inet_ntop(AF_INET, &(_address.sin_addr), ip, INET_ADDRSTRLEN);
+				std::cout	<< "New connection." << std::endl
+							<< "\tsocket fd : " << fd << std::endl
+							<< "\tip : " << ip << std::endl
+							<< "\tport : " << ntohs(_address.sin_port) << std::endl;
+			#endif
 			close(fd);
 			this->_clients_socket[i] = 0;
 			break;
