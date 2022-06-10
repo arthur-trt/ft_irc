@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_names.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tpons <tpons@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 18:27:31 by atrouill          #+#    #+#             */
-/*   Updated: 2022/05/23 16:59:50 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:32:37 by tpons            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,17 @@ void	cmd_names ( IRC *serv, User *user, std::string & args )
 
 	if (args != "")
 	{
+		std::vector<std::string>				new_args;
 		std::vector<std::string>				chan;
 		std::pair<bool, Channel *>				res;
-
-		chan = ft_split(args, ",");
+		
+		new_args = ft_split(args, " ");
+		if (new_args.size() > 1 && !pattern_match(serv->_tcp.getHostname(), new_args[1]))
+		{
+			serv->_tcp.add_to_buffer(std::make_pair(user->_fd, send_rpl(402, serv, user, new_args[1])));
+			return ;
+		}
+		chan = ft_split(new_args[0], ",");
 		for (size_t i = 0; i < chan.size(); i++)
 		{
 			res = serv->get_channel(chan[i]);
