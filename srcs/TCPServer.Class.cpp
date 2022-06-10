@@ -6,7 +6,7 @@
 /*   By: atrouill <atrouill@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:34:21 by atrouill          #+#    #+#             */
-/*   Updated: 2022/06/10 11:11:40 by atrouill         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:12:23 by atrouill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,6 @@ const int &				TCPServer::getMainSocket ( void ) const
  */
 void					TCPServer::close_connection ( const int & fd )
 {
-	char		buffer[1025];
 	socklen_t	addr_len = sizeof(_address);
 
 	for (size_t i = 0; i < MAX_CLIENTS_CONNECTION; i++)
